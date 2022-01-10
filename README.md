@@ -1,5 +1,7 @@
 # Colouring Athens
 
+Collecting open data about buildings in Athens.
+
 Forked from https://github.com/colouring-london/colouring-london
 
 [Colouring London](http://colouring.london/) is a web-based citizen social
