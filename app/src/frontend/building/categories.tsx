@@ -14,7 +14,7 @@ const Categories: React.FC<CategoriesProps> = (props) => (
             title="Location"
             desc="Where's the building?"
             slug="location"
-            help="https://pages.colouring.london/location"
+            help="https://pages.colouring.athens/location"
             inactive={false}
             mode={props.mode}
             building_id={props.building_id}
@@ -23,7 +23,7 @@ const Categories: React.FC<CategoriesProps> = (props) => (
             title="Land Use"
             desc="What's it used for?"
             slug="use"
-            help="https://pages.colouring.london/use"
+            help="https://pages.colouring.athens/use"
             inactive={true}
             mode={props.mode}
             building_id={props.building_id}
@@ -32,7 +32,7 @@ const Categories: React.FC<CategoriesProps> = (props) => (
             title="Type"
             desc="Building type"
             slug="type"
-            help="https://pages.colouring.london/buildingtypology"
+            help="https://pages.colouring.athens/buildingtypology"
             inactive={false}
             mode={props.mode}
             building_id={props.building_id}
@@ -41,7 +41,7 @@ const Categories: React.FC<CategoriesProps> = (props) => (
             title="Age"
             desc="Age & history"
             slug="age"
-            help="https://pages.colouring.london/age"
+            help="https://pages.colouring.athens/age"
             inactive={false}
             mode={props.mode}
             building_id={props.building_id}
@@ -50,7 +50,7 @@ const Categories: React.FC<CategoriesProps> = (props) => (
             title="Size &amp; Shape"
             desc="Form & scale"
             slug="size"
-            help="https://pages.colouring.london/shapeandsize"
+            help="https://pages.colouring.athens/shapeandsize"
             inactive={false}
             mode={props.mode}
             building_id={props.building_id}
@@ -59,7 +59,7 @@ const Categories: React.FC<CategoriesProps> = (props) => (
             title="Construction"
             desc="Methods & materials"
             slug="construction"
-            help="https://pages.colouring.london/construction"
+            help="https://pages.colouring.athens/construction"
             inactive={false}
             mode={props.mode}
             building_id={props.building_id}
@@ -68,7 +68,7 @@ const Categories: React.FC<CategoriesProps> = (props) => (
             title="Streetscape"
             desc="Environment"
             slug="streetscape"
-            help="https://pages.colouring.london/greenery"
+            help="https://pages.colouring.athens/greenery"
             inactive={true}
             mode={props.mode}
             building_id={props.building_id}
@@ -77,7 +77,7 @@ const Categories: React.FC<CategoriesProps> = (props) => (
             title="Team"
             desc="Builder & designer"
             slug="team"
-            help="https://pages.colouring.london/team"
+            help="https://pages.colouring.athens/team"
             inactive={true}
             mode={props.mode}
             building_id={props.building_id}
@@ -86,7 +86,7 @@ const Categories: React.FC<CategoriesProps> = (props) => (
             title="Sustainability"
             desc="Performance"
             slug="sustainability"
-            help="https://pages.colouring.london/sustainability"
+            help="https://pages.colouring.athens/sustainability"
             inactive={false}
             mode={props.mode}
             building_id={props.building_id}
@@ -95,7 +95,7 @@ const Categories: React.FC<CategoriesProps> = (props) => (
             title="Community"
             desc="Public asset?"
             slug="community"
-            help="https://pages.colouring.london/community"
+            help="https://pages.colouring.athens/community"
             inactive={false}
             mode={props.mode}
             building_id={props.building_id}
@@ -104,7 +104,7 @@ const Categories: React.FC<CategoriesProps> = (props) => (
             title="Planning"
             desc="Special controls?"
             slug="planning"
-            help="https://pages.colouring.london/planning"
+            help="https://pages.colouring.athens/planning"
             inactive={true}
             mode={props.mode}
             building_id={props.building_id}
@@ -113,7 +113,7 @@ const Categories: React.FC<CategoriesProps> = (props) => (
             title="Like Me?"
             desc="Adds to the city?"
             slug="like"
-            help="https://pages.colouring.london/likeme"
+            help="https://pages.colouring.athens/likeme"
             inactive={false}
             mode={props.mode}
             building_id={props.building_id}

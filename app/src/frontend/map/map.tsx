@@ -39,8 +39,8 @@ class ColouringMap extends Component<ColouringMapProps, ColouringMapState> {
         super(props);
         this.state = {
             theme: 'night',
-            lat: 51.5245255,
-            lng: -0.1338422,
+            lat: 37.983810,
+            lng: 23.727539,
             zoom: 16,
             boundary: undefined,
         };
@@ -108,9 +108,15 @@ class ColouringMap extends Component<ColouringMapProps, ColouringMapState> {
         // baselayer
         const key = OS_API_KEY;
         const tilematrixSet = 'EPSG:3857';
-        const layer = (this.state.theme === 'light')? 'Light 3857' : 'Night 3857';
-        const baseUrl = `https://api2.ordnancesurvey.co.uk/mapping_api/v1/service/zxy/${tilematrixSet}/${layer}/{z}/{x}/{y}.png?key=${key}`;
-        const attribution = 'Building attribute data is © Colouring London contributors. Maps contain OS data © Crown copyright: OS Maps baselayers and building outlines. <a href=/ordnance-survey-licence.html>OS licence</a>';
+        // const layer = (this.state.theme === 'light')? 'Light 3857' : 'Night 3857';
+
+        const layer = (this.state.theme === 'light')? 'dark_all' : 'light_all';
+
+        // const baseUrl = `https://api2.ordnancesurvey.co.uk/mapping_api/v1/service/zxy/${tilematrixSet}/${layer}/{z}/{x}/{y}.png?key=${key}`;
+
+        const baseUrl = `https://{s}.basemaps.cartocdn.com/${layer}/{z}/{x}/{y}{r}.png`;
+
+        const attribution = 'Building attribute data is © Colouring Athens contributors. &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
         const baseLayer = <TileLayer
             url={baseUrl}
             attribution={attribution}

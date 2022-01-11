@@ -60,27 +60,27 @@ class Header extends React.Component<HeaderProps, HeaderState> {
                                 </NavLink>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="https://pages.colouring.london">
+                                <a className="nav-link" href="https://pages.colouring.athens">
                                     About
                                 </a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="https://pages.colouring.london/buildingcategories">
+                                <a className="nav-link" href="https://pages.colouring.athens/buildingcategories">
                                     Data Categories
                                 </a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="https://pages.colouring.london/whoisinvolved">
+                                <a className="nav-link" href="https://pages.colouring.athens/whoisinvolved">
                                     Who&rsquo;s Involved?
                                 </a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="https://pages.colouring.london/data-ethics">
+                                <a className="nav-link" href="https://pages.colouring.athens/data-ethics">
                                     Data Ethics
                                 </a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="https://discuss.colouring.london">
+                                <a className="nav-link" href="https://discuss.colouring.athens">
                                     Discuss
                                 </a>
                             </li>
