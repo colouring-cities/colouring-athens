@@ -1,13 +1,17 @@
 import React, { Fragment } from 'react';
 
 import InfoBox from '../../components/info-box';
-import { dataFields } from '../../data_fields';
+import { dataFields } from '../../config/data-fields-config';
 import DataEntry from '../data-components/data-entry';
 import NumericDataEntry from '../data-components/numeric-data-entry';
-import UPRNsDataEntry from '../data-components/uprns-data-entry';
+// import UPRNsDataEntry from '../data-components/uprns-data-entry';
+import Verification from '../data-components/verification';
 import withCopyEdit from '../data-container';
+import { PatternDataEntry } from '../data-components/pattern-data-entry';
 
 import { CategoryViewProps } from './category-view-props';
+
+const locationNumberPattern = "[1-9]\\d*[a-z]?(-([1-9]\\d*))?"; ///[1-9]\d*[a-z]?(-([1-9]\d*))?/;
 
 const LocationView: React.FunctionComponent<CategoryViewProps> = (props) => (
     <Fragment>
@@ -23,16 +27,34 @@ const LocationView: React.FunctionComponent<CategoryViewProps> = (props) => (
             placeholder="Building name (if any)"
             disabled={true}
             />
-        <NumericDataEntry
+        <Verification
+            slug="location_name"
+            allow_verify={props.user !== undefined && props.building.location_name !== null && !props.edited}
+            onVerify={props.onVerify}
+            user_verified={props.user_verified.hasOwnProperty("location_name")}
+            user_verified_as={props.user_verified.location_name}
+            verified_count={props.building.verified.location_name}
+            />
+
+        <PatternDataEntry
             title={dataFields.location_number.title}
             slug="location_number"
             value={props.building.location_number}
+            pattern={locationNumberPattern}
             mode={props.mode}
             copy={props.copy}
             onChange={props.onChange}
-            step={1}
-            min={1}
+            tooltip={dataFields.location_number.tooltip}
             />
+        <Verification
+            slug="location_number"
+            allow_verify={props.user !== undefined && props.building.location_number !== null && !props.edited}
+            onVerify={props.onVerify}
+            user_verified={props.user_verified.hasOwnProperty("location_number")}
+            user_verified_as={props.user_verified.location_number}
+            verified_count={props.building.verified.location_number}
+            />
+
         <DataEntry
             title={dataFields.location_street.title}
             slug="location_street"
@@ -42,6 +64,15 @@ const LocationView: React.FunctionComponent<CategoryViewProps> = (props) => (
             onChange={props.onChange}
             disabled={true}
             />
+        <Verification
+            slug="location_street"
+            allow_verify={props.user !== undefined && props.building.location_street !== null && !props.edited}
+            onVerify={props.onVerify}
+            user_verified={props.user_verified.hasOwnProperty("location_street")}
+            user_verified_as={props.user_verified.location_street}
+            verified_count={props.building.verified.location_street}
+            />
+
         <DataEntry
             title={dataFields.location_line_two.title}
             slug="location_line_two"
@@ -58,6 +89,7 @@ const LocationView: React.FunctionComponent<CategoryViewProps> = (props) => (
             mode={props.mode}
             copy={props.copy}
             onChange={props.onChange}
+            disabled={true}
             />
         <DataEntry
             title={dataFields.location_postcode.title}
@@ -68,22 +100,23 @@ const LocationView: React.FunctionComponent<CategoryViewProps> = (props) => (
             onChange={props.onChange}
             maxLength={8}
             valueTransform={x=>x.toUpperCase()}
+            disabled={true}
             />
         <DataEntry
-            title={dataFields.ref_toid.title}
-            slug="ref_toid"
-            value={props.building.ref_toid}
+            title={dataFields.ref_elstat_id.title}
+            slug="ref_elstat_id"
+            value={props.building.ref_elstat_id}
             mode={props.mode}
             copy={props.copy}
-            tooltip={dataFields.ref_toid.tooltip}
+            tooltip={dataFields.ref_elstat_id.tooltip}
             onChange={props.onChange}
             disabled={true}
             />
-        <UPRNsDataEntry
+        {/* <UPRNsDataEntry
             title={dataFields.uprns.title}
             value={props.building.uprns}
             tooltip={dataFields.uprns.tooltip}
-            />
+            /> */}
         <DataEntry
             title={dataFields.ref_osm_id.title}
             slug="ref_osm_id"

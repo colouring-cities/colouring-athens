@@ -1,3 +1,11 @@
+.night-theme {
+    filter: grayscale(100%) invert(1);
+}
+
+.light-theme {
+    filter: none;
+}
+
 .theme-switcher {
     z-index: 1000;
     position: absolute;
@@ -21,9 +29,8 @@
     background-image: none;
     border-color: #343a40;
 }
-@media (max-width: 768px){
+@media (max-width: 990px){
     .theme-switcher {
         visibility: hidden;
     }
 }
-

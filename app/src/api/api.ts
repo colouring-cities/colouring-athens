@@ -2,15 +2,18 @@ import bodyParser from 'body-parser';
 import express from 'express';
 
 import autofillController from './controllers/autofillController';
+
 import * as editHistoryController from './controllers/editHistoryController';
 import { ApiParamError, ApiUserError } from './errors/api'; 
 import { DatabaseError } from './errors/general';
 import buildingsRouter from './routes/buildingsRouter';
+import multiLingualRouter from './routes/multiLingualRouter';
 import extractsRouter from './routes/extractsRouter';
 import leaderboardRouter from './routes/leaderboardRouter';
 import usersRouter from './routes/usersRouter';
 import { queryLocation } from './services/search';
 import { authUser, getNewUserAPIKey, logout } from './services/user';
+import multiLingualController from './controllers/multiLingualController';
 
 const server = express.Router();
 
@@ -23,15 +26,21 @@ server.use('/extracts', extractsRouter);
 server.use('/leaderboard', leaderboardRouter);
 
 server.get('/history', editHistoryController.getGlobalEditHistory);
-server.get('/autofill', autofillController.getAutofillOptions);
+// server.get('/autofill', autofillController.getAutofillOptions);
+
+// server.use('/multilingual', multiLingualRouter);
+server.use('/multilingualoptions', multiLingualController. getMultiLingualOptions);
+server.use('/multilinguallabels', multiLingualController. getMultiLingualLabel);
 
 // POST user auth
 server.post('/login', function (req, res) {
     authUser(req.body.username, req.body.password).then(function (user: any) { // TODO: remove any
         if (user.user_id) {
-            req.session.user_id = user.user_id;
+            // req.session.user_id = user.user_id;
+            req.session.id = user.user_id;
         } else {
-            req.session.user_id = undefined;
+            // req.session.user_id = undefined;
+            req.session.id = undefined;
         }
         res.send(user);
     }).catch(function (error) {
@@ -51,12 +60,13 @@ server.post('/logout', function (req, res) {
 
 // POST generate API key
 server.post('/api/key', function (req, res) {
-    if (!req.session.user_id) {
+    // if (!req.session.user_id) {
+        if (!req.session.id) {
         res.send({ error: 'Must be logged in' });
         return;
     }
-
-    getNewUserAPIKey(req.session.user_id).then(function (apiKey) {
+    getNewUserAPIKey(req.session.id).then(function (apiKey) {
+    // getNewUserAPIKey(req.session.user_id).then(function (apiKey) {
         res.send(apiKey);
     }).catch(function (error) {
         res.send(error);
@@ -102,6 +112,8 @@ server.use((err: any, req: express.Request, res: express.Response, next: express
     if (res.headersSent) {
         return next(err);
     }
+
+    console.log(res)
 
     if (err != undefined) {
         if (err instanceof ApiUserError) {

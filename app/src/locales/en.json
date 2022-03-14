@@ -1,0 +1,9 @@
+{
+  "language": "en",
+  "name": "COLOURING ATHENS",
+  "current_landuse_ground_floor": "",
+  "current_landuse_floor": "Current floor use",
+  "building_use": "Συνολική χρήση κτιρίου",
+  "land_use_info": "Land use order, shown below, is automatically derived from the land use groups",
+  "find_out_more" : "Find out more"
+}

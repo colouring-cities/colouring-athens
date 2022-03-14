@@ -18,7 +18,7 @@ async function createUser(user) {
             throw { error: err.message };
         } else throw err;
     }
-    
+
     try {
         return await db.one(
             `INSERT
@@ -54,40 +54,34 @@ async function createUser(user) {
 }
 
 async function authUser(username: string, password: string) {
-    try {
-        const user = await db.one(
-            `SELECT
-                user_id,
-                (
-                    pass = crypt($2, pass)
-                ) AS auth_ok,
-                is_blocked,
-                blocked_on,
-                blocked_reason
-            FROM users
-            WHERE
-            username = $1
-            `, [
-                username,
-                password
-            ]
-        );
+    const user = await db.oneOrNone(
+        `SELECT
+            user_id,
+            (
+                pass = crypt($2, pass)
+            ) AS auth_ok,
+            is_blocked,
+            blocked_on,
+            blocked_reason
+        FROM users
+        WHERE
+        username = $1
+        `, [
+            username,
+            password
+        ]
+    );
 
-        if (user && user.auth_ok) {
-            if (user.is_blocked) {
-                return { error: `Account temporarily blocked.${user.blocked_reason == undefined ? '' : ' Reason: '+user.blocked_reason}` };
-            }
-            return { user_id: user.user_id };
-        } else {
-            return { error: 'Username or password not recognised' };
+    if (user == undefined) {
+        return { error: 'The username does not exist in the system' };
+    } else if (user.auth_ok) {
+        if (user.is_blocked) {
+            return { error: `Account temporarily blocked.${user.blocked_reason == undefined ? '' : ' Reason: '+user.blocked_reason}` };
         }
-    } catch(err) {
-        if (err instanceof errors.QueryResultError) {
-            console.error(`Authentication failed for user ${username}`);
-            return { error: 'Username or password not recognised' };
-        }
-        console.error('Error:', err);
-        return { error: 'Database error' }; 
+        return { user_id: user.user_id };
+    } else {
+        console.error(`Authentication failed for user ${username}`);
+        return { error: 'Username / password pair not recognised' };
     }
 }
 
@@ -95,7 +89,7 @@ async function getUserById(id: string) {
     try {
         return await db.one(
             `SELECT
-                username, email, registered, api_key
+                username, email, date_trunc('minute', registered) as registered, api_key
             FROM
                 users
             WHERE
@@ -148,9 +142,9 @@ async function getNewUserAPIKey(id: string) {
     }
 }
 
-async function authAPIUser(key: string) {
+async function authAPIUser(key: string): Promise<string> {
     try {
-        return await db.one(
+        const { user_id } = await db.one(
             `SELECT
                 user_id
             FROM
@@ -161,6 +155,8 @@ async function authAPIUser(key: string) {
                 key
             ]
         );
+
+        return user_id;
     } catch(error) {
         console.error('Error:', error);
         return undefined;

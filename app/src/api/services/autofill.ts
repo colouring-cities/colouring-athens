@@ -8,13 +8,13 @@ interface AutofillOption {
 
 type GetAutofillOptionsFn = (value: string, all?: boolean) => Promise<AutofillOption[]>;
 
-const autofillFunctionMap : { [fieldName: string] : GetAutofillOptionsFn } = {
+const autofillFunctionMap: { [fieldName: string]: GetAutofillOptionsFn } = {
     current_landuse_group: getLanduseGroupOptions,
 };
 
 
 function getLanduseGroupOptions(value: string, all: boolean = false) {
-    if(all) {
+    if (all) {
         return db.manyOrNone(`
             SELECT
                 landuse_id AS id,
@@ -22,6 +22,7 @@ function getLanduseGroupOptions(value: string, all: boolean = false) {
             FROM reference_tables.buildings_landuse_group
             `
         );
+ 
     }
 
     let query = buildPartialMatchQuery(value);

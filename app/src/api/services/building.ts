@@ -65,31 +65,33 @@ async function queryBuildingsAtPoint(lng: number, lat: number) {
 
 async function queryBuildingsByReference(key: string, ref: string) {
     try {
-        if (key === 'toid') {
+        if (key === 'elstat_id') {
             return await db.manyOrNone(
                 `SELECT
                     *
                 FROM
                     buildings
                 WHERE
-                    ref_toid = $1
+                    ref_elstat_id = $1
                 `,
                 [ref]
             );
-        } else if (key === 'uprn') {
-            return await db.manyOrNone(
-                `SELECT
-                    b.*
-                FROM
-                    buildings as b, building_properties as p
-                WHERE
-                    b.building_id = p.building_id
-                AND
-                    p.uprn = $1
-                `,
-                [ref]
-            );
-        } else {
+        } 
+        // else if (key === 'uprn') {
+        //     return await db.manyOrNone(
+        //         `SELECT
+        //             b.*
+        //         FROM
+        //             buildings as b, building_properties as p
+        //         WHERE
+        //             b.building_id = p.building_id
+        //         AND
+        //             p.uprn = $1
+        //         `,
+        //         [ref]
+        //     );
+        // } 
+        else {
             return { error: 'Key must be UPRN or TOID' };
         }
     } catch(err) {
@@ -146,17 +148,17 @@ async function getBuildingLikeById(buildingId: number, userId: string) {
     }
 }
 
-async function getBuildingUPRNsById(id: number) {
-    try {
-        return await db.any(
-            'SELECT uprn, parent_uprn FROM building_properties WHERE building_id = $1',
-            [id]
-        );
-    } catch(error) {
-        console.error(error);
-        return undefined;
-    }
-}
+// async function getBuildingUPRNsById(id: number) {
+//     try {
+//         return await db.any(
+//             'SELECT uprn, parent_uprn FROM building_properties WHERE building_id = $1',
+//             [id]
+//         );
+//     } catch(error) {
+//         console.error(error);
+//         return undefined;
+//     }
+// }
 
 async function saveBuilding(buildingId: number, building: any, userId: string): Promise<object> { // TODO add proper building type
     return await updateBuildingData(buildingId, userId, async () => {
@@ -293,56 +295,59 @@ const BUILDING_FIELD_WHITELIST = new Set([
     'location_postcode',
     'location_latitude',
     'location_longitude',
-    'date_year',
-    'date_lower',
-    'date_upper',
+
+    'current_landuse_ground_floor',
+    'current_landuse_floor',
+
+    'type_class',
+    'side_distances',
+
+    'year_built',
+    'reconstruction_year',
     'date_source',
-    'date_source_detail',
-    'date_link',
-    'facade_year',
-    'facade_upper',
-    'facade_lower',
-    'facade_source',
-    'facade_source_detail',
-    'size_storeys_attic',
+    'date_source_link',
+
     'size_storeys_core',
     'size_storeys_basement',
-    'size_height_apex',
-    'size_floor_area_ground',
-    'size_floor_area_total',
-    'size_width_frontage',
-    'construction_core_material',
-    'construction_secondary_materials',
-    'construction_roof_covering',
-    'planning_portal_link',
-    'planning_in_conservation_area',
-    'planning_conservation_area_name',
-    'planning_in_list',
-    'planning_list_id',
-    'planning_list_cat',
-    'planning_list_grade',
-    'planning_heritage_at_risk_id',
-    'planning_world_list_id',
-    'planning_in_glher',
-    'planning_glher_url',
-    'planning_in_apa',
-    'planning_apa_name',
-    'planning_apa_tier',
-    'planning_in_local_list',
-    'planning_local_list_url',
-    'planning_in_historic_area_assessment',
-    'planning_historic_area_assessment_url',
-    'sust_breeam_rating',
-    'sust_dec',
-    // 'sust_aggregate_estimate_epc',
-    'sust_retrofit_date',
-    // 'sust_life_expectancy',
-    'building_attachment_form',
-    'date_change_building_use',
+    'pilotis' ,
+    'high_ground_floor',
 
-    // 'current_landuse_class',
-    'current_landuse_group',
-    'current_landuse_order'
+
+    'construction_core_material',
+    'construction_roof_covering',
+    'construction_front_cover_materials',
+    'construction_side_cover_materials',
+
+    'has_sidewalk',
+    'sidewalk_width',
+    'road_width',
+    'sidewalk_accessibility',
+    'sidewalk_lawn',
+    'sidewalk_trees',
+    'noise_level',
+    'has_pavement',
+    'has_cycling_track',
+    'has_parodia_stoa',
+    'has_egkarsia_stoa',
+
+    'inside_protected_area',
+    'inside_archaelogical_area',
+    'inside_energy_area',
+    'officially_protected',
+    'officially_preserved',
+    'preservation_designation',
+    'officially_monument',
+    'monument_designation',
+    'fek_issue',
+    'fek_number',
+    'fek_date',
+
+    'has_photovoltaic_panels',
+    'building_state',
+    'visible_collapse_risk',
+
+    'ownership_type',
+
 ]);
 
 /**
@@ -374,7 +379,7 @@ export {
     getBuildingById,
     getBuildingLikeById,
     getBuildingEditHistory,
-    getBuildingUPRNsById,
+    // getBuildingUPRNsById,
     saveBuilding,
     likeBuilding,
     unlikeBuilding,

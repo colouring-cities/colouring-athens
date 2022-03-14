@@ -1,6 +1,8 @@
+
+
 export enum Category {
     Location = 'Location',
-    LandUse = 'LandUse',
+    Use = 'Use',
     Type = 'Type',
     Age = 'Age',
     SizeShape = 'SizeShape',
@@ -20,7 +22,7 @@ export const categories = {
         slug: 'location',
         name: 'Location'
     },
-    [Category.LandUse]: {
+    [Category.Use]: {
         slug: 'use',
         name: 'Land Use'
     },
@@ -68,7 +70,7 @@ export const categories = {
 
 export const categoriesOrder: Category[] = [
     Category.Location,
-    Category.LandUse,
+    Category.Use,
     Category.Type,
     Category.Age,
     Category.SizeShape,
@@ -123,21 +125,21 @@ export const dataFields = {
         title: "Postcode",
         //tooltip: ,
     },
-    ref_toid: {
+    ref_elstat_id: {
         category: Category.Location,
-        title: "TOID",
-        tooltip: "Ordnance Survey Topography Layer ID (to be filled automatically)",
+        title: "ELSTAT ID",
+        tooltip: "ELSTAT ID",
     },
-    
+
     /**
      * UPRNs is not part of the buildings table, but the string fields 
      * are included here for completeness
      */
-    uprns: {
-        category: Category.Location,
-        title: "UPRNs",
-        tooltip: "Unique Property Reference Numbers (to be filled automatically)"
-    },
+    // uprns: {
+    //     category: Category.Location,
+    //     title: "UPRNs",
+    //     tooltip: "Unique Property Reference Numbers (to be filled automatically)"
+    // },
 
     ref_osm_id: {
         category: Category.Location,
@@ -153,282 +155,361 @@ export const dataFields = {
         title: "Longitude",
     },
 
-    current_landuse_group: {
-        category: Category.LandUse,
-        title: "Current Land Use (Group)",
-        tooltip: "Land use Groups as classified by [NLUD](https://www.gov.uk/government/statistics/national-land-use-database-land-use-and-land-cover-classification)"
-    },
-    current_landuse_order: {
-        category: Category.LandUse,
-        title: "Current Land Use (Order)",
-        tooltip: "Land use Order as classified by [NLUD](https://www.gov.uk/government/statistics/national-land-use-database-land-use-and-land-cover-classification)"
+    // current_landuse_group: {
+    //     category: Category.LandUse,
+    //     title: "Current Land Use (Group)",
+    //     tooltip: "Land use Groups as classified by [NLUD](https://www.gov.uk/government/statistics/national-land-use-database-land-use-and-land-cover-classification)"
+    // },
+    // current_landuse_order: {
+    //     category: Category.LandUse,
+    //     title: "Current Land Use (Order)",
+    //     tooltip: "Land use Order as classified by [NLUD](https://www.gov.uk/government/statistics/national-land-use-database-land-use-and-land-cover-classification)"
+    // },
+
+    // Current Use
+
+    current_landuse_ground_floor: {
+        category: Category.Use,
+        title_gr: "Υφιστάμενη χρήση ισογείου",
+        tooltip_gr: "Υφιστάμενη χρήση ισογείου",
+        title_en: "Current ground floor use",
+        tooltip_en: "Current floor use"
     },
 
-    building_attachment_form: {
-        category: Category.Type,
-        title: "Building configuration (attachment)?",
-        tooltip: "We have prepopulated these based on their current attachment. A building can either be detached, semi-detached or part of a terrace (middle or end)",
-    },
-    date_change_building_use: {
-        category: Category.Type,
-        title:"When did use change?",
-        tooltip: "This is the date the building stopped being used for for the function it was built for. I.e. if it was Victorian warehouse which is now an office this would be when it became an office or if it was something before that, maybe a garage then the date that happened",
-    },
-    /**
-     * original_building_use does not exist in database yet.
-     * Slug needs to be adjusted if the db column will be named differently 
-     */
-    original_building_use: {
-        category: Category.Type,
-        title: "Original building use",
-        tooltip: "What was the building originally used for when it was built? I.e. If it was Victorian warehouse which is now an office this would be warehouse",
+    current_landuse_floor: {
+        category: Category.Use,
+        title_gr: "Υφιστάμενη επικρατούσα χρήση ορόφων",
+        tooltip_gr: "Υφιστάμενη επικρατούσα χρήση ορόφων",
+        title_en: "Current floor use",
+        tooltip_en: "Current floor use"
     },
 
-    date_year: {
-        category: Category.Age,
-        title: "Year built (best estimate)"
+
+    // Type
+
+    type_class: {
+        category: Category.Type,
+        title_gr: "Προορισμός κτιρίου",
+        tooltip_gr: "Προορισμός κτιρίου",
+        title_en: "Προορισμός κτιρίου",
+        tooltip_en: "Προορισμός κτιρίου"
     },
-    date_lower : {
-        category: Category.Age,
-        title: "Earliest possible start date",
-        tooltip: "This should be the earliest year in which building could have started."
+
+    side_distances: {
+        category: Category.Type,
+        title_gr: "Πλαϊνές αποστάσεις από γειτονικά κτίρια",
+        tooltip_gr: "Πλαϊνές αποστάσεις από γειτονικά κτίρια",
+        title_en: "Πλαϊνές αποστάσεις από γειτονικά κτίρια",
+        tooltip_en: "Πλαϊνές αποστάσεις από γειτονικά κτίρια"
     },
-    date_upper: {
+
+
+    year_built: {
         category: Category.Age,
-        title: "Latest possible start year",
-        tooltip: "This should be the latest year in which building could have started."
+        title_gr: "Έτος έναρξης κατασκευής",
+        tooltip_gr: "Έτος έναρξης κατασκευής",
+        title_en: "Έτος έναρξης κατασκευής",
+        tooltip_en: "Έτος έναρξης κατασκευής"
     },
-    facade_year: {
+
+    reconstruction_year: {
         category: Category.Age,
-        title: "Facade year",
-        tooltip: "Best estimate"
+        title_gr: "Έτος τελευταίας ανακατασκευής κτιρίου",
+        tooltip_gr: "Έτος τελευταίας ανακατασκευής κτιρίου",
+        title_en: "Έτος τελευταίας ανακατασκευής κτιρίου",
+        tooltip_en: "Έτος τελευταίας ανακατασκευής κτιρίου"
     },
+
+
     date_source: {
         category: Category.Age,
-        title: "Source of information",
-        tooltip: "Source for the main start date"
+        title_gr: "Πηγή πληροφορίας",
+        tooltip_gr: "Πηγή πληροφορίας",
+        title_en: "Πηγή πληροφορίας",
+        tooltip_en: "Πηγή πληροφορίας"
     },
-    date_source_detail: {
+
+
+    date_source_link: {
         category: Category.Age,
-        title: "Source details",
-        tooltip: "References for date source (max 500 characters)"
+        title_gr: "Σύνδεσμος πηγής",
+        tooltip_gr: "Σύνδεσμος πηγής",
+        title_en: "Σύνδεσμος πηγής",
+        tooltip_en: "Σύνδεσμος πηγής"
     },
-    date_link: {
-        category: Category.Age,
-        title: "Text and Image Links",
-        tooltip: "URL for age and date reference",
-    },
+
 
     size_storeys_core: {
         category: Category.SizeShape,
-        title: "Core storeys",
-        tooltip: "How many storeys between the pavement and start of roof?",
+        title_gr: "Αριθμός κύριων ορόφων",
+        tooltip_gr: "Αριθμός κύριων ορόφων",
+        title_en: "Αριθμός κύριων ορόφων",
+        tooltip_en: "Αριθμός κύριων ορόφων"
     },
-    size_storeys_attic: {
-        category: Category.SizeShape,
-        title: "Attic storeys",
-        tooltip: "How many storeys above start of roof?",
-    },
+
+    
     size_storeys_basement: {
         category: Category.SizeShape,
-        title: "Basement storeys",
-        tooltip: "How many storeys below pavement level?",
+        title_gr: "Αριθμός υπόγειων ορόφων",
+        tooltip_gr: "Αριθμός υπόγειων ορόφων",
+        title_en: "Αριθμός υπόγειων ορόφων",
+        tooltip_en: "Αριθμός υπόγειων ορόφων"
     },
-    size_height_apex: {
+
+    
+    pilotis: {
         category: Category.SizeShape,
-        title: "Height to apex (m)",
-        //tooltip: ,
+        title_gr: "Υπάρχει pilotis;",
+        tooltip_gr: "Υπάρχει pilotis;",
+        title_en: "Υπάρχει pilotis;",
+        tooltip_en: "Υπάρχει pilotis;"
     },
-    size_height_eaves: {
+
+    
+    high_ground_floor: {
         category: Category.SizeShape,
-        title: "Height to eaves (m)",
-        //tooltip: ,
+        title_gr: "Υπάρχει ισόγειο μεγάλου ύψους με πατάρι;",
+        tooltip_gr: "Υπάρχει ισόγειο μεγάλου ύψους με πατάρι;",
+        title_en: "Υπάρχει ισόγειο μεγάλου ύψους με πατάρι;",
+        tooltip_en: "Υπάρχει ισόγειο μεγάλου ύψους με πατάρι;"
     },
-    size_floor_area_ground: {
-        category: Category.SizeShape,
-        title: "Ground floor area (m²)",
-        //tooltip: ,
-    },
-    size_floor_area_total: {
-        category: Category.SizeShape,
-        title: "Total floor area (m²)",
-        //tooltip: ,
-    },
-    size_width_frontage: {
-        category: Category.SizeShape,
-        title: "Frontage Width (m)",
-        //tooltip: ,
-    },
-    size_plot_area_total: {
-        category: Category.SizeShape,
-        title: "Total area of plot (m²)",
-        //tooltip: ,
-    },
-    size_far_ratio: {
-        category: Category.SizeShape,
-        title: "FAR ratio (percentage of plot covered by building)",
-        //tooltip: ,
-    },
-    size_configuration: {
-        category: Category.SizeShape,
-        title: "Configuration (semi/detached, end/terrace)",
-        //tooltip: ,
-    },
-    size_roof_shape: {
-        category: Category.SizeShape,
-        title: "Roof shape",
-        //tooltip: ,
-    },
+
 
     construction_core_material: {
         category: Category.Construction,
-        title: "Core Material",
-        tooltip:"The main structural material",
-    },
-
-    construction_secondary_materials: {
-        category: Category.Construction,
-        title: "Secondary Construction Material/s",
-        tooltip:"Other construction materials",
+        title_gr: "Υλικό κατασκευής ",
+        tooltip_gr: "Υλικό κατασκευής ",
+        title_en: "Υλικό κατασκευής ",
+        tooltip_en: "Υλικό κατασκευής "
     },
 
     construction_roof_covering: {
         category: Category.Construction,
-        title: "Main Roof Covering",
-        tooltip:'Main roof covering material',
+        title_gr: "Τρόπος κάλυψης κτιρίου",
+        tooltip_gr: "Τρόπος κάλυψης κτιρίου",
+        title_en: "Τρόπος κάλυψης κτιρίου",
+        tooltip_en: "Τρόπος κάλυψης κτιρίου"
     },
 
-    sust_breeam_rating: {
-        category: Category.Sustainability,
-        title: "BREEAM Rating",
-        tooltip: "(Building Research Establishment Environmental Assessment Method) May not be present for many buildings",
-    },
-    sust_dec: {
-        category: Category.Sustainability,
-        title: "DEC Rating",
-        tooltip: "(Display Energy Certificate) Any public building should have (and display) a DEC. Showing how the energy use for that building compares to other buildings with same use",
-    },
-    sust_aggregate_estimate_epc: {
-        category: Category.Sustainability,
-        title: "EPC Rating",
-        tooltip: "(Energy Performance Certifcate) Any premises sold or rented is required to have an EPC to show how energy efficient it is. Only buildings rate grade E or higher maybe rented",
-    },
-    sust_retrofit_date: {
-        category: Category.Sustainability,
-        title: "Last significant retrofit",
-        tooltip: "Date of last major building refurbishment",
-    },
-    sust_life_expectancy: {
-        category: Category.Sustainability,
-        title: "Expected lifespan for typology",
-        //tooltip: ,
+    construction_front_cover_materials: {
+        category: Category.Construction,
+        title_gr: "Υλικό κάλυψης κύριας όψης",
+        tooltip_gr: "Υλικό κάλυψης κύριας όψης",
+        title_en: "Υλικό κάλυψης κύριας όψης",
+        tooltip_en: "Υλικό κάλυψης κύριας όψης"
     },
 
-    planning_portal_link: {
-        category: Category.Planning,
-        title: "Planning portal link",
-        //tooltip: ,
+    construction_side_cover_materials: {
+        category: Category.Construction,
+        title_gr: "Υλικό κάλυψης πλάγιων όψεων",
+        tooltip_gr: "Υλικό κάλυψης πλάγιων όψεων",
+        title_en: "Υλικό κάλυψης πλάγιων όψεων",
+        tooltip_en: "Υλικό κάλυψης πλάγιων όψεων"
     },
-    planning_in_conservation_area: {
-        category: Category.Planning,
-        title: "In a conservation area?",
-        //tooltip: ,
+
+
+    has_sidewalk: {
+        category: Category.Streetscape,
+        title_gr: "Υπάρχει πεζοδρόμιο;",
+        tooltip_gr: "Υπάρχει πεζοδρόμιο;",
+        title_en: "Υπάρχει πεζοδρόμιο;",
+        tooltip_en: "Υπάρχει πεζοδρόμιο;"
     },
-    planning_conservation_area_name: {
-        category: Category.Planning,
-        title: "Conservation area name",
-        //tooltip: ,
+
+    sidewalk_width: {
+        category: Category.Streetscape,
+        title_gr: "Πλάτος πεζοδρομίου (μέσος όρος)",
+        tooltip_gr: "Πλάτος πεζοδρομίου (μέσος όρος)",
+        title_en: "Πλάτος πεζοδρομίου (μέσος όρος)",
+        tooltip_en: "Πλάτος πεζοδρομίου (μέσος όρος)"
     },
-    planning_in_list: {
-        category: Category.Planning,
-        title: "Is listed on the National Heritage List for England?",
-        //tooltip: ,
+
+    road_width: {
+        category: Category.Streetscape,
+        title_gr: "Πλάτος δρόμου (μέσος όρος)",
+        tooltip_gr: "Πλάτος δρόμου (μέσος όρος)",
+        title_en: "Πλάτος δρόμου (μέσος όρος)",
+        tooltip_en: "Πλάτος δρόμου (μέσος όρος)"
     },
-    planning_list_id: {
-        category: Category.Planning,
-        title: "National Heritage List for England list id",
-        //tooltip: ,
+
+    sidewalk_accessibility: {
+        category: Category.Streetscape,
+        title_gr: "Δυνατότητα ανεμπόδιστης κίνησης ΑΜΕΑ στο πεζοδρόμιο",
+        tooltip_gr: "Δυνατότητα ανεμπόδιστης κίνησης ΑΜΕΑ στο πεζοδρόμιο",
+        title_en: "Δυνατότητα ανεμπόδιστης κίνησης ΑΜΕΑ στο πεζοδρόμιο",
+        tooltip_en: "Δυνατότητα ανεμπόδιστης κίνησης ΑΜΕΑ στο πεζοδρόμιο"
     },
-    planning_list_cat: {
-        category: Category.Planning,
-        title: "National Heritage List for England list type",
-        //tooltip: ,
+
+    sidewalk_lawn: {
+        category: Category.Streetscape,
+        title_gr: "Ύπαρξη πρασιάς",
+        tooltip_gr: "Ύπαρξη πρασιάς",
+        title_en: "Ύπαρξη πρασιάς",
+        tooltip_en: "Ύπαρξη πρασιάς"
     },
-    planning_list_grade: {
-        category: Category.Planning,
-        title: "Listing grade",
-        //tooltip: ,
+
+    sidewalk_trees: {
+        category: Category.Streetscape,
+        title_gr: "Ύπαρξη δενδροφύτευσης στο πεζοδρόμιο",
+        tooltip_gr: "Ύπαρξη δενδροφύτευσης στο πεζοδρόμιο",
+        title_en: "Ύπαρξη δενδροφύτευσης στο πεζοδρόμιο",
+        tooltip_en: "Ύπαρξη δενδροφύτευσης στο πεζοδρόμιο"
     },
-    planning_heritage_at_risk_id: {
-        category: Category.Planning,
-        title: "Heritage at risk list id",
-        //tooltip: ,
+
+    noise_level: {
+        category: Category.Streetscape,
+        title_gr: "Επίπεδο θορύβου στο πεζοδρόμιο",
+        tooltip_gr: "Επίπεδο θορύβου στο πεζοδρόμιο",
+        title_en: "Επίπεδο θορύβου στο πεζοδρόμιο",
+        tooltip_en: "Επίπεδο θορύβου στο πεζοδρόμιο"
     },
-    planning_world_list_id: {
-        category: Category.Planning,
-        title: "World heritage list id",
-        //tooltip: ,
+
+    has_pavement: {
+        category: Category.Streetscape,
+        title_gr: "Ύπαρξη πεζόδρομου",
+        tooltip_gr: "Ύπαρξη πεζόδρομου",
+        title_en: "Ύπαρξη πεζόδρομου",
+        tooltip_en: "Ύπαρξη πεζόδρομου"
     },
-    planning_in_glher: {
-        category: Category.Planning,
-        title: "In the Greater London Historic Environment Record?",
-        //tooltip: ,
+
+    has_cycling_track: {
+        category: Category.Streetscape,
+        title_gr: "Ύπαρξη ποδηλατόδρομου",
+        tooltip_gr: "Ύπαρξη ποδηλατόδρομου",
+        title_en: "Ύπαρξη ποδηλατόδρομου",
+        tooltip_en: "Ύπαρξη ποδηλατόδρομου"
     },
-    planning_glher_url: {
-        category: Category.Planning,
-        title: "Greater London Historic Environment Record link",
-        //tooltip: ,
+
+    has_parodia_stoa: {
+        category: Category.Streetscape,
+        title_gr: "Ύπαρξη παρόδιας στοάς",
+        tooltip_gr: "Ύπαρξη παρόδιας στοάς",
+        title_en: "Ύπαρξη παρόδιας στοάς",
+        tooltip_en: "Ύπαρξη παρόδιας στοάς"
     },
-    planning_in_apa: {
-        category: Category.Planning,
-        title: "In an Architectural Priority Area?",
-        //tooltip: ,
+
+    has_egkarsia_stoa: {
+        category: Category.Streetscape,
+        title_gr: "Ύπαρξη εγκάρσιας στοάς",
+        tooltip_gr: "Ύπαρξη εγκάρσιας στοάς",
+        title_en: "Ύπαρξη εγκάρσιας στοάς",
+        tooltip_en: "Ύπαρξη εγκάρσιας στοάς"
     },
-    planning_apa_name: {
+
+
+    inside_protected_area: {
         category: Category.Planning,
-        title: "Architectural Priority Area name",
-        //tooltip: ,
+        title_gr: "Βρίσκεται το κτίριο εντός προστατευόμενης περιοχής;",
+        tooltip_gr: "Βρίσκεται το κτίριο εντός προστατευόμενης περιοχής;",
+        title_en: "Βρίσκεται το κτίριο εντός προστατευόμενης περιοχής;",
+        tooltip_en: "Βρίσκεται το κτίριο εντός προστατευόμενης περιοχής;"
     },
-    planning_apa_tier: {
+
+    inside_archaelogical_area: {
         category: Category.Planning,
-        title: "Architectural Priority Area tier",
-        //tooltip: ,
+        title_gr: "Βρίσκεται το κτίριο εντός περιοχής χαρακτηρισμένης ως ‘Αρχαιολογικού Χώρου’ από το Υπουργείο Πολιτισμού και Αθλητισμού;",
+        tooltip_gr: "Βρίσκεται το κτίριο εντός περιοχής χαρακτηρισμένης ως ‘Αρχαιολογικού Χώρου’ από το Υπουργείο Πολιτισμού και Αθλητισμού;",
+        title_en: "Βρίσκεται το κτίριο εντός περιοχής χαρακτηρισμένης ως ‘Αρχαιολογικού Χώρου’ από το Υπουργείο Πολιτισμού και Αθλητισμού;",
+        tooltip_en: "Βρίσκεται το κτίριο εντός περιοχής χαρακτηρισμένης ως ‘Αρχαιολογικού Χώρου’ από το Υπουργείο Πολιτισμού και Αθλητισμού;"
     },
-    planning_in_local_list: {
+
+    inside_energy_area: {
         category: Category.Planning,
-        title: "Is locally listed?",
-        //tooltip: ,
+        title_gr: "Βρίσκεται το κτίριο εντός τμήματος πόλεως χαρακτηρισμένου ως προστατευόμενου από το Υπουργείο Περιβάλλοντος και Ενέργειας;",
+        tooltip_gr: "Βρίσκεται το κτίριο εντός τμήματος πόλεως χαρακτηρισμένου ως προστατευόμενου από το Υπουργείο Περιβάλλοντος και Ενέργειας;",
+        title_en: "Βρίσκεται το κτίριο εντός τμήματος πόλεως χαρακτηρισμένου ως προστατευόμενου από το Υπουργείο Περιβάλλοντος και Ενέργειας;",
+        tooltip_en: "Βρίσκεται το κτίριο εντός τμήματος πόλεως χαρακτηρισμένου ως προστατευόμενου από το Υπουργείο Περιβάλλοντος και Ενέργειας;"
     },
-    planning_local_list_url: {
+
+    officially_protected: {
         category: Category.Planning,
-        title: "Local list link",
-        //tooltip: ,
+        title_gr: "Βρίσκεται το κτίριο υπό επίσημο καθεστώς προστασίας;",
+        tooltip_gr: "Βρίσκεται το κτίριο υπό επίσημο καθεστώς προστασίας;",
+        title_en: "Βρίσκεται το κτίριο υπό επίσημο καθεστώς προστασίας;",
+        tooltip_en: "Βρίσκεται το κτίριο υπό επίσημο καθεστώς προστασίας;"
     },
-    planning_in_historic_area_assessment: {
+
+    officially_preserved: {
         category: Category.Planning,
-        title: "Within a historic area assessment?",
-        //tooltip: ,
+        title_gr: "Έχει χαρακτηριστεί το κτίριο ή τμήμα του κτιρίου ως διατηρητέο, ή ανήκει το κτίριο σε συγκρότημα κτιρίων χαρακτηρισμένο ως διατηρητέο από το Υπουργείο Περιβάλλοντος και Ενέργειας;",
+        tooltip_gr: "Έχει χαρακτηριστεί το κτίριο ή τμήμα του κτιρίου ως διατηρητέο, ή ανήκει το κτίριο σε συγκρότημα κτιρίων χαρακτηρισμένο ως διατηρητέο από το Υπουργείο Περιβάλλοντος και Ενέργειας;",
+        title_en: "Έχει χαρακτηριστεί το κτίριο ή τμήμα του κτιρίου ως διατηρητέο, ή ανήκει το κτίριο σε συγκρότημα κτιρίων χαρακτηρισμένο ως διατηρητέο από το Υπουργείο Περιβάλλοντος και Ενέργειας;",
+        tooltip_en: "Έχει χαρακτηριστεί το κτίριο ή τμήμα του κτιρίου ως διατηρητέο, ή ανήκει το κτίριο σε συγκρότημα κτιρίων χαρακτηρισμένο ως διατηρητέο από το Υπουργείο Περιβάλλοντος και Ενέργειας;"
     },
-    planning_historic_area_assessment_url: {
+
+    preservation_designation: {
         category: Category.Planning,
-        title: "Historic area assessment link",
-        //tooltip: ,
+        title_gr: "Αν ναι, χαρακτηρισμός κτιρίου:",
+        tooltip_gr: "Αν ναι, χαρακτηρισμός κτιρίου:",
+        title_en: "Αν ναι, χαρακτηρισμός κτιρίου:",
+        tooltip_en: "Αν ναι, χαρακτηρισμός κτιρίου:"
     },
-    planning_demolition_proposed: {
+
+    officially_monument: {
         category: Category.Planning,
-        title: "Is the building proposed for demolition?",
-        //tooltip: ,
+        title_gr: "Έχει χαρακτηριστεί το κτίριο ως μνημείο από το Υπουργείο Πολιτισμού και Αθλητισμού; ",
+        tooltip_gr: "Έχει χαρακτηριστεί το κτίριο ως μνημείο από το Υπουργείο Πολιτισμού και Αθλητισμού; ",
+        title_en: "Έχει χαρακτηριστεί το κτίριο ως μνημείο από το Υπουργείο Πολιτισμού και Αθλητισμού; ",
+        tooltip_en: "Έχει χαρακτηριστεί το κτίριο ως μνημείο από το Υπουργείο Πολιτισμού και Αθλητισμού; "
     },
-    planning_demolition_complete: {
+
+    monument_designation: {
         category: Category.Planning,
-        title: "Has the building been demolished?",
-        //tooltip: ,
+        title_gr: "Αν ναι, χαρακτηρισμός κτιρίου:",
+        tooltip_gr: "Αν ναι, χαρακτηρισμός κτιρίου:",
+        title_en: "Αν ναι, χαρακτηρισμός κτιρίου:",
+        tooltip_en: "Αν ναι, χαρακτηρισμός κτιρίου:"
     },
-    planning_demolition_history: {
+
+    fek_issue: {
         category: Category.Planning,
-        title: "Dates of construction and demolition of previous buildings on site",
-        //tooltip: ,
+        title_gr: "Τεύχος ΦΕΚ",
+        tooltip_gr: "Τεύχος ΦΕΚ",
+        title_en: "Τεύχος ΦΕΚ",
+        tooltip_en: "Τεύχος ΦΕΚ"
     },
+
+    fek_number: {
+        category: Category.Planning,
+        title_gr: "Αριθμός ΦΕΚ",
+        tooltip_gr: "Αριθμός ΦΕΚ",
+        title_en: "Αριθμός ΦΕΚ",
+        tooltip_en: "Αριθμός ΦΕΚ"
+    },
+
+    fek_date: {
+        category: Category.Planning,
+        title_gr: "Ημερομηνία ΦΕΚ",
+        tooltip_gr: "Ημερομηνία ΦΕΚ",
+        title_en: "Ημερομηνία ΦΕΚ",
+        tooltip_en: "Ημερομηνία ΦΕΚ"
+    },
+
+    has_photovoltaic_panels: {
+        category: Category.Sustainability,
+        title_gr: "Υπάρχει εγκατάσταση φωτοβολταϊκών πανέλων;",
+        tooltip_gr: "Υπάρχει εγκατάσταση φωτοβολταϊκών πανέλων;",
+        title_en: "Υπάρχει εγκατάσταση φωτοβολταϊκών πανέλων;",
+        tooltip_en: "Υπάρχει εγκατάσταση φωτοβολταϊκών πανέλων;"
+    },
+
+    building_state: {
+        category: Category.Sustainability,
+        title_gr: "Γενική κατάσταση κτιρίου",
+        tooltip_gr: "Γενική κατάσταση κτιρίου",
+        title_en: "Γενική κατάσταση κτιρίου",
+        tooltip_en: "Γενική κατάσταση κτιρίου"
+    },
+
+    visible_collapse_risk: {
+        category: Category.Sustainability,
+        title_gr: "Διατρέχει ορατό κίνδυνο κατάρρευσης;",
+        tooltip_gr: "Διατρέχει ορατό κίνδυνο κατάρρευσης;",
+        title_en: "Διατρέχει ορατό κίνδυνο κατάρρευσης;",
+        tooltip_en: "Διατρέχει ορατό κίνδυνο κατάρρευσης;"
+    },
+
+
 
     likes_total: {
         category: Category.Like,

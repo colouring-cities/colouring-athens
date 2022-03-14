@@ -10,6 +10,8 @@ const server = http.createServer(app);
 
 let currentApp = app;
 
+// app.disable('etag');
+
 server.listen(process.env.PORT || 3000, () => {
     console.log('🚀  started');
 }).on('error', error => {

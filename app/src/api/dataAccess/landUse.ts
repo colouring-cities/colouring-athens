@@ -47,3 +47,14 @@ export async function isLandUseGroupAllowed(group: string): Promise<boolean> {
 
     return (groupResult != undefined);
 }
+
+
+export async function getLandUse(classes: string[]): Promise<string[]> {
+    if (classes.length === 0) return [];
+    return (await db.many(
+        `
+        SELECT description_gr AS value
+        FROM reference_tables.buildings_landuse_group`,
+        [classes]
+    )).map(x => x.description);
+}

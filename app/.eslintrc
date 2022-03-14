@@ -1,5 +1,15 @@
 {
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint",
+    "jest",
+    "react"
+  ],
   "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
     "eslint:recommended",
     "plugin:jest/recommended",
     "plugin:react/recommended"
@@ -11,7 +21,6 @@
     "es6": true,
     "jest": true
   },
-  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module",
@@ -30,12 +39,9 @@
     "camelcase": ["warn", {"ignoreDestructuring": true ,"properties": "never"}],
     "eol-last": ["warn", "always"],
     "no-multiple-empty-lines": ["warn", {"max": 1}],
-    "prefer-const": "warn"
+    "prefer-const": "warn",
+    "react/prop-types": "off"
   },
-  "plugins": [
-    "jest",
-    "react"
-  ],
   "settings": {
     "react": {
       "version": "detect"

@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "boundary_athens_4326",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 23.555943071208254, 37.798091638167278 ], [ 23.887715782406726, 37.798091638167278 ], [ 23.887715782406726, 38.146853320781197 ], [ 23.555943071208254, 38.146853320781197 ], [ 23.555943071208254, 37.798091638167278 ] ] ] } }
+]
+}

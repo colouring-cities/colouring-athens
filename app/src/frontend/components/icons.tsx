@@ -2,8 +2,23 @@
  * Mini-library of icons
  */
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faAngleLeft, faCaretDown, faCaretRight, faCaretUp, faCheck, faCheckDouble,
-    faEye, faInfoCircle, faPaintBrush, faQuestionCircle, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
+import {
+    faAngleLeft,
+    faAngleRight,
+    faCaretDown,
+    faCaretRight,
+    faCaretUp,
+    faCheck,
+    faCheckCircle,
+    faCheckDouble,
+    faEye,
+    faInfoCircle,
+    faPaintBrush,
+    faQuestionCircle,
+    faSearch,
+    faSpinner,
+    faTimes
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 
@@ -13,13 +28,16 @@ library.add(
     faPaintBrush,
     faTimes,
     faCheck,
+    faCheckCircle,
     faCheckDouble,
     faAngleLeft,
+    faAngleRight,
     faCaretDown,
     faCaretUp,
     faCaretRight,
     faSearch,
-    faEye
+    faEye,
+    faSpinner
 );
 
 const HelpIcon = () => (
@@ -50,8 +68,16 @@ const SaveDoneIcon = () => (
     <FontAwesomeIcon icon="check-double" />
 );
 
+const VerifyIcon = () => (
+    <FontAwesomeIcon icon="check-circle" />
+)
+
 const BackIcon = () => (
     <FontAwesomeIcon icon="angle-left" />
+);
+
+const ForwardIcon = () => (
+    <FontAwesomeIcon icon="angle-right" />
 );
 
 const DownIcon = () => (
@@ -70,6 +96,10 @@ const SearchIcon = () => (
     <FontAwesomeIcon icon="search" />
 );
 
+const SpinnerIcon: React.FC<{spin?: boolean}> = ({spin=true}) => (
+    <FontAwesomeIcon icon="spinner" spin={spin} />
+);
+
 export {
     HelpIcon,
     InfoIcon,
@@ -79,8 +109,11 @@ export {
     SaveIcon,
     SaveDoneIcon,
     BackIcon,
+    ForwardIcon,
     DownIcon,
     UpIcon,
     RightIcon,
-    SearchIcon
+    SearchIcon,
+    VerifyIcon,
+    SpinnerIcon
 };

@@ -1,134 +1,254 @@
-import React, { Fragment } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 
-import './header.css';
+import "./header.css";
 
-import { Logo } from './components/logo';
-import { User } from './models/user';
+import { Logo } from "./components/logo";
+import { WithSeparator } from "./components/with-separator";
+import { useAuth } from "./auth-context";
+import { useTranslation } from "react-i18next";
 
-
-interface HeaderProps {
-    user: User;
-    animateLogo: boolean;
+interface MenuLink {
+  to: string;
+  text: string;
+  external?: boolean;
+  disabled?: boolean;
+  note?: string;
 }
 
-interface HeaderState {
-    collapseMenu: boolean;
+function getCurrentMenuLinks(username: string): MenuLink[][] {
+  return [
+    [
+      {
+        to: "/view/categories",
+        text: "View Maps",
+      },
+      {
+        to: "/edit/categories",
+        text: "Edit Maps",
+      },
+      {
+        to: "/data-extracts.html",
+        text: "Download data",
+      },
+      {
+        to: "https://github.com/colouring-london/colouring-london",
+        text: "Access open code",
+        external: true,
+      },
+      {
+        to: "/showcase.html",
+        text: "View Data Showcase",
+        disabled: true,
+        note: "Coming soon",
+      },
+    ],
+    [
+      {
+        to: "https://pages.colouring.london",
+        text: "About",
+        external: true,
+      },
+      {
+        to: "https://pages.colouring.london/buildingcategories",
+        text: "Data Categories",
+        external: true,
+      },
+      {
+        to: "https://pages.colouring.london/whoisinvolved",
+        text: "Who's Involved?",
+        external: true,
+      },
+      {
+        to: "https://pages.colouring.london/data-ethics",
+        text: "Data Ethics",
+        external: true,
+      },
+      {
+        to: "https://pages.colouring.london/colouring-cities",
+        text: "Colouring Cities Research Programme",
+        external: true,
+      },
+    ],
+    [
+      {
+        to: "/leaderboard.html",
+        text: "Top Contributors",
+      },
+      {
+        to: "https://discuss.colouring.london",
+        text: "Discussion Forum",
+        external: true,
+      },
+    ],
+    [
+      {
+        to: "/privacy-policy.html",
+        text: "Privacy Policy",
+      },
+      {
+        to: "/contributor-agreement.html",
+        text: "Contributor Agreement",
+      },
+      {
+        to: "/code-of-conduct.html",
+        text: "Code of Conduct",
+      },
+      {
+        to: "/data-accuracy.html",
+        text: "Data Accuracy Agreement",
+      },
+      // {
+      //     to: "/ordnance-survey-uprn.html",
+      //     text: "Ordnance Survey terms of UPRN usage"
+      // },
+    ],
+    [
+      {
+        to: "/contact.html",
+        text: "Contact",
+      },
+      ...(username != undefined
+        ? [
+            {
+              to: "/my-account.html",
+              text: `Account (${username})`,
+            },
+          ]
+        : [
+            {
+              to: "/login.html",
+              text: "Log in",
+            },
+            {
+              to: "/sign-up.html",
+              text: "Sign up",
+            },
+          ]),
+    ],
+  ];
 }
 
-/**
- * Render the main header using a responsive design
- */
-class Header extends React.Component<HeaderProps, HeaderState> {
-    constructor(props) {
-        super(props);
-        this.state = {collapseMenu: true};
-        this.handleClick = this.handleClick.bind(this);
-        this.handleNavigate = this.handleNavigate.bind(this);
-    }
+const Menu: React.FC<{ onNavigate: () => void }> = ({ onNavigate }) => {
+  const { user } = useAuth();
 
-    handleClick() {
-        this.setState(state => ({
-            collapseMenu: !state.collapseMenu
-        }));
-    }
+  const menuLinkSections = getCurrentMenuLinks(user?.username);
+  return (
+    <WithSeparator separator={<hr />}>
+      {menuLinkSections.map((section, idx) => (
+        <ul key={`menu-section-${idx}`} className="navbar-nav flex-container">
+          {section.map((item) => (
+            <li className="nav-item" key={`${item.to}-${item.text}`}>
+              {item.disabled ? (
+                <LinkStub note={item.note}>{item.text}</LinkStub>
+              ) : item.external ? (
+                <ExternalNavLink to={item.to}>{item.text}</ExternalNavLink>
+              ) : (
+                <InternalNavLink to={item.to} onClick={onNavigate}>
+                  {item.text}
+                </InternalNavLink>
+              )}
+            </li>
+          ))}
+        </ul>
+      ))}
+    </WithSeparator>
+  );
+};
 
-    handleNavigate() {
-        this.setState({
-            collapseMenu: true
-        });
-    }
+const InternalNavLink: React.FC<{ to: string; onClick: () => void }> = ({
+  to,
+  onClick,
+  children,
+}) => (
+  <NavLink className="nav-link" to={to} onClick={onClick}>
+    {children}
+  </NavLink>
+);
 
-    render() {
-        return (
-            <header className="main-header">
-                <nav className="navbar navbar-light navbar-expand-lg">
-                    <span className="navbar-brand align-self-start">
-                        <NavLink to="/">
-                            <Logo variant={this.props.animateLogo ? 'animated' : 'default'}/>
-                        </NavLink>
-                    </span>
-                    <button className="navbar-toggler navbar-toggler-right" type="button"
-                        onClick={this.handleClick} aria-expanded={!this.state.collapseMenu} aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
-                    <div className={this.state.collapseMenu ? 'collapse navbar-collapse' : 'navbar-collapse'}>
-                        <ul className="navbar-nav ml-auto">
-                            <li className="nav-item">
-                                <NavLink to="/view/categories" className="nav-link" onClick={this.handleNavigate}>
-                                    View/Edit Maps
-                                </NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="https://pages.colouring.athens">
-                                    About
-                                </a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="https://pages.colouring.athens/buildingcategories">
-                                    Data Categories
-                                </a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="https://pages.colouring.athens/whoisinvolved">
-                                    Who&rsquo;s Involved?
-                                </a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="https://pages.colouring.athens/data-ethics">
-                                    Data Ethics
-                                </a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="https://discuss.colouring.athens">
-                                    Discuss
-                                </a>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink to="/data-extracts.html" className="nav-link" onClick={this.handleNavigate}>
-                                    Downloads
-                                </NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink to="/leaderboard.html" className="nav-link" onClick={this.handleNavigate}>
-                                    Leaderboard
-                                </NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink to="/contact.html" className="nav-link" onClick={this.handleNavigate}>
-                                    Contact
-                                </NavLink>
-                            </li>
-                            {
-                                this.props.user?
-                                    (
-                                        <li className="nav-item">
-                                            <NavLink to="/my-account.html" className="nav-link" onClick={this.handleNavigate}>
-                                                Account <span className="shorten-username">({this.props.user.username})</span>
-                                            </NavLink>
-                                        </li>
-                                    ):
-                                    (
-                                        <Fragment>
-                                            <li className="nav-item">
-                                                <NavLink to="/login.html" className="nav-link" onClick={this.handleNavigate}>
-                                                    Log in
-                                                </NavLink>
-                                            </li>
-                                            <li className="nav-item">
-                                                <NavLink to="/sign-up.html" className="nav-link" onClick={this.handleNavigate}>
-                                                    Sign up
-                                                </NavLink>
-                                            </li>
-                                        </Fragment>
-                                    )
-                            }
-                        </ul>
-                    </div>
-                </nav>
-            </header>
-        );
-    }
+const ExternalNavLink: React.FC<{ to: string }> = ({ to, children }) => (
+  <a className="nav-link" href={to}>
+    {children}
+  </a>
+);
+
+const LinkStub: React.FC<{ note: string }> = ({ note, children }) => (
+  <a className="nav-link disabled">
+    {children}
+    <span className="link-note">{note}</span>
+  </a>
+);
+
+let ls;
+
+if (typeof window !== 'undefined') {
+  ls = window.localStorage;
+}
+else {
+  ls = {
+    i18nextLng : 'gr'
+  }
 }
 
-export default Header;
+
+export const Header: React.FC<{
+  animateLogo: boolean;
+}> = ({ animateLogo }) => {
+  const [collapseMenu, setCollapseMenu] = useState(true);
+
+  const toggleCollapse = () => setCollapseMenu(!collapseMenu);
+  const handleNavigate = () => setCollapseMenu(true);
+
+  const { i18n } = useTranslation();
+
+  const lngs = {
+    en: { nativeName: "EN" },
+    gr: { nativeName: "GR" },
+  };
+
+  // console.log(i18n.language);
+
+    return (
+      <header className="main-header navbar navbar-light">
+        <div className="nav-header">
+          <NavLink to="/">
+            <Logo variant={animateLogo ? "animated" : "default"} />
+          </NavLink>
+          <select
+            className="custom-select"
+            style={{ width: 64 }}
+            onChange={(e) => i18n.changeLanguage(e.target.value)}
+            value={i18n.language || ls.i18nextLng || ""}
+            // defaultValue={i18n.language || window.localStorage.i18nextLng || '' }
+          >
+            {Object.keys(lngs).map((lng) => (
+              <option value={lng} key={lng}>
+                {lngs[lng].nativeName}
+              </option>
+            ))}
+          </select>
+          <button
+            className="navbar-toggler"
+            type="button"
+            onClick={toggleCollapse}
+            aria-expanded={!collapseMenu}
+            aria-label="Toggle navigation"
+          >
+            Menu&nbsp;
+            {collapseMenu ? (
+              <span className="navbar-toggler-icon"></span>
+            ) : (
+              <span className="close">&times;</span>
+            )}
+          </button>
+        </div>
+        <nav
+          className={
+            collapseMenu ? "collapse navbar-collapse" : "navbar-collapse"
+          }
+        >
+          <Menu onNavigate={handleNavigate}></Menu>
+        </nav>
+      </header>
+    );
+};

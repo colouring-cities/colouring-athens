@@ -12,20 +12,16 @@ ALTER TABLE buildings DROP COLUMN IF EXISTS location_longitude;
 
 -- Drop date fields
 
-ALTER TABLE buildings DROP COLUMN IF EXISTS date_year;
-ALTER TABLE buildings DROP COLUMN IF EXISTS date_lower;
-ALTER TABLE buildings DROP COLUMN IF EXISTS date_upper;
+ALTER TABLE buildings DROP COLUMN IF EXISTS year_built;
+ALTER TABLE buildings DROP COLUMN IF EXISTS reconstruction_year;
 ALTER TABLE buildings DROP COLUMN IF EXISTS date_source;
-
-ALTER TABLE buildings DROP COLUMN IF EXISTS facade_year;
-ALTER TABLE buildings DROP COLUMN IF EXISTS facade_upper;
-ALTER TABLE buildings DROP COLUMN IF EXISTS facade_lower;
-ALTER TABLE buildings DROP COLUMN IF EXISTS facade_source;
+ALTER TABLE buildings DROP COLUMN IF EXISTS date_source_detail;
 
 -- Drop size fields
-ALTER TABLE buildings DROP COLUMN IF EXISTS size_storeys_attic;
 ALTER TABLE buildings DROP COLUMN IF EXISTS size_storeys_core;
 ALTER TABLE buildings DROP COLUMN IF EXISTS size_storeys_basement;
+ALTER TABLE buildings DROP COLUMN IF EXISTS pilotis;
+ALTER TABLE buildings DROP COLUMN IF EXISTS high_ground_floor;
 
 ALTER TABLE buildings DROP COLUMN IF EXISTS size_height_apex;
 ALTER TABLE buildings DROP COLUMN IF EXISTS size_floor_area_ground;

@@ -2,9 +2,10 @@ import express from 'express';
 
 import { ApiUserError } from '../errors/api';
 import { UserError } from '../errors/general';
+import { parseBooleanExact } from '../../helpers';
 import { parsePositiveIntParam, processParam } from '../parameters';
 import asyncController from '../routes/asyncController';
-import * as buildingService from '../services/building';
+import * as buildingService from '../services/building/base';
 import * as userService from '../services/user';
 
 
@@ -15,7 +16,7 @@ import * as userService from '../services/user';
 const getBuildingsByLocation = asyncController(async (req: express.Request, res: express.Response) => {
     const { lng, lat } = req.query;
     try {
-        const result = await buildingService.queryBuildingsAtPoint(lng, lat);
+        const result = await buildingService.queryBuildingsAtPoint(Number(lng), Number(lat));
         res.send(result);
     } catch (error) {
         console.error(error);
@@ -27,7 +28,7 @@ const getBuildingsByLocation = asyncController(async (req: express.Request, res:
 const getBuildingsByReference = asyncController(async (req: express.Request, res: express.Response) => {
     const { key, id } = req.query;
     try {
-        const result = await buildingService.queryBuildingsByReference(key, id);
+        const result = await buildingService.queryBuildingsByReference(String(key), String(id));
         res.send(result);
     } catch (error) {
         console.error(error);
@@ -35,12 +36,22 @@ const getBuildingsByReference = asyncController(async (req: express.Request, res
     }
 });
 
-// GET individual building, POST building updates
+// GET individual building
 const getBuildingById = asyncController(async (req: express.Request, res: express.Response) => {
     const buildingId = processParam(req.params, 'building_id', parsePositiveIntParam, true);
 
+    const returnUserAttributes = parseBooleanExact(String(req.query.user_attributes));
+
+    let userDataOptions = null;
+    if(returnUserAttributes) {
+        if(!req.session.user_id) {
+            return res.send({ error: 'Must be logged in' });
+        }
+        userDataOptions = { userId: req.session.user_id, userAttributes: true};
+    }
+
     try {
-        const result = await buildingService.getBuildingById(buildingId);
+        const result = await buildingService.getBuildingById(buildingId, { userDataOptions });
         res.send(result);
     } catch(error) {
         console.error(error);
@@ -48,75 +59,80 @@ const getBuildingById = asyncController(async (req: express.Request, res: expres
     }
 });
 
+// POST building attribute updates
 const updateBuildingById = asyncController(async (req: express.Request, res: express.Response) => {
-    if (req.session.user_id) {
-        await updateBuilding(req, res, req.session.user_id);
-    } else if (req.query.api_key) {
-        try {
-            const user = await userService.authAPIUser(req.query.api_key);
-            await updateBuilding(req, res, user.user_id);
-        } catch(err) {
-            console.error(err);
-            res.send({ error: 'Must be logged in' });
-        }
-    } else {
-        res.send({ error: 'Must be logged in' });
+    let userId: string;
+    
+    try {
+        userId = req.session.user_id ?? (
+            req.query.api_key && await userService.authAPIUser(String(req.query.api_key))
+        );
+    } catch(error) {
+        console.error(error);
     }
-});
 
-async function updateBuilding(req: express.Request, res: express.Response, userId: string) {
+    if(!userId) {
+        return res.send({ error: 'Must be logged in' });
+    }
+
     const buildingId = processParam(req.params, 'building_id', parsePositiveIntParam, true);
 
-    const buildingUpdate = req.body;
+    const {
+        attributes = null,
+        user_attributes: userAttributes = null
+    } = req.body;
 
-    let updatedBuilding: object;
     try {
-        updatedBuilding = await buildingService.saveBuilding(buildingId, buildingUpdate, userId);
+        const resultUpdate = await buildingService.editBuilding(buildingId, userId, {attributes, userAttributes});
+        
+        res.send({
+            attributes: resultUpdate.attributes,
+            user_attributes: resultUpdate.userAttributes,
+            revision_id: resultUpdate.revisionId
+        });
     } catch(error) {
         if(error instanceof UserError) {
             throw new ApiUserError(error.message, error);
         }
         throw error;
     }
+});
 
-    res.send(updatedBuilding);
-}
 
 // GET building UPRNs
-const getBuildingUPRNsById = asyncController(async (req: express.Request, res: express.Response) => {
+// const getBuildingUPRNsById = asyncController(async (req: express.Request, res: express.Response) => {
+//     const buildingId = processParam(req.params, 'building_id', parsePositiveIntParam, true);
+
+//     try {
+//         const result = await buildingService.getBuildingUPRNsById(buildingId);
+
+//         if (typeof (result) === 'undefined') {
+//             return res.send({ error: 'Database error' });
+//         }
+//         res.send({uprns: result});
+//     } catch(error) {
+//         console.error(error);
+//         res.send({ error: 'Database error' });
+//     }
+// });
+
+const getBuildingUserAttributesById = asyncController(async (req: express.Request, res: express.Response) => {
+    if(!req.session.user_id) {
+        return res.send({ error: 'Must be logged in'});
+    }
+
     const buildingId = processParam(req.params, 'building_id', parsePositiveIntParam, true);
 
     try {
-        const result = await buildingService.getBuildingUPRNsById(buildingId);
+        const userAttributes = await buildingService.getBuildingUserAttributesById(buildingId, req.session.user_id);
 
-        if (typeof (result) === 'undefined') {
-            return res.send({ error: 'Database error' });
-        }
-        res.send({uprns: result});
+        res.send(userAttributes);
     } catch(error) {
-        console.error(error);
-        res.send({ error: 'Database error' });
+        res.send({ error: 'Database error'});
     }
 });
 
-// GET/POST like building
-const getBuildingLikeById = asyncController(async (req: express.Request, res: express.Response) => {
-    if (!req.session.user_id) {
-        return res.send({ like: false });  // not logged in, so cannot have liked
-    }
-
-    const buildingId = processParam(req.params, 'building_id', parsePositiveIntParam, true);
-    
-    try {
-        const like = await buildingService.getBuildingLikeById(buildingId, req.session.user_id);
-
-        // any value returned means like
-        res.send({ like: like });
-    } catch(error) {
-        res.send({ error: 'Database error' });
-    }
-});
-
+// GET building edit history
 const getBuildingEditHistoryById = asyncController(async (req: express.Request, res: express.Response) => {
     const buildingId = processParam(req.params, 'building_id', parsePositiveIntParam, true);
 
@@ -129,30 +145,48 @@ const getBuildingEditHistoryById = asyncController(async (req: express.Request, 
     }
 });
 
-const updateBuildingLikeById = asyncController(async (req: express.Request, res: express.Response) => {
+// GET building attributes (and values) as verified by user
+const getUserVerifiedAttributes = asyncController(async (req: express.Request, res: express.Response) => {
+    if (!req.session.user_id) {
+        return res.send({error: "Not logged in"}); // not logged in, so send empty object as no attributes verified
+    }
+
+    const buildingId = processParam(req.params, 'building_id', parsePositiveIntParam, true);
+
+    try {
+        const verifiedAttributes = await buildingService.getUserVerifiedAttributes(buildingId, req.session.user_id);
+        res.send(verifiedAttributes);
+    } catch (error) {
+        if(error instanceof UserError) {
+            throw new ApiUserError(error.message, error);
+        }
+
+        throw error;
+    }
+});
+
+// POST update to verify building attribute
+const verifyBuildingAttributes = asyncController(async (req: express.Request, res: express.Response) => {
     if (!req.session.user_id) {
         return res.send({ error: 'Must be logged in' });
     }
 
     const buildingId = processParam(req.params, 'building_id', parsePositiveIntParam, true);
-    const { like } = req.body;
+    const verifiedAttributes = req.body;
 
-    let updatedBuilding: object;
     try {
-        updatedBuilding = like ?
-            await buildingService.likeBuilding(buildingId, req.session.user_id) :
-            await buildingService.unlikeBuilding(buildingId, req.session.user_id);
-    } catch(error) {
+        const success = await buildingService.verifyBuildingAttributes(buildingId, req.session.user_id, verifiedAttributes);
+        res.send(success);
+    } catch (error) {
         if(error instanceof UserError) {
             throw new ApiUserError(error.message, error);
         }
-        
-        throw error;
-    }
 
-    res.send(updatedBuilding);
+        throw error;
+    }    
 });
 
+// GET latest revision id of any building
 const getLatestRevisionId = asyncController(async (req: express.Request, res: express.Response) => {
     try {
         const revisionId = await buildingService.getLatestRevisionId();
@@ -167,9 +201,10 @@ export default {
     getBuildingsByReference,
     getBuildingById,
     updateBuildingById,
-    getBuildingUPRNsById,
-    getBuildingLikeById,
-    updateBuildingLikeById,
+    // getBuildingUPRNsById,
+    getUserVerifiedAttributes,
+    verifyBuildingAttributes,
     getBuildingEditHistoryById,
-    getLatestRevisionId
+    getLatestRevisionId,
+    getBuildingUserAttributesById
 };
