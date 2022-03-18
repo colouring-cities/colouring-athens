@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 
 interface SelectOption {
     value: number;
-    label: string;
+    label?: string;
   }
 
 interface BaseDataEntryUseProps {
@@ -46,6 +46,7 @@ const DataEntryUse: React.FC<DataEntryUseProps> = (props) => {
     }, [props.slug, i18n.language]);
   
     if (options == undefined) return null;
+    
     return (
         <Fragment>
             <DataTitleCopyable

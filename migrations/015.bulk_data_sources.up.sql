@@ -93,106 +93,106 @@ CREATE TABLE IF NOT EXISTS reference_tables.ownership_classifications (
 INSERT INTO reference_tables.landuse_classifications
 (description_en, description_gr)
 VALUES
-('House', 'Κατοικία'),
-('Βιοτεχνία, επαγγελματικά εργαστήρια, συνεργείο','Βιοτεχνία, επαγγελματικά εργαστήρια, συνεργείο'),
-('Βιομηχανία','Βιομηχανία'),
-('Χονδρεμπόριο, αποθήκες','Χονδρεμπόριο, αποθήκες'),
-('Λιανικό εμπόριο','Λιανικό εμπόριο'),
-('Εστίαση, αναψυχή','Εστίαση, αναψυχή'),
-('Αθλητισμός','Αθλητισμός'),
-('Προσωπικές υπηρεσίες','Προσωπικές υπηρεσίες'),
-('Διοίκηση, γραφεία, υπηρεσίες','Διοίκηση, γραφεία, υπηρεσίες'),
-('Εκπαίδευση','Εκπαίδευση'),
-('Περίθαλψη, υγεία, πρόνοια','Περίθαλψη, υγεία, πρόνοια'),
-('Πολιτισμός, σύλλογοι','Πολιτισμός, σύλλογοι'),
-('Υπό ανέγερση','Υπό ανέγερση'),
-('Χωρίς χρήση','Χωρίς χρήση'),
-('Λοιπές χρήσεις','Λοιπές χρήσεις'),
-('Στάθμευση','Στάθμευση'),
-('Εκκλησία, θρησκευτικοί χώροι','Εκκλησία, θρησκευτικοί χώροι'),
-('Μεταφορές','Μεταφορές'),
-('Εγκαταστάσεις υποδομών (ύδρευση, ενέργεια, επικοινωνίες)','Εγκαταστάσεις υποδομών (ύδρευση, ενέργεια, επικοινωνίες)');
+('Residential', 'Κατοικία'),
+('Small industries & Workshops','Βιοτεχνία, Εργαστήρια & Συνεργεία'),
+('Industry','Βιομηχανία'),
+('Wholesale & Warehouses','Χονδρεμπόριο & Αποθήκες'),
+('Retail','Λιανικό εμπόριο'),
+('Catering & Leisure','Εστίαση & Αναψυχή'),
+('Sports','Αθλητισμός'),
+('Personal services','Προσωπικές υπηρεσίες'),
+('Administration, Offices & Services','Διοίκηση, Γραφεία & Υπηρεσίες'),
+('Education','Εκπαίδευση'),
+('Health & Welfare','Υγεία & Πρόνοια'),
+('Culture','Πολιτισμός'),
+('Under construction','Υπό ανέγερση'),
+('Unused','Χωρίς χρήση'),
+('Parking','Στάθμευση'),
+('Church & Worship spaces','Εκκλησία & Χώροι λατρείας'),
+('Transportation','Μεταφορές'),
+('Infrastructure facilities','Εγκαταστάσεις υποδομών'),
+('Other','Λοιπές χρήσεις'),
+('Mixed use','Μικτή χρήση');
 
 
 INSERT INTO reference_tables.type_classifications
 (description_en, description_gr)
 VALUES
-('Μονοκατοικία', 'Μονοκατοικία'),
-('Διπλοκατοικία', 'Διπλοκατοικία'),
-('Πολυκατοικία','Πολυκατοικία'),
-('Κτίριο γραφείων','Κτίριο γραφείων'),
-('Εμπορικό ακίνητο','Εμπορικό ακίνητο'),
-('Άλλο','Άλλο');
+('Single-family home', 'Μονοκατοικία'),
+('Duplex', 'Διπλοκατοικία'),
+('Apartment building','Πολυκατοικία'),
+('Office building','Κτίριο γραφείων'),
+('Commercial building','Εμπορικό ακίνητο'),
+('Other','Άλλο');
 
 
 INSERT INTO reference_tables.side_distances_classifications
 (description_en, description_gr)
 VALUES
-('Σε απόσταση από όλα τα πλαϊνά γειτονικά κτίρια', 'Σε απόσταση από όλα τα πλαϊνά γειτονικά κτίρια'),
-('Σε επαφή με τα πλαϊνά γειτονικά κτίρια', 'Σε επαφή με τα πλαϊνά γειτονικά κτίρια'),
-('Σε επαφή με κάποια και σε απόσταση από άλλα πλαϊνά γειτονικά κτίρια','Σε επαφή με κάποια και σε απόσταση από άλλα πλαϊνά γειτονικά κτίρια');
+('Detached from all side neighboring buildings','Σε απόσταση από όλα τα πλαϊνά γειτονικά κτίρια'),
+('Attached to all side neighboring buildings','Σε επαφή με τα πλαϊνά γειτονικά κτίρια'),
+('Attached to some and detached from others side neighboring buildings','Σε επαφή με κάποια και σε απόσταση από άλλα πλαϊνά γειτονικά κτίρια');
 
 
 INSERT INTO reference_tables.year_built_classifications
 (description_en, description_gr)
 VALUES
-('Προ 1920', 'Προ 1920'),
+('Before 1920', 'Προ 1920'),
 ('1920-1955', '1920-1955'),
 ('1955-1985','1955-1985'),
 ('1985-2010','1985-2010'),
-('Μετά το 2010','Μετά το 2010');
+('After 2010','Μετά το 2010');
 
 
 INSERT INTO reference_tables.date_source
 (description_en, description_gr)
 VALUES
-('Γνώση/γνωμάτευση ειδικού για το κτίριο', 'Γνώση/γνωμάτευση ειδικού για το κτίριο'),
-('Ιστορικό έγγραφο', 'Ιστορικό έγγραφο'),
-('Ιστορικός χάρτης','Ιστορικός χάρτης'),
-('Άλλο έγγραφο/δημοσίευση','Άλλο έγγραφο/δημοσίευση'),
-('Διαδικτυακή βάση δεδομένων','Διαδικτυακή βάση δεδομένων'),
-('Ταινία/βίντεο','Ταινία/βίντεο'),
-('Άλλη ιστοσελίδα','Άλλη ιστοσελίδα'),
-('Άλλο','Άλλο');
+('Expert estimate/knowledge of building', 'Γνώση/γνωμάτευση ειδικού για το κτίριο'),
+('Historical document', 'Ιστορικό έγγραφο'),
+('Historical map','Ιστορικός χάρτης'),
+('Other document/publication','Άλλο έγγραφο/δημοσίευση'),
+('Online database','Διαδικτυακή βάση δεδομένων'),
+('Film/video','Ταινία/βίντεο'),
+('Other website','Άλλη ιστοσελίδα'),
+('Other','Άλλο');
 
 
 INSERT INTO reference_tables.construction_material_classifications
 (description_en, description_gr)
 VALUES
-('Οπλισμένο σκυρόδεμα', 'Οπλισμένο σκυρόδεμα'),
-('Λιθόκτιστο', 'Λιθόκτιστο'),
-('Πλινθόκτιστο','Πλινθόκτιστο'),
-('Μεταλλική κατασκευή','Μεταλλική κατασκευή'),
-('Ξύλινη κατασκευή','Ξύλινη κατασκευή'),
-('Σύμμικτη κατασκευή','Σύμμικτη κατασκευή');
+('Reinforced concrete', 'Οπλισμένο σκυρόδεμα'),
+('Stone', 'Λιθόκτιστο'),
+('Brick','Πλινθόκτιστο'),
+('Metal structure','Μεταλλική κατασκευή'),
+('Wood','Ξύλινη κατασκευή'),
+('Mixed','Σύμμικτη κατασκευή');
 
 
 INSERT INTO reference_tables.roof_classifications
 (description_en, description_gr)
 VALUES
-('Οριζόντιο δώμα', 'Οριζόντιο δώμα'),
-('Κεκλιμένη στέγη', 'Κεκλιμένη στέγη');
+('Flat roof', 'Οριζόντιο δώμα'),
+('Sloping roof', 'Κεκλιμένη στέγη');
 
 
 INSERT INTO reference_tables.cover_material_classifications
 (description_en, description_gr)
 VALUES
-('Σοβάς ανοιχτού χρώματος', 'Σοβάς ανοιχτού χρώματος'),
-('Σοβάς σκούρου χρώματος', 'Σοβάς σκούρου χρώματος'),
-('Υαλοπέτασμα ή άλλη ανακλαστική επιφάνεια','Υαλοπέτασμα ή άλλη ανακλαστική επιφάνεια'),
-('Μεταλλικό πανέλο','Μεταλλικό πανέλο'),
-('Πέτρα','Πέτρα'),
-('Πράσινη φυτεμένη όψη','Πράσινη φυτεμένη όψη'),
-('Άλλο','Άλλο');
-
+('Light-coloured plaster', 'Σοβάς ανοιχτού χρώματος'),
+('Dark-coloured plaster', 'Σοβάς σκούρου χρώματος'),
+('Glass curtain or other reflective surface','Υαλοπέτασμα ή άλλη ανακλαστική επιφάνεια'),
+('Metal panel','Μεταλλικό πανέλο'),
+('Stone','Πέτρα'),
+('Green planted facade','Πράσινη φυτεμένη όψη'),
+('Other','Άλλο');
 
 INSERT INTO reference_tables.noise_level_classifications
 (description_en, description_gr)
 VALUES
-('Χαμηλό', 'Χαμηλό'),
-('Μέτριο', 'Μέτριο'),
-('Υψηλό','Υψηλό'),
-('Πολύ υψηλό','Πολύ υψηλό');
+('Low', 'Χαμηλό'),
+('Moderate', 'Μέτριο'),
+('High','Υψηλό'),
+('Too high','Πολύ υψηλό');
 
 
 INSERT INTO reference_tables.fek_issue
@@ -208,32 +208,32 @@ VALUES
 INSERT INTO reference_tables.preservation_designation_classifications
 (description_en, description_gr)
 VALUES
-('Διατηρητέο κτίριο ή διατηρητέο τμήμα κτιρίου', 'Διατηρητέο κτίριο ή διατηρητέο τμήμα κτιρίου'),
-('Διατηρητέα χρήση, όνομα ή επωνυμία κτιρίου', 'Διατηρητέα χρήση, όνομα ή επωνυμία κτιρίου'),
-('Διατηρητέο συγκρότημα κτιρίων','Διατηρητέο συγκρότημα κτιρίων');
-
+('Listed building or listed part of a building', 'Διατηρητέο κτίριο ή διατηρητέο τμήμα κτιρίου'),
+('Listed use or name of building', 'Διατηρητέα χρήση, όνομα ή επωνυμία κτιρίου'),
+('Listed building complex','Διατηρητέο συγκρότημα κτιρίων');
 
 INSERT INTO reference_tables.monument_designation_classifications
 (description_en, description_gr)
 VALUES
-('Αρχαίο μνημείο', 'Αρχαίο μνημείο'),
-('Νεότερο μνημείο προγενέστερο των εκάστοτε τελευταίων εκατό ετών', 'Νεότερο μνημείο προγενέστερο των εκάστοτε τελευταίων εκατό ετών'),
-('Νεότερο μνημείο μεταγενέστερο των εκάστοτε τελευταίων εκατό ετών','Νεότερο μνημείο μεταγενέστερο των εκάστοτε τελευταίων εκατό ετών');
+('Ancient monument', 'Αρχαίο μνημείο'),
+('Newer monument built before the last hundred years', 'Νεότερο μνημείο προγενέστερο των εκάστοτε τελευταίων εκατό ετών'),
+('Newer monument built within the last hundred years','Νεότερο μνημείο μεταγενέστερο των εκάστοτε τελευταίων εκατό ετών');
 
 
 INSERT INTO reference_tables.building_state_classifications
 (description_en, description_gr)
 VALUES
-('Καλή', 'Καλή'),
-('Μέτρια', 'Μέτρια'),
-('Κακή','Κακή'),
-('Ερείπιο','Ερείπιο');
+('Good', 'Καλή'),
+('Moderate', 'Μέτρια'),
+('Bad','Κακή'),
+('Ruin','Ερείπιο');
 
 
 INSERT INTO reference_tables.ownership_classifications
 (description_en, description_gr)
 VALUES
-('Δημόσιο', 'Δημόσιο'),
-('Ο.Τ.Α.', 'Ο.Τ.Α.'),
-('Κοινωφελής φορέας','Κοινωφελής φορέας'),
-('Ιδιώτης','Ιδιώτης');
+('Owned by central government', 'Ιδιοκτησίας δημοσίου'),
+('Owned by local government', 'Ιδιοκτησίας Ο.Τ.Α.'),
+('Owned by nonprofit body','Ιδιοκτησίας μη κερδοσκοπικού φορέα'),
+('Private ownership','Ιδιωτικό');
+

@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS building_properties (
     -- Parent should reference UPRN, but assume dataset may be (initially) incomplete
     --parent_uprn bigint,
     -- Building ID may be null for failed matches
-    building_id integer REFERENCES buildings,
+    building_id integer REFERENCES buildings
     -- TOID match provided by AddressBase
     --toid varchar,
     -- Geometry (for verification if loaded, not for public access)
