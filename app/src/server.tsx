@@ -35,7 +35,7 @@ const sess: any = { // TODO: remove any
     resave: false,
     cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days
 };
-if (server.get('env') === 'production') {
+if (server.get('env') === 'production') { 
     // trust first proxy
     server.set('trust proxy', 1);
     // serve secure cookies

@@ -4,7 +4,7 @@ import './supporter-logos.css';
 
 const SupporterLogos = () => (
     <Fragment>
-        <h2 className="h3">Lead Organisation and Project Partners</h2>
+        {/* <h2 className="h3">Lead Organisation and Project Partners</h2>
         <ul className="logo-list">
             <li>
                 <a href="https://www.ucl.ac.uk/bartlett/casa/">
@@ -36,7 +36,7 @@ const SupporterLogos = () => (
                         alt="Supported by the Mayor of London" />
                 </a>
             </li>
-        </ul>
+        </ul> */}
     </Fragment>
 );
 

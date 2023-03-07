@@ -162,7 +162,7 @@ async function getBuildingLikeById(buildingId: number, userId: string) {
 
 async function saveBuilding(buildingId: number, building: any, userId: string): Promise<object> { // TODO add proper building type
     return await updateBuildingData(buildingId, userId, async () => {
-        const processedBuilding = await processBuildingUpdate(buildingId, building);
+        const processedBuilding: any = await processBuildingUpdate(buildingId, building);
         
         // remove read-only fields from consideration
         delete processedBuilding.building_id;
@@ -241,7 +241,6 @@ async function updateBuildingData(
 
         const oldBuilding = await buildingDataAccess.getBuildingData(buildingId, true, t);
 
-        console.log(update);
         const patches = compare(oldBuilding, update);
         console.log('Patching', buildingId, patches);
         const [forward, reverse] = patches;
@@ -309,14 +308,19 @@ const BUILDING_FIELD_WHITELIST = new Set([
 
     'size_storeys_core',
     'size_storeys_basement',
+    'size_height_apex',
+
+    'size_floor_area_ground',
+    'size_floor_area_total',
+    'size_width_frontage',
+
     'pilotis' ,
     'high_ground_floor',
-
-
+    
     'construction_core_material',
     'construction_roof_covering',
-    'construction_front_cover_materials',
-    'construction_side_cover_materials',
+    'construction_front_cover_material',
+    'construction_side_cover_material',
 
     'has_sidewalk',
     'sidewalk_width',
@@ -331,16 +335,38 @@ const BUILDING_FIELD_WHITELIST = new Set([
     'has_egkarsia_stoa',
 
     'inside_protected_area',
+     'name_of_protected_area',
+     'fek_issue_protected',
+     'fek_number_protected',
+     'fek_date_protected',
+
     'inside_archaelogical_area',
+    'name_of_archaelogical_area',
+    'fek_issue_archaelogical',
+    'fek_number_archaelogical',
+    'fek_date_archaelogical',
+
     'inside_energy_area',
-    'officially_protected',
+    'name_of_energy_area',
+    'fek_issue_energy',
+    'fek_number_energy',
+    'fek_date_energy',
+    // 'officially_protected',
+
     'officially_preserved',
     'preservation_designation',
+    'name_of_officially_preserved_building',
+    'fek_issue_officially_preserved',
+    'fek_number_officially_preserved',
+    'fek_date_officially_preserved',
+
     'officially_monument',
     'monument_designation',
-    'fek_issue',
-    'fek_number',
-    'fek_date',
+    'name_of_officially_monument_building',
+    'fek_issue_officially_monument',
+    'fek_number_officially_monument',
+    'fek_date_officially_monument',
+
 
     'has_photovoltaic_panels',
     'building_state',

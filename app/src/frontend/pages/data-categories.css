@@ -1,0 +1,66 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  gap: 16px;
+  margin: 16px 0px 16px 0px;
+}
+.grid-item {
+  /* background-color: rgba(255, 255, 255, 0.8); */
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  text-align: center;
+}
+
+.grid-item-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.grid-item-subtitle {
+  font-size: 16px;
+}
+
+.grid-item-a {
+  background-color: rgba(247, 198, 37, 1);
+}
+.grid-item-b {
+  background-color: rgba(247, 236, 37, 1);
+}
+.grid-item-c {
+  background-color: rgba(247, 125, 17, 1);
+}
+.grid-item-d {
+  background-color: rgba(255, 97, 97, 1);
+}
+.grid-item-e {
+  background-color: rgba(242, 162, 185, 1);
+}
+.grid-item-f {
+  background-color: rgba(171, 143, 176, 1);
+}
+.grid-item-g {
+  background-color: rgba(113, 136, 153, 1);
+}
+.grid-item-h {
+  background-color: rgba(124, 191, 57, 1);
+}
+.grid-item-i {
+  background-color: rgba(87, 194, 142, 1);
+}
+.grid-item-j {
+  background-color: rgba(107, 177, 227, 1);
+}
+.grid-item-k {
+  background-color: rgba(170, 170, 170, 1);
+}
+.grid-item-l {
+  background-color: rgba(163, 145, 111, 1);
+}
+
+.bold-text {
+  font-weight: bold;
+}
+
+.data-categories-title {
+  width: 350px;
+}

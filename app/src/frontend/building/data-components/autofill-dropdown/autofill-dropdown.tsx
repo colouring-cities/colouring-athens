@@ -43,7 +43,6 @@ export const AutofillDropdown: React.FC<AutofillDropdownProps> =  props => {
             }
 
             const url = `/api/autofill?field_name=${props.fieldName}&${valueParam}`;
-            console.log(url)
             const { options: newOptions } = await apiGet(url);
 
             if (!props.editing) return;

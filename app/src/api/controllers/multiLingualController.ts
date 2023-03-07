@@ -7,9 +7,6 @@ const getMultiLingualOptions = asyncController(async (req, res) => {
     const language = processParam(req.query, 'language', x => x, true);
 
     const options = await multiLingualService.getMultiLingualOptions(fieldName, language);
-
-    console.log(options)
-
     res.send({ options: options });
 });
 
@@ -20,7 +17,6 @@ const getMultiLingualLabel = asyncController(async (req, res) => {
     const id = processParam(req.query, 'id', parsePositiveIntParam);
 
     const options = await multiLingualService.getMultiLingualLabel(fieldName, id, language);
-    console.log(options)
 
     res.send({ options: options });
 });

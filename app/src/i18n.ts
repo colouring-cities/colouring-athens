@@ -1,7 +1,8 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
-import LanguageDetector from 'i18next-browser-languagedetector';
+
+// import LanguageDetector from 'i18next-browser-languagedetector';
 
 // Importing translation files
 
@@ -28,14 +29,16 @@ const DETECTION_OPTIONS = {
 
 i18n
     // .use(Backend)
-    .use(LanguageDetector)
+    // .use(LanguageDetector)
     .use(initReactI18next)
     .init({
         resources,
+        react: { useSuspense: false },
         detection: DETECTION_OPTIONS,
-        // fallbackLng: 'en',
+        fallbackLng: 'en',
+        lng: typeof window !== "undefined" ?localStorage.getItem('language') || 'en' : 'en',
         // lng: "en", //default language
-        keySeparator: false,
+        // keySeparator: false,
         interpolation: {
             escapeValue: false,
         },

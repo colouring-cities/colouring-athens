@@ -11,7 +11,8 @@ import { DynamicsBuildingPane, DynamicsDataEntry } from './dynamics-data-entry';
 import { FieldRow } from '../../data-components/field-row';
 import NumericDataEntry from '../../data-components/numeric-data-entry';
 import withCopyEdit from '../../data-container';
-
+import { useTranslation } from "react-i18next";
+import i18next from "i18next";
 import { CategoryViewProps } from '../category-view-props';
 import { LogicalDataEntry } from '../../data-components/logical-data-entry/logical-data-entry';
 
@@ -21,28 +22,47 @@ import { LogicalDataEntry } from '../../data-components/logical-data-entry/logic
 const DynamicsView: React.FunctionComponent<CategoryViewProps> = (props) => {
     const building = props.building;
     const thisYear = (new Date()).getFullYear();
-    // const currentBuildingConstructionYear = building.date_year || undefined;
+    const currentBuildingConstructionYear = building.date_year || undefined;
 
     const ageLinkUrl = `/${props.mode}/${Category.Age}/${props.building.building_id}`;
 
+    const { t } = useTranslation();
+
+
+    let year_constructed_title = dataFields.demolished_buildings.items.year_constructed.title_en;
+    let year_demolished_title = dataFields.demolished_buildings.items.year_constructed.title_en;
+  
+    let dynamics_has_demolished_buildings_title = dataFields.dynamics_has_demolished_buildings.title_en;
+    
+  
+  
+  
+    if (i18next.language === "gr") {
+         year_constructed_title = dataFields.demolished_buildings.items.year_constructed.title_gr;
+         year_demolished_title = dataFields.demolished_buildings.items.year_constructed.title_gr;
+      
+         dynamics_has_demolished_buildings_title = dataFields.dynamics_has_demolished_buildings.title_gr;
+
+    }
+
     return (<>
-        <DataEntryGroup collapsed={false} name="Constructions and demolitions on this site" showCount={false}>
+        <DataEntryGroup collapsed={false} name={t("dynamics_info_a")} showCount={false}>
             <DynamicsBuildingPane>
-                <label>Current building (age data <Link to={ageLinkUrl}>editable here</Link>)</label>
+                <label>{t("dynamics_info_b")}<Link to={ageLinkUrl}>{t("dynamics_info_c")}</Link>)</label>
                 <FieldRow>
                     <div>
-                        {/* <NumericDataEntry
+                        <NumericDataEntry
                             slug=''
-                            title={dataFields.demolished_buildings.items.year_constructed.title}
+                            title={year_constructed_title}
                             value={currentBuildingConstructionYear}
                             disabled={true}
                             mode='view'
-                        /> */}
+                        />
                     </div>
                     <div>
                         <NumericDataEntry
                             slug=''
-                            title={dataFields.demolished_buildings.items.year_demolished.title}
+                            title={year_demolished_title}
                             value={undefined}
                             placeholder='---'
                             disabled={true}
@@ -50,24 +70,24 @@ const DynamicsView: React.FunctionComponent<CategoryViewProps> = (props) => {
                         />
                     </div>
                     <div style={{flex: '0 1 27%'}}>
-                        {/* <DataEntry
+                        <DataEntry
                             slug=''
-                            title='Lifespan to date'
+                            title={t("dynamics_info_d")}
                             value={ (thisYear - currentBuildingConstructionYear) + ''}
                             disabled={true}
                             mode='view'
-                        /> */}
+                        />
                     </div>
                 </FieldRow>
             </DynamicsBuildingPane>
             {
-                // currentBuildingConstructionYear == undefined ?
-                    // <InfoBox>To add historical records, fill in the <Link to={ageLinkUrl}>Age</Link> data first.</InfoBox> :
+                currentBuildingConstructionYear == undefined ?
+                    <InfoBox>{t("dynamics_info_e")}<Link to={ageLinkUrl}>{t("dynamics_info_f")}</Link>{t("dynamics_info_g")}</InfoBox> :
                     
                     <>
                         <LogicalDataEntry
                             slug='dynamics_has_demolished_buildings'
-                            title={dataFields.dynamics_has_demolished_buildings.title}
+                            title={dynamics_has_demolished_buildings_title}
                             value={building.dynamics_has_demolished_buildings}
                             disallowFalse={(building.demolished_buildings?.length ?? 0) > 0}
                             disallowNull={(building.demolished_buildings?.length ?? 0) > 0}
@@ -79,7 +99,7 @@ const DynamicsView: React.FunctionComponent<CategoryViewProps> = (props) => {
                         {
                             building.dynamics_has_demolished_buildings &&
                             <>
-                                {/* <DynamicsDataEntry
+                                <DynamicsDataEntry
                                     
                           
                                     key={building.building_id} 
@@ -94,10 +114,10 @@ const DynamicsView: React.FunctionComponent<CategoryViewProps> = (props) => {
                                     hasEdits={props.edited}
                                     maxYear={currentBuildingConstructionYear}
                                     minYear={50}
-                                /> */}
+                                />
                                 {
                                     props.mode === 'view' &&
-                                        <InfoBox>Switch to edit mode to add/edit past building records</InfoBox>
+                                        <InfoBox>{t("dynamics_info_h")}</InfoBox>
                                 }
                             </>
                         }
@@ -105,7 +125,7 @@ const DynamicsView: React.FunctionComponent<CategoryViewProps> = (props) => {
             }
         </DataEntryGroup>
 
-        <DataEntryGroup name="Future planned data collection" collapsed={false} showCount={false}>
+        {/* <DataEntryGroup name="Future planned data collection" collapsed={false} showCount={false}>
             <DataEntry
                 title="Historical land use change"
                 slug=""
@@ -124,10 +144,9 @@ const DynamicsView: React.FunctionComponent<CategoryViewProps> = (props) => {
                 value=""
                 mode='view'
             />
-        </DataEntryGroup>
+        </DataEntryGroup> */}
         <InfoBox>
-            This section is under development in collaboration with the historic environment sector.
-            Please let us know your suggestions on the <a href="https://discuss.colouring.london/t/dynamics-category-discussion/107">discussion forum</a>! (external link - save your edits first)
+        {t("dynamics_info_i")}<a href="https://discuss.colouring.london/t/dynamics-category-discussion/107">{t("dynamics_info_j")}</a>{t("dynamics_info_k")}
         </InfoBox>
     </>)
 };

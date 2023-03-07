@@ -21,10 +21,9 @@ interface VerificationMultilingualProps {
 const SelectDataEntryMultiLingual: React.FunctionComponent<
   VerificationMultilingualProps
 > = (props) => {
-  // console.log(props)
   //   const slugWithModifier = props.slug + (props.slugModifier ?? "");
   const [options, setLabel] = useState<label[]>(null);
-
+  const { t } = useTranslation();
   const { i18n } = useTranslation();
 
   function handleClick(verify) {
@@ -69,14 +68,14 @@ const SelectDataEntryMultiLingual: React.FunctionComponent<
       </span>
       {props.user_verified ? (
         <Fragment>
-          Verified as "<span>{displayedVerifiedValue}</span>"
+          {t("verified_as")} "<span>{displayedVerifiedValue}</span>"
           <button
             className="btn btn-danger"
             title="Remove my verification"
             disabled={!props.allow_verify}
             onClick={handleClick(false)}
           >
-            Remove
+            {t("verified_remove")}
           </button>
         </Fragment>
       ) : (
@@ -87,7 +86,7 @@ const SelectDataEntryMultiLingual: React.FunctionComponent<
             disabled={!props.allow_verify}
             onClick={handleClick(true)}
           >
-            Verify
+            {t("verify")}
           </button>
         </Fragment>
       )}

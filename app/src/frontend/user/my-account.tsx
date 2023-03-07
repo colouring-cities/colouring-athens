@@ -5,10 +5,13 @@ import { useAuth } from '../auth-context';
 import ConfirmationModal from '../components/confirmation-modal';
 import ErrorBox from '../components/error-box';
 import { SpinnerIcon } from '../components/icons';
+import { useTranslation } from "react-i18next";
+import i18next from "i18next";
+
 
 export const MyAccountPage: React.FC = () => {
     const { isLoading, user, userError, logout, generateApiKey, deleteAccount } = useAuth();
-
+    const { t } = useTranslation();
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
     const [error, setError] = useState(undefined);
 
@@ -33,62 +36,72 @@ export const MyAccountPage: React.FC = () => {
         return (
             <article>
                 <section className="main-col">
-                    <SpinnerIcon spin={true} /> Loading user info... 
+                    <SpinnerIcon spin={true} /> {t('account_loading')}
                 </section>
             </article>
         );
     }
+
+    let deleteAccountText = "Delete account";
+    let logoutText = "Log out";
+    let generateApiKeyText = "Generate API key";
+    if (i18next.language === 'gr') {
+        deleteAccountText = 'Διαγραφή λογαριασμού';
+        logoutText = "Αποσύνδεση";
+        generateApiKeyText = "Δημιουργία κλειδιού API";
+      }
+
 
     return (
         <article>
             <section className="main-col">
                 { !isLoading && <ErrorBox msg={userError} /> }
                 {!userError && (<>
-                    <h1 className="h1">Welcome, {user.username}!</h1>
+                    <h1 className="h1">{t('account_welcome')} {user.username}!</h1>
                     <p>
-                        Colouring London is under active development. Please{' '}
-                        <a href="https://discuss.colouring.london/">discuss suggestions for improvements</a> and{' '}
-                        <a href="https://github.com/colouring-london/colouring-london/issues"> report issues or problems</a>.
+                    {t('account_active_development')}{' '}
+                        <a href="https://discuss.colouring.london/">{t('login_discuss_suggestions')}</a> {t('login_and')}{' '}
+                        <a href="https://github.com/colouring-cities/colouring-Athens/issues"> {t('login_report_issues')}</a>.
                     </p>
                     <p>
-                        For reference, here are the{' '}
-                        <Link to="/privacy-policy.html">privacy policy</Link>,{' '}
-                        <Link to="/contributor-agreement.html">contributor agreement</Link> and{' '}
-                        <Link to="/data-accuracy.html">data accuracy agreement</Link>.
+                        {t('account_for_reference')}{' '}
+                        <Link to="/privacy-policy.html">{t('account_privacy_policy')}</Link>,{' '}
+                        <Link to="/contributor-agreement.html">{t('account_contributor_agreement')}</Link> {t('account_and')}{' '}
+                        <Link to="/data-accuracy.html">{t('account_data_accuracy_agreement')}</Link>.
                     </p>
                     <ErrorBox msg={error} />
                     <form onSubmit={handleLogout}>
                         <div className="buttons-container">
-                            <Link to="/edit/age" className="btn btn-warning">Start colouring</Link>
-                            <input className="btn btn-secondary" type="submit" value="Log out"/>
+                            <Link to="/edit/age" className="btn btn-warning">{t('account_start_colouring')}</Link>
+                            <input className="btn btn-secondary" type="submit" value={logoutText}/>
                         </div>
                     </form>
 
                     <hr/>
-                    <h2 className="h2">My Details</h2>
-                    <h3 className="h3">Username</h3>
+                    <h2 className="h2">{t('account_my_details')}</h2>
+                    <h3 className="h3">{t('account_username')}</h3>
                     <p>{user.username}</p>
-                    <h3 className="h3">Email Address</h3>
+                    <h3 className="h3">{t('account_email')}</h3>
                     <p>{user.email || '-'}</p>
-                    <h3 className="h3">Registered</h3>
+                    <h3 className="h3">{t('account_registered')}</h3>
                     <p>{user.registered.toString()}</p>
 
                     <hr/>
 
-                    <h2 className="h2">Technical details</h2>
-                    <p>Are you a software developer? If so, you might be interested in these.</p>
-                    <h3 className="h3">API key</h3>
+                    <h2 className="h2">{t('account_technical_details')}</h2>
+                    <p>{t('account_are_you_a_developer')}</p>
+                    <h3 className="h3">{t('account_api_key')}</h3>
                     <p>{user.api_key || '-'}</p>
                     <form onSubmit={handleGenerateKey} className="form-group mb-3">
-                        <input className="btn btn-warning" type="submit" value="Generate API key"/>
+                        <input className="btn btn-warning" type="submit" value={generateApiKeyText}/>
                     </form>
 
-                    <h3 className="h3">Open Source Code</h3>
-                    Colouring London site code is developed at <a href="http://github.com/colouring-london/colouring-london/">colouring-london</a> on Github
+                    <h3 className="h3">{t('account_open_source_code')}</h3>
+                    {t('account_site_code')} <a href="https://github.com/colouring-cities/colouring-Athens/">colouring-Athens</a> {t('account_github')}
 
                     <hr />
 
-                    <h2 className="h2">Account actions</h2>
+                    <h2 className="h2">{t('account_actions')}</h2>
                     <form
                         onSubmit={e => {
                             e.preventDefault();
@@ -96,13 +109,13 @@ export const MyAccountPage: React.FC = () => {
                         }}
                         className="form-group mb-3"
                     >
-                        <input className="btn btn-danger" type="submit" value="Delete account" />
+                        <input className="btn btn-danger" type="submit" value={deleteAccountText} />
                     </form>
 
                     <ConfirmationModal
                         show={showDeleteConfirm}
-                        title="Confirm account deletion"
-                        description="Are you sure you want to delete your account? This cannot be undone."
+                        title={t('account_delete_confirm')}
+                        description={t('account_delete_confirm_desc')}
                         confirmButtonText="Delete account"
                         confirmButtonClass="btn-danger"
                         onConfirm={() => handleDeleteAccount()}

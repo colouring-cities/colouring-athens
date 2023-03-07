@@ -9,7 +9,13 @@ export function CityBoundaryLayer() {
 
     useEffect(() => {
         apiGet('/geometries/boundary_athens_4326.geojson')
-            .then(data => setBoundaryGeojson(data as GeoJsonObject));
+            .then(data => 
+                { 
+                    console.log(data)
+                    setBoundaryGeojson(data as GeoJsonObject);
+                }
+               
+                );
     }, []);
 
     return boundaryGeojson &&

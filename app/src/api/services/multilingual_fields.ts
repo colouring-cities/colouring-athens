@@ -9,7 +9,7 @@ interface MultiLingualOption {
 
 interface MultiLingualLabel {
     // label: string;
-    language: string;
+    // language: string;
 }
 // type GetMultiLingualOptionsFn = (language: string) => Promise<MultiLingualOption[]>;
 type GetMultiLingualOptionsFn = (language: string) => Promise<MultiLingualOption[]>;
@@ -25,17 +25,25 @@ const multiLingualFunctionMap: { [fieldName: string]: GetMultiLingualOptionsFn }
     year_built: getYearBuiltOptions,
     date_source: getDateSourceOptions,
 
+    
+
     construction_core_material: getConstructionMaterialOptions,
     construction_roof_covering: getRoofOptions,
-    construction_front_cover_materials: getCoverMaterialOptions,
-    construction_side_cover_materials: getCoverMaterialOptions,
+    construction_front_cover_material: getCoverMaterialOptions,
+    construction_side_cover_material: getCoverMaterialOptions,
 
     noise_level: getNoiseLevelOptions,
 
     preservation_designation: getPreservationDesignationOptions,
     monument_designation: getMonumentDesignationOptions,
 
-    fek_issue: getFekIssueOptions,
+    // fek_issue: getFekIssueOptions,
+    fek_issue_archaelogical: getFekIssueOptions,
+    fek_issue_energy: getFekIssueOptions,
+    fek_issue_protected: getFekIssueOptions,
+    fek_issue_officially_preserved: getFekIssueOptions,
+    fek_issue_officially_monument: getFekIssueOptions,
+
     building_state: getBuildingStateOptions,
 
     ownership_type: getOwnershipOptions,
@@ -56,15 +64,21 @@ const multiLingualLabelFunctionMap: { [fieldName: string]: GetMultiLingualLabelF
 
     construction_core_material: getConstructionMaterialLabel,
     construction_roof_covering: getRoofLabel,
-    construction_front_cover_materials: getCoverMaterialLabel,
-    construction_side_cover_materials: getCoverMaterialLabel,
+    construction_front_cover_material: getCoverMaterialLabel,
+    construction_side_cover_material: getCoverMaterialLabel,
 
     noise_level: getNoiseLevelLabel,
 
     preservation_designation: getPreservationDesignationLabel,
     monument_designation: getMonumentDesignationLabel,
 
-    fek_issue: getFekIssueLabel,
+    fek_issue_archaelogical: getFekIssueLabel,
+    fek_issue_energy: getFekIssueLabel,
+    fek_issue_protected: getFekIssueLabel,
+    fek_issue_officially_preserved: getFekIssueLabel,
+    fek_issue_officially_monument: getFekIssueLabel,
+
+
     building_state: getBuildingStateLabel,
 
     ownership_type: getOwnershipLabel,
@@ -137,7 +151,7 @@ function getSideDistancesOptions(language: string = 'gr') {
 }
 function getYearBuiltOptions(language: string = 'gr') {
 
-    console.log("YEAR BUILT" + language);
+    
 
 
     switch (language) {

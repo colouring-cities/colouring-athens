@@ -27,7 +27,6 @@ const SelectDataEntryMultiLingual: React.FunctionComponent<
     // async function doAsync() {
     const doAsync = async () => {
       const url = `/api/multilingualoptions?field_name=${props.slug}&language=${i18n.language}`;
-      // console.log(url)
       const { options: newOptions } = await apiGet(url);
       setOptions(newOptions);
     };
@@ -40,7 +39,7 @@ const SelectDataEntryMultiLingual: React.FunctionComponent<
   }, [props.slug, i18n.language]);
 
   if (options == undefined) return null;
-  
+  options.sort((a, b) => a.value - b.value);
   return (
     <Fragment>
       <DataTitleCopyable
@@ -55,7 +54,7 @@ const SelectDataEntryMultiLingual: React.FunctionComponent<
         className="form-control"
         id={slugWithModifier}
         name={slugWithModifier}
-        value={props.value || null}
+        value={props.value || ''}
         disabled={props.mode === "view" || props.disabled}
         required={props.required}
         onChange={(e) =>

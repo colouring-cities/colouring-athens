@@ -15,7 +15,7 @@ export function useUserVerifiedData(buildingId: number, preloadedData: UserVerif
         }
         try {
             const userVerify = await apiGet(`/api/buildings/${buildingId}/verify.json`);
-
+            
             setUserVerifyData(userVerify);
         } catch(error) {
             console.error(error);
@@ -35,6 +35,5 @@ export function useUserVerifiedData(buildingId: number, preloadedData: UserVerif
             fetchData();
         }
     }, [isOld])
-
     return [userVerifyData, setUserVerifyData, () => setIsOld(true)];
 }

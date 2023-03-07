@@ -4,7 +4,7 @@ import express from 'express';
 import autofillController from './controllers/autofillController';
 
 import * as editHistoryController from './controllers/editHistoryController';
-import { ApiParamError, ApiUserError } from './errors/api'; 
+import { ApiParamError, ApiUserError } from './errors/api';
 import { DatabaseError } from './errors/general';
 import buildingsRouter from './routes/buildingsRouter';
 import multiLingualRouter from './routes/multiLingualRouter';
@@ -33,14 +33,12 @@ server.use('/multilingualoptions', multiLingualController. getMultiLingualOption
 server.use('/multilinguallabels', multiLingualController. getMultiLingualLabel);
 
 // POST user auth
-server.post('/login', function (req, res) {
-    authUser(req.body.username, req.body.password).then(function (user: any) { // TODO: remove any
+server.post('/login', function (req : any, res) {
+    authUser(req.body.username, req.body.password).then( (user: any) => { // TODO: remove any
         if (user.user_id) {
-            // req.session.user_id = user.user_id;
-            req.session.id = user.user_id;
+            req.session.user_id = user.user_id;
         } else {
-            // req.session.user_id = undefined;
-            req.session.id = undefined;
+            req.session.user_id = undefined;
         }
         res.send(user);
     }).catch(function (error) {
@@ -49,7 +47,7 @@ server.post('/login', function (req, res) {
 });
 
 // POST user logout
-server.post('/logout', function (req, res) {
+server.post('/logout', function (req: any, res) {
     logout(req.session).then(() => {
         res.send({ success: true });
     }).catch(err => {
@@ -59,14 +57,13 @@ server.post('/logout', function (req, res) {
 });
 
 // POST generate API key
-server.post('/api/key', function (req, res) {
-    // if (!req.session.user_id) {
-        if (!req.session.id) {
-        res.send({ error: 'Must be logged in' });
+server.post('/api/key', function (req : any, res) {
+    if (!req.session.user_id) {
+        res.send({ error: 'Post api, Must be logged in' });
         return;
     }
-    getNewUserAPIKey(req.session.id).then(function (apiKey) {
-    // getNewUserAPIKey(req.session.user_id).then(function (apiKey) {
+
+    getNewUserAPIKey(req.session.user_id).then(function (apiKey) {
         res.send(apiKey);
     }).catch(function (error) {
         res.send(error);
@@ -96,7 +93,7 @@ server.get('/search', function (req, res) {
                 return {
                     type: 'Feature',
                     attributes: {
-                        label: item.search_str,
+                        label: item.tk,
                         zoom: item.zoom || 9
                     },
                     geometry: geom
@@ -113,30 +110,28 @@ server.use((err: any, req: express.Request, res: express.Response, next: express
         return next(err);
     }
 
-    console.log(res)
-
     if (err != undefined) {
         if (err instanceof ApiUserError) {
             let errorMessage: string;
-            
+
             if(err instanceof ApiParamError) {
                 errorMessage = `Problem with parameter ${err.paramName}: ${err.message}`;
             } else {
                 errorMessage = err.message;
             }
-            
+
             return res.status(400).send({ error: errorMessage });
         }
-        
+
         // we need to log the error only if it's not an api user error
         console.log('Global error handler: ', err);
-        
+
         if(err instanceof DatabaseError){
             res.status(500).send({ error: 'Database error' });
         } else {
             res.status(500).send({ error: 'Server error' });
         }
-        
+
     }
 });
 

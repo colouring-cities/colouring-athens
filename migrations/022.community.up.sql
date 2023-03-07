@@ -13,13 +13,6 @@
 -- ALTER TABLE buildings
 --     ADD COLUMN IF NOT EXISTS ownership_type ownership_type DEFAULT 'Private individual';
 
-ALTER TABLE
-    buildings
-ADD
-    COLUMN IF NOT EXISTS ownership_type integer,
-ADD
-    FOREIGN KEY (ownership_type) REFERENCES reference_tables.ownership_classifications (ownership_id);
-
 -- Ownerhsip perception, would you describe this as a community asset?
 -- Boolean yes / no
 -- Below accepts t/f, yes/no, y/n, 0/1 as valid inputs all of which
@@ -49,17 +42,17 @@ ADD COLUMN community_local_significance_total INT DEFAULT 0;
 ALTER TABLE buildings
 ADD COLUMN community_activities BOOLEAN NULL;
 
--- CREATE TYPE public_ownership_type
---     AS ENUM (
---         'State-owned',
---         'Charity-owned',
---         'Community-owned/cooperative',
---         'Owned by other non-profit body',
---         'Not in public/community ownership'
---     );
+CREATE TYPE public_ownership_type
+    AS ENUM (
+        'State-owned',
+        'Charity-owned',
+        'Community-owned/cooperative',
+        'Owned by other non-profit body',
+        'Not in public/community ownership'
+    );
 
--- ALTER TABLE buildings
--- ADD COLUMN community_public_ownership public_ownership_type;
+ALTER TABLE buildings
+ADD COLUMN community_public_ownership public_ownership_type;
 
 ALTER TABLE buildings
 ADD COLUMN community_public_ownership_sources VARCHAR[];

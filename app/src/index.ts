@@ -3,7 +3,7 @@
  *
  */
 import http from 'http';
-
+import './i18n';
 import app from './server';
 
 const server = http.createServer(app);

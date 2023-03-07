@@ -71,7 +71,6 @@ async function authUser(username: string, password: string) {
             password
         ]
     );
-
     if (user == undefined) {
         return { error: 'The username does not exist in the system' };
     } else if (user.auth_ok) {
@@ -183,7 +182,7 @@ async function deleteUser(id: string) {
     }
 }
 
-function logout(session: Express.Session): Promise<void> {
+function logout(session: any): Promise<void> {
     session.user_id = undefined;
 
     return promisify(session.destroy.bind(session))();

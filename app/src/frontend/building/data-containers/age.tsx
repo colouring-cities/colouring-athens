@@ -9,7 +9,7 @@ import TextboxDataEntry from "../data-components/textbox-data-entry";
 import Verification from "../data-components/verification";
 import YearDataEntry from "../data-components/year-data-entry";
 import withCopyEdit from "../data-container";
-
+import VerificationMultilingual from "../data-components/verification-multilingual";
 import { CategoryViewProps } from "./category-view-props";
 
 // import { useTranslation } from "react-i18next";
@@ -22,7 +22,8 @@ const AgeView: React.FunctionComponent<CategoryViewProps> = (props) => {
   const currentYear = new Date().getFullYear();
 
   //   const { t } = useTranslation();
-
+  let date_year_title = dataFields.date_year.title_en;
+  let date_year_tooltip = dataFields.date_year.tooltip_en;
   let year_built_title = dataFields.year_built.title_en;
   let year_built_tooltip = dataFields.year_built.tooltip_en;
   let reconstruction_year_title = dataFields.reconstruction_year.title_en;
@@ -33,6 +34,8 @@ const AgeView: React.FunctionComponent<CategoryViewProps> = (props) => {
   let date_source_link_tooltip = dataFields.date_source_link.tooltip_en;
 
   if (i18next.language === "gr") {
+    date_year_title = dataFields.date_year.title_gr;
+    date_year_tooltip = dataFields.date_year.tooltip_gr;
     year_built_title = dataFields.year_built.title_gr;
     year_built_tooltip = dataFields.year_built.tooltip_gr;
     reconstruction_year_title = dataFields.reconstruction_year.title_gr;
@@ -41,19 +44,64 @@ const AgeView: React.FunctionComponent<CategoryViewProps> = (props) => {
     date_source_tooltip = dataFields.date_source.tooltip_gr;
     date_source_link_title = dataFields.date_source_link.title_gr;
     date_source_link_tooltip = dataFields.date_source_link.tooltip_gr;
-    
+  }
+  let yearTest = false;
+  switch (yearTest) {
+    case (props.building.date_year <= 2010):
+      props.building.year_built = 4;
+      break;
+  
+    default:
+      break;
   }
 
   return (
     <Fragment>
-      <SelectDataEntryMultiLingual
-        title={year_built_title}
-        slug="year_built"
-        value={props.building.type_class}
-        tooltip={year_built_tooltip}
+      <NumericDataEntry
+        title={date_year_title}
+        slug="date_year"
+        value={props.building.date_year}
         mode={props.mode}
         copy={props.copy}
         onChange={props.onChange}
+        step={1}
+        min={1}
+        max={currentYear}
+        // tooltip={date_year_tooltip}
+      />
+      <Verification
+        slug="date_year"
+        allow_verify={
+          props.user !== undefined &&
+          props.building.date_year !== null &&
+          !props.edited
+        }
+        onVerify={props.onVerify}
+        user_verified={props.user_verified.hasOwnProperty("date_year")}
+        user_verified_as={props.user_verified.date_year}
+        verified_count={props.building.verified.date_year}
+      />
+
+      <SelectDataEntryMultiLingual
+        title={year_built_title}
+        slug="year_built"
+        value={ props.building.date_year ? (props.building.date_year <= 1920 ? 1 : (props.building.date_year <= 1955 ? 2 : (props.building.date_year <= 1985 ? 3 : props.building.date_year <= 2010 ? 4: 5)) )  : props.building.year_built }
+        // tooltip={year_built_tooltip}
+        mode={props.mode}
+        copy={props.copy}
+        onChange={props.onChange}
+      />
+      <VerificationMultilingual
+        slug="year_built"
+        allow_verify={
+          props.user !== undefined &&
+          props.building.year_built !== null &&
+          !props.edited
+        }
+        onVerify={props.onVerify}
+        user_verified={props.user_verified.hasOwnProperty("year_built")}
+        user_verified_as={props.user_verified.year_built}
+        verified_count={props.building.verified.year_built}
       />
 
       <NumericDataEntry
@@ -66,17 +114,23 @@ const AgeView: React.FunctionComponent<CategoryViewProps> = (props) => {
         step={1}
         min={1}
         max={currentYear}
-        tooltip={reconstruction_year_tooltip}
+        // tooltip={reconstruction_year_tooltip}
       />
 
-      {/* <Verification
-                slug="facade_year"
-                allow_verify={props.user !== undefined && props.building.facade_year !== null && !props.edited}
-                onVerify={props.onVerify}
-                user_verified={props.user_verified.hasOwnProperty("facade_year")}
-                user_verified_as={props.user_verified.facade_year}
-                verified_count={props.building.verified.facade_year}
-                /> */}
+      <Verification
+        slug="reconstruction_year"
+        allow_verify={
+          props.user !== undefined &&
+          props.building.reconstruction_year !== null &&
+          !props.edited
+        }
+        onVerify={props.onVerify}
+        user_verified={props.user_verified.hasOwnProperty(
+          "reconstruction_year"
+        )}
+        user_verified_as={props.user_verified.reconstruction_year}
+        verified_count={props.building.verified.reconstruction_year}
+      />
 
       <SelectDataEntryMultiLingual
         title={date_source_title}
@@ -90,7 +144,7 @@ const AgeView: React.FunctionComponent<CategoryViewProps> = (props) => {
 
       <TextboxDataEntry
         title={date_source_link_title}
-        slug="date_source"
+        slug="date_source_link"
         value={props.building.date_source_link}
         mode={props.mode}
         copy={props.copy}

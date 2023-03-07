@@ -6,7 +6,7 @@ import { apiGet } from '../../apiHelpers';
 import { Building } from '../../models/building';
 import { EditHistoryEntry } from '../../models/edit-history-entry';
 import ContainerHeader from '../container-header';
-
+import { useTranslation } from "react-i18next";
 import { BuildingEditSummary } from './building-edit-summary';
 
 interface EditHistoryProps {
@@ -15,6 +15,7 @@ interface EditHistoryProps {
 
 const EditHistory: React.FunctionComponent<EditHistoryProps> = (props) => {
     const [history, setHistory] = useState<EditHistoryEntry[]>(undefined);
+    const { t } = useTranslation();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -30,7 +31,7 @@ const EditHistory: React.FunctionComponent<EditHistoryProps> = (props) => {
     
     return (
         <>
-            <ContainerHeader title="Edit history" backLink='.' cat='edit-history' />
+            <ContainerHeader title={t('edit_history')} backLink='.' cat='edit-history' />
 
             <ul className="edit-history-list">
                 {history && history.map(entry => (

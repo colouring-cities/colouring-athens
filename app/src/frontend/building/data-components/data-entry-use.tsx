@@ -34,7 +34,7 @@ const DataEntryUse: React.FC<DataEntryUseProps> = (props) => {
     const [options, setOptions] = useState<SelectOption[]>(null);
 
     const { i18n } = useTranslation();
-  
+
     useEffect(() => {
       const doAsync = async () => {
         const url = `/api/multilingualoptions?field_name=current_landuse_ground_floor&language=${i18n.language}`;
@@ -44,9 +44,9 @@ const DataEntryUse: React.FC<DataEntryUseProps> = (props) => {
       };
         doAsync();
     }, [props.slug, i18n.language]);
-  
+
     if (options == undefined) return null;
-    
+
     return (
         <Fragment>
             <DataTitleCopyable
@@ -60,7 +60,7 @@ const DataEntryUse: React.FC<DataEntryUseProps> = (props) => {
             <DataEntryInput
                 slug={props.slug}
                 name={props.slug + props.slugModifier ?? ''}
-                value={options[props.value - 1].label}
+                value={options[props?.value - 1]?.label}
                 // onChange={props.onChange}
                 disabled={true}
 

@@ -16,6 +16,7 @@ export async function editBuilding(
     { attributes, userAttributes } : BuildingUpdate
 ): Promise<BuildingUpdate> {
     // Validate externally provided attributes
+    
     if(attributes) {
         validateChangeSet(attributes, true);
     }

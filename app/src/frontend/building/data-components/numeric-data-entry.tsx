@@ -10,6 +10,7 @@ interface NumericDataEntryProps extends BaseDataEntryProps {
     step?: number;
     min?: number;
     max?: number;
+    maxLength?: number;
 }
 
 const NumericDataEntry: React.FunctionComponent<NumericDataEntryProps> = (props) => {
@@ -34,6 +35,7 @@ const NumericDataEntry: React.FunctionComponent<NumericDataEntryProps> = (props)
                 step={props.step == undefined ? 1 : props.step}
                 max={props.max}
                 min={props.min}
+                maxLength={props.maxLength}
                 disabled={props.mode === 'view' || props.disabled}
                 placeholder={props.placeholder}
                 required={props.required}

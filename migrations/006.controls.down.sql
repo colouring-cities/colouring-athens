@@ -1,32 +1,43 @@
-ALTER TABLE
-    buildings DROP COLUMN IF EXISTS inside_protected_area;
+-- Remove planning and controls fields
 
-ALTER TABLE
-    buildings DROP COLUMN IF EXISTS inside_archaelogical_area;
+-- Planning Portal
+ALTER TABLE buildings DROP COLUMN IF EXISTS planning_portal_link;
 
-ALTER TABLE
-    buildings DROP COLUMN IF EXISTS inside_energy_area;
+-- Conservation area
+ALTER TABLE buildings DROP COLUMN IF EXISTS planning_in_conservation_area;
+ALTER TABLE buildings DROP COLUMN IF EXISTS planning_conservation_area_name;
 
-ALTER TABLE
-    buildings DROP COLUMN IF EXISTS officially_protected;
+-- Listed
+ALTER TABLE buildings DROP COLUMN IF EXISTS planning_in_list;
+ALTER TABLE buildings DROP COLUMN IF EXISTS planning_list_id;
 
-ALTER TABLE
-    buildings DROP COLUMN IF EXISTS officially_preserved;
+-- List category
+DROP TYPE IF EXISTS planning_list_cat;
+ALTER TABLE buildings DROP COLUMN IF EXISTS planning_list_cat;
 
-ALTER TABLE
-    buildings DROP COLUMN IF EXISTS preservation_designation;
+-- Listing grade
+DROP TYPE IF EXISTS planning_list_grade;
+ALTER TABLE buildings DROP COLUMN IF EXISTS planning_list_grade;
 
-ALTER TABLE
-    buildings DROP COLUMN IF EXISTS officially_monument;
+-- Heritage at risk
+ALTER TABLE buildings DROP COLUMN IF EXISTS planning_heritage_at_risk_id;
 
-ALTER TABLE
-    buildings DROP COLUMN IF EXISTS monument_designation;
+-- World Heritage
+ALTER TABLE buildings DROP COLUMN IF EXISTS planning_world_list_id;
 
-ALTER TABLE
-    buildings DROP COLUMN IF EXISTS fek_issue;
+-- GLHER
+ALTER TABLE buildings DROP COLUMN IF EXISTS planning_in_glher;
+ALTER TABLE buildings DROP COLUMN IF EXISTS planning_glher_url;
 
-ALTER TABLE
-    buildings DROP COLUMN IF EXISTS fek_number;
+-- Archaeological Priority Area
+ALTER TABLE buildings DROP COLUMN IF EXISTS planning_in_apa;
+ALTER TABLE buildings DROP COLUMN IF EXISTS planning_apa_name;
+ALTER TABLE buildings DROP COLUMN IF EXISTS planning_apa_tier;
 
-ALTER TABLE
-    buildings DROP COLUMN IF EXISTS fek_date;
+-- Locally listed
+ALTER TABLE buildings DROP COLUMN IF EXISTS planning_in_local_list;
+ALTER TABLE buildings DROP COLUMN IF EXISTS planning_local_list_url;
+
+-- Historic Area Assessment
+ALTER TABLE buildings DROP COLUMN IF EXISTS planning_in_historic_area_assessment;
+ALTER TABLE buildings DROP COLUMN IF EXISTS planning_historic_area_assessment_url;

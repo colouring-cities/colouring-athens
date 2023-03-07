@@ -7,10 +7,12 @@ import { Logo } from "./components/logo";
 import { WithSeparator } from "./components/with-separator";
 import { useAuth } from "./auth-context";
 import { useTranslation } from "react-i18next";
+import { Translation } from "react-i18next";
 
 interface MenuLink {
   to: string;
-  text: string;
+  text_en: string;
+  text_gr: string;
   external?: boolean;
   disabled?: boolean;
   note?: string;
@@ -21,82 +23,106 @@ function getCurrentMenuLinks(username: string): MenuLink[][] {
     [
       {
         to: "/view/categories",
-        text: "View Maps",
+        text_en: "View Maps",
+        text_gr: "Προβολή Χαρτών",
       },
       {
         to: "/edit/categories",
-        text: "Edit Maps",
+        text_en: "Edit Maps",
+        text_gr: "Επεξεργασία Χαρτών",
       },
       {
-        to: "/data-extracts.html",
-        text: "Download data",
+        // to: "/data-extracts.html",
+        to: '',
+        text_en: "Download data",
+        text_gr: "Λήψη δεδομένων",
+        disabled: true,
+        note: "Coming soon",
       },
       {
-        to: "https://github.com/colouring-london/colouring-london",
-        text: "Access open code",
+        to: "https://github.com/colouring-cities/colouring-Athens",
+        text_en: "Access open code",
+        text_gr: "Πρόσβαση ανοιχτού κώδικα",
         external: true,
       },
       {
         to: "/showcase.html",
-        text: "View Data Showcase",
+        text_en: "View Data Showcase",
+        text_gr: "Προβολή έκθεσης δεδομένων",
         disabled: true,
         note: "Coming soon",
       },
     ],
     [
       {
-        to: "https://pages.colouring.london",
-        text: "About",
-        external: true,
+        // to: "https://pages.colouring.london",
+        to: "/about-page.html",
+        text_en: "About",
+        text_gr: "Σχετικά",
+        // external: true,
       },
       {
-        to: "https://pages.colouring.london/buildingcategories",
-        text: "Data Categories",
-        external: true,
+        // to: "https://pages.colouring.london/buildingcategories",
+        to: "/data-categories.html",
+        text_en: "Data Categories",
+        text_gr: "Κατηγορίες δεδομένων",
+        // external: true,
       },
       {
-        to: "https://pages.colouring.london/whoisinvolved",
-        text: "Who's Involved?",
-        external: true,
+        // to: "https://pages.colouring.london/whoisinvolved",
+        to: "/who-is-envolved.html",
+        text_en: "Who's Involved?",
+        text_gr: "Ποιοι εμπλέκονται;",
+        // external: true,
       },
       {
-        to: "https://pages.colouring.london/data-ethics",
-        text: "Data Ethics",
-        external: true,
+        // to: "https://pages.colouring.london/data-ethics",
+        to: "/data-ethics.html",
+        text_en: "Data Ethics",
+        text_gr: "Δεοντολογία Δεδομένων",
+        // external: true,
       },
       {
-        to: "https://pages.colouring.london/colouring-cities",
-        text: "Colouring Cities Research Programme",
-        external: true,
+        // to: "https://pages.colouring.london/colouring-cities",
+        to: "/ccrp.html",
+        text_en: "Colouring Cities Research Programme",
+        text_gr: "Colouring Cities Research Programme",
+        // external: true,
       },
     ],
     [
       {
         to: "/leaderboard.html",
-        text: "Top Contributors",
+        text_en: "Top Contributors",
+        text_gr: "Κορυφαίοι Συντελεστές",
       },
       {
-        to: "https://discuss.colouring.london",
-        text: "Discussion Forum",
+        to: "https://github.com/colouring-cities/colouring-Athens/discussions",
+        text_en: "Discussion Forum",
+        text_gr: "Φόρουμ συζήτησης",
         external: true,
       },
     ],
     [
       {
         to: "/privacy-policy.html",
-        text: "Privacy Policy",
+        text_en: "Privacy Policy",
+        text_gr: "Πολιτική Απορρήτου",
       },
       {
         to: "/contributor-agreement.html",
-        text: "Contributor Agreement",
+        text_en: "Contributor Agreement",
+        text_gr: "Συμφωνία συνεισφέροντος",
       },
       {
         to: "/code-of-conduct.html",
-        text: "Code of Conduct",
+        text_en: "Code of Conduct",
+        text_gr: "Κώδικας δεοντολογίας",
       },
       {
         to: "/data-accuracy.html",
-        text: "Data Accuracy Agreement",
+        text_en: "Data Accuracy Agreement",
+        text_gr: "Συμφωνία Ακρίβειας Δεδομένων",
       },
       // {
       //     to: "/ordnance-survey-uprn.html",
@@ -106,23 +132,27 @@ function getCurrentMenuLinks(username: string): MenuLink[][] {
     [
       {
         to: "/contact.html",
-        text: "Contact",
+        text_en: "Contact",
+        text_gr: "Επικοινωνία",
       },
       ...(username != undefined
         ? [
             {
               to: "/my-account.html",
-              text: `Account (${username})`,
+              text_en: `Account (${username})`,
+              text_gr: `Λογαριασμός (${username})`,
             },
           ]
         : [
             {
               to: "/login.html",
-              text: "Log in",
+              text_en: "Log in",
+              text_gr: "Σύνδεση",
             },
             {
               to: "/sign-up.html",
-              text: "Sign up",
+              text_en: "Sign up",
+              text_gr: "Εγγραφή",
             },
           ]),
     ],
@@ -131,21 +161,31 @@ function getCurrentMenuLinks(username: string): MenuLink[][] {
 
 const Menu: React.FC<{ onNavigate: () => void }> = ({ onNavigate }) => {
   const { user } = useAuth();
-
+  const { i18n } = useTranslation();
   const menuLinkSections = getCurrentMenuLinks(user?.username);
+
   return (
     <WithSeparator separator={<hr />}>
       {menuLinkSections.map((section, idx) => (
         <ul key={`menu-section-${idx}`} className="navbar-nav flex-container">
           {section.map((item) => (
-            <li className="nav-item" key={`${item.to}-${item.text}`}>
+            <li
+              className="nav-item"
+              key={`${item.to}-${
+                i18n.language === "gr" ? item.text_gr : item.text_en
+              }`}
+            >
               {item.disabled ? (
-                <LinkStub note={item.note}>{item.text}</LinkStub>
+                <LinkStub note={item.note}>
+                  {i18n.language === "gr" ? item.text_gr : item.text_en}
+                </LinkStub>
               ) : item.external ? (
-                <ExternalNavLink to={item.to}>{item.text}</ExternalNavLink>
+                <ExternalNavLink to={item.to}>
+                  {i18n.language === "gr" ? item.text_gr : item.text_en}
+                </ExternalNavLink>
               ) : (
                 <InternalNavLink to={item.to} onClick={onNavigate}>
-                  {item.text}
+                  {i18n.language === "gr" ? item.text_gr : item.text_en}
                 </InternalNavLink>
               )}
             </li>
@@ -181,15 +221,13 @@ const LinkStub: React.FC<{ note: string }> = ({ note, children }) => (
 
 let ls;
 
-if (typeof window !== 'undefined') {
+if (typeof window !== "undefined") {
   ls = window.localStorage;
-}
-else {
+} else {
   ls = {
-    i18nextLng : 'gr'
-  }
+    i18nextLng: "gr",
+  };
 }
-
 
 export const Header: React.FC<{
   animateLogo: boolean;
@@ -199,56 +237,63 @@ export const Header: React.FC<{
   const toggleCollapse = () => setCollapseMenu(!collapseMenu);
   const handleNavigate = () => setCollapseMenu(true);
 
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const lngs = {
     en: { nativeName: "EN" },
     gr: { nativeName: "GR" },
   };
 
-  // console.log(i18n.language);
+  const [selected, setSelected] = React.useState<string | null>(null);
+  const handleChange = (s) => {
+    i18n.changeLanguage(s.target.value);
+    localStorage.setItem("language", i18n.language);
+    setSelected(s.target.value);
+  };
+  React.useEffect(() => {
+    setSelected(i18n.language);
+  });
 
-    return (
-      <header className="main-header navbar navbar-light">
-        <div className="nav-header">
-          <NavLink to="/">
-            <Logo variant={animateLogo ? "animated" : "default"} />
-          </NavLink>
-          <select
-            className="custom-select"
-            style={{ width: 64 }}
-            onChange={(e) => i18n.changeLanguage(e.target.value)}
-            value={i18n.language || ls.i18nextLng || ""}
-            // defaultValue={i18n.language || window.localStorage.i18nextLng || '' }
-          >
-            {Object.keys(lngs).map((lng) => (
-              <option value={lng} key={lng}>
-                {lngs[lng].nativeName}
-              </option>
-            ))}
-          </select>
-          <button
-            className="navbar-toggler"
-            type="button"
-            onClick={toggleCollapse}
-            aria-expanded={!collapseMenu}
-            aria-label="Toggle navigation"
-          >
-            Menu&nbsp;
-            {collapseMenu ? (
-              <span className="navbar-toggler-icon"></span>
-            ) : (
-              <span className="close">&times;</span>
-            )}
-          </button>
-        </div>
-        <nav
-          className={
-            collapseMenu ? "collapse navbar-collapse" : "navbar-collapse"
-          }
+  return (
+    <header className="main-header navbar navbar-light">
+      <div className="nav-header">
+        <NavLink to="/">
+          <Logo variant={animateLogo ? "animated" : "default"} />
+        </NavLink>
+        <select
+          className="custom-select"
+          style={{ width: 64 }}
+          value={selected || undefined}
+          onChange={handleChange}
         >
-          <Menu onNavigate={handleNavigate}></Menu>
-        </nav>
-      </header>
-    );
+          {Object.keys(lngs).map((lng) => (
+            <option value={lng} key={lng}>
+              {lngs[lng].nativeName}
+            </option>
+          ))}
+        </select>
+        <button
+          className="navbar-toggler"
+          type="button"
+          onClick={toggleCollapse}
+          aria-expanded={!collapseMenu}
+          aria-label="Toggle navigation"
+        >
+          {t("menu")}&nbsp;
+          {collapseMenu ? (
+            <span className="navbar-toggler-icon"></span>
+          ) : (
+            <span className="close">&times;</span>
+          )}
+        </button>
+      </div>
+      <nav
+        className={
+          collapseMenu ? "collapse navbar-collapse" : "navbar-collapse"
+        }
+      >
+        <Menu onNavigate={handleNavigate}></Menu>
+      </nav>
+    </header>
+  );
 };

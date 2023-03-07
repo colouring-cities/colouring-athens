@@ -17,7 +17,7 @@ import i18next from "i18next";
  * Type view/edit section
  */
 const TypeView: React.FunctionComponent<CategoryViewProps> = (props) => {
-//   const { t } = useTranslation();
+  //   const { t } = useTranslation();
 
   let type_class_title = dataFields.type_class.title_en;
   let type_class_tooltip = dataFields.type_class.tooltip_en;
@@ -37,23 +37,45 @@ const TypeView: React.FunctionComponent<CategoryViewProps> = (props) => {
         title={type_class_title}
         slug="type_class"
         value={props.building.type_class}
-        tooltip={type_class_tooltip}
+        // tooltip={type_class_tooltip}
         mode={props.mode}
         copy={props.copy}
         onChange={props.onChange}
       />
+      <VerificationMultilingual
+        slug="type_class"
+        allow_verify={
+          props.user !== undefined &&
+          props.building.type_class !== null &&
+          !props.edited
+        }
+        onVerify={props.onVerify}
+        user_verified={props.user_verified.hasOwnProperty("type_class")}
+        user_verified_as={props.user_verified.type_class}
+        verified_count={props.building.verified.type_class}
+      />
 
-<SelectDataEntryMultiLingual
+      <SelectDataEntryMultiLingual
         title={side_distances_title}
         slug="side_distances"
         value={props.building.side_distances}
-        tooltip={side_distances_tooltip}
+        // tooltip={side_distances_tooltip}
         mode={props.mode}
         copy={props.copy}
         onChange={props.onChange}
       />
-
-
+      <VerificationMultilingual
+        slug="side_distances"
+        allow_verify={
+          props.user !== undefined &&
+          props.building.side_distances !== null &&
+          !props.edited
+        }
+        onVerify={props.onVerify}
+        user_verified={props.user_verified.hasOwnProperty("side_distances")}
+        user_verified_as={props.user_verified.side_distances}
+        verified_count={props.building.verified.side_distances}
+      />
     </Fragment>
   );
 };

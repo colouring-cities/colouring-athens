@@ -56,6 +56,9 @@
     transform: translateY(0);
     background: #fff;
 }
+.custom-select {
+    align-self: center;
+}
 @media (min-width: 990px){
     .navbar-collapse {
         border-right: 1px solid #000;

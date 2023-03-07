@@ -8,7 +8,8 @@ import { ValidationError } from '../validation';
 
 const createUser = asyncController(async (req: express.Request, res: express.Response) => {
     const user = req.body;
-    if (req.session.user_id) {
+    const session: any = req.session;
+    if (session.user_id) {
         return res.send({ error: 'Already signed in' });
     }
 
@@ -23,10 +24,10 @@ const createUser = asyncController(async (req: express.Request, res: express.Res
     try {
         const result = await userService.createUser(user);
         if (result.user_id) {
-            req.session.user_id = result.user_id;
+            session.user_id = result.user_id;
             res.send({ user_id: result.user_id });
         } else {
-            req.session.user_id = undefined;
+            session.user_id = undefined;
             res.send({ error: result.error });
         }
     } catch(err) {
@@ -36,12 +37,13 @@ const createUser = asyncController(async (req: express.Request, res: express.Res
 });
 
 const getCurrentUser = asyncController(async (req: express.Request, res: express.Response) => {
-    if (!req.session.user_id) {
-        return res.send({ error: 'Must be logged in' });
+    const session: any = req.session;
+    if (!session.user_id) {
+        return res.send({ error: 'Get user, Must be logged in' });
     }
 
     try {
-        const user = await userService.getUserById(req.session.user_id);
+        const user = await userService.getUserById(session.user_id);
         res.send(user);
     } catch(error) {
         res.send(error);
@@ -49,14 +51,15 @@ const getCurrentUser = asyncController(async (req: express.Request, res: express
 });
 
 const deleteCurrentUser = asyncController(async (req: express.Request, res: express.Response) => {
-    if (!req.session.user_id) {
+    const session: any = req.session;
+    if (!session.user_id) {
         return res.send({ error: 'Must be logged in' });
     }
-    console.log(`Deleting user ${req.session.user_id}`);
+    console.log(`Deleting user ${session.user_id}`);
 
     try {
-        await userService.deleteUser(req.session.user_id);
-        await userService.logout(req.session);
+        await userService.deleteUser(session.user_id);
+        await userService.logout(session);
 
         res.send({ success: true });
     } catch(err) {
@@ -68,11 +71,12 @@ const resetPassword = asyncController(async function(req: express.Request, res: 
     if(req.body == undefined || (req.body.email == undefined && req.body.token == undefined)) {
         return res.send({ error: 'Expected an email address or password reset token in the request body' });
     }
-
+    // console.log(req.body.email);
     if(req.body.email != undefined) {
         // first stage: send reset token to email address
 
         const origin = getWebAppOrigin();
+        // const origin = 'https://Athens.colouringcities.org'
         await passwordResetService.sendPasswordResetToken(req.body.email, origin);
 
         return res.status(202).send({ success: true });

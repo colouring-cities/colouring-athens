@@ -59,6 +59,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
     const [isLoading, setIsLoading] = useState(false);
 
     const login = useCallback(async (data: UserLoginData, cb: (err) => void = noop) => {
+        
         if(isAuthenticated) {
             return;
         }
@@ -130,9 +131,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
     async function updateUserData(): Promise<void> {
         setUserError(undefined);
         setIsLoading(true);
-
+        
         try {
-            const user = await apiGet('/api/users/me');
+            const user = await apiGet('/api/users/me');  
             if (user.error) {
                 setUserError(user.error);
             } else {

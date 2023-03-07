@@ -1,15 +1,16 @@
 import React, { useCallback, useState } from "react";
 import { Link } from "react-router-dom";
-
+import { useTranslation } from "react-i18next";
 import { useAuth } from "../auth-context";
 import ErrorBox from "../components/error-box";
 import { SpinnerIcon } from "../components/icons";
 import InfoBox from "../components/info-box";
 import SupporterLogos from "../components/supporter-logos";
+import i18next from "i18next";
 
 export const Login: React.FC = () => {
   const { isLoading, login } = useAuth();
-
+  const { t } = useTranslation();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -26,25 +27,30 @@ export const Login: React.FC = () => {
     [username, password]
   );
 
+  let loginText = 'Log in';
+  if (i18next.language === 'gr') {
+    loginText = 'Σύνδεση';
+  }
+
   return (
     <article>
       <section className="main-col">
-        <h1 className="h2">Log in</h1>
-        <InfoBox msg="Welcome to Colouring Athens. You're one of the first people to use the site!  ">
+        <h1 className="h2">{t('login')}</h1>
+        <InfoBox msg={t('login_infobox')}>
           <br />
-          Please{" "}
+          {t('login_please')}{" "}
           <a href="https://discuss.colouring.london/">
-            discuss suggestions for improvements
+          {t('login_discuss_suggestions')}
           </a>{" "}
-          and{" "}
-          <a href="https://github.com/colouring-london/colouring-london/issues">
-            report issues or problems
+          {t('login_and')}{" "}
+          <a href="https://github.com/colouring-cities/colouring-Athens/issues">
+          {t('login_report_issues')}
           </a>
           .
         </InfoBox>
         <ErrorBox msg={error} />
         <form onSubmit={onSubmit}>
-          <label htmlFor="username">Username*</label>
+          <label htmlFor="username">{t('login_username')}</label>
           <input
             name="username"
             id="username"
@@ -52,10 +58,10 @@ export const Login: React.FC = () => {
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            placeholder="not-your-real-name"
+            placeholder={t('login_not_your_real_name')}
             required
           />
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">{t('login_password')}</label>
           <input
             name="password"
             id="password"
@@ -75,28 +81,28 @@ export const Login: React.FC = () => {
               onChange={(e) => setShowPassword(e.target.checked)}
             />
             <label htmlFor="show_password" className="form-check-label">
-              Show password?
+            {t('login_show_password')}
             </label>
           </div>
-          <Link to="/forgotten-password.html">Forgotten password?</Link>
+          <Link to="/forgotten-password.html">{t('login_forgotten_password')}</Link>
           <div className="buttons-container with-space">
             <input
               type="submit"
               disabled={isLoading}
-              value="Log In"
+              value={loginText}
               className="btn btn-primary"
             />
             {isLoading && (
               <span>
                 <SpinnerIcon />
-                Logging in...
+                {t('login_logging_in')}
               </span>
             )}
           </div>
-          Would you like to create an account instead?
+          {t('login_create_account')}
           <div className="buttons-container with-space">
             <Link to="sign-up.html" className="btn btn-outline-dark">
-              Sign Up
+            {t('signup')}
             </Link>
           </div>
         </form>

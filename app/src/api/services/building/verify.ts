@@ -22,6 +22,7 @@ export async function verifyBuildingAttributes(buildingId: number, userId: strin
             if (JSON.stringify(value) == JSON.stringify(building[key])) {
                 try {
                     await verifyDataAccess.updateBuildingUserVerifiedAttribute(buildingId, userId, key, building[key]);
+
                     verified[key] = building[key];
                 } catch (error) {
                     // possible reasons:
@@ -45,6 +46,7 @@ export async function verifyBuildingAttributes(buildingId: number, userId: strin
             throw new DatabaseError(msg);
         }
     }
+    
     return verified;
 }
 
@@ -62,5 +64,6 @@ export async function getBuildingVerifications(building: BaseBuilding) {
             verified[item.attribute] = verified[item.attribute] ?? 0 + 1;
         }
     }
+
     return verified;
 }

@@ -25,8 +25,8 @@ const frontendRoute = asyncController(async (req: express.Request, res: express.
     const data: any = {}; // TODO: remove any
     context.status = 200;
 
-    // const userId = req.session.user_id;
-    const userId = req.session.id;
+    const userId = req.session.user_id;
+    // const userId = req.session.id;
     const buildingId = parseBuildingURL(req.url);
     const isBuilding = (typeof (buildingId) !== 'undefined');
     if (isBuilding && isNaN(buildingId)) {
@@ -51,6 +51,7 @@ const frontendRoute = asyncController(async (req: express.Request, res: express.
         }
         data.user = user;
         data.building = building;
+        
         data.user_verified = userVerified;
         // if (data.building != null) {
         //     data.building.uprns = uprns;
@@ -91,14 +92,14 @@ function renderHTML(context, data, req, res) {
         <meta charset="utf-8" />
 
         <meta name="twitter:card"              content="summary" />
-        <meta name="twitter:site"              content="@colouringathens" />
+        <meta name="twitter:site"              content="@colouringAthens" />
 
-        <meta property="og:url"                content="https://colouring.athens" />
+        <meta property="og:url"                content="https://Athens.colouringcities.org/" />
         <meta property="og:type"               content="website" />
         <meta property="og:title"              content="Colouring Athens" />
-        <meta property="og:description"        content="Colouring Athens is a knowledge exchange platform collecting information on every building in London, to help make the city more sustainable. We’re building it at The Bartlett Centre for Advanced Spatial Analysis, University College London." />
+        <meta property="og:description"        content="Colouring Athens is a knowledge exchange platform collecting information on every building in Athens, to help make the city more sustainable. We’re building it at the National Technical University of Athens." />
         <meta property="og:locale"             content="en_GB" />
-        <meta property="og:image"              content="https://colouring.athens/images/logo-cl-square.png" />
+        <meta property="og:image"              content="https://Athens.colouringcities.org/images/logo-cl-square.png" />
 
         <link rel="manifest" href="site.webmanifest">
 

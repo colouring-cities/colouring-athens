@@ -62,7 +62,7 @@ function getPasswordResetEmail(email: string, token: string, siteOrigin: string)
         text: messageBody,
         subject: 'Reset your Colouring Athens password',
         to: email,
-        from: 'no-reply@colouring.london'
+        from: 'Athens@colouringcities.org'
     };
 }
 

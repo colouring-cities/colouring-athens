@@ -60,7 +60,7 @@ function parseDate(isoUtcDate: string): Date {
     const [year, month, day, hour, minute, second, millisecond] = isoUtcDate.match(/^(\d{4})-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d).(\d{3})Z$/)
         .splice(1)
         .map(x => parseInt(x, 10));
-    return new Date(Date.UTC(year, month-1, day, hour, minute, second, millisecond));
+    return new Date(Date.UTC(year, month-1, day, hour + 2, minute, second, millisecond));
 }
 
 function compareObjects(objA: object, objB: object): [object, object] {

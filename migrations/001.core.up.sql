@@ -6,9 +6,8 @@
 CREATE TABLE IF NOT EXISTS geometries (
     -- internal unique id
     geometry_id serial PRIMARY KEY,
-    -- replaced source id with ELSTAT and OSM ids
-    elstat_id varchar(30),
-    osm_id varchar(30),
+    -- cross-reference to data source id
+    source_id varchar(30),
     -- geometry as EPSG:3857 avoiding reprojection for tiles
     geometry_geom geometry(GEOMETRY, 3857)
 );
@@ -22,19 +21,13 @@ CREATE TABLE IF NOT EXISTS buildings (
     -- internal unique id
     building_id serial PRIMARY KEY,
     -- OS MasterMap topo id
-    --ref_toid varchar,
-    --replaced by Hellenic Statistics building ID
-    ref_elstat_id varchar,
+    ref_toid varchar,
     -- OSM reference id
-    ref_osm_id varchar,
+    ref_osm_id bigint,
     -- reference to geometry, aiming to decouple from geometry provider
     geometry_id integer REFERENCES geometries
 );
-
-ALTER TABLE
-    buildings
-ADD
-    CONSTRAINT buildings_ref_elstat_id CHECK (length(ref_elstat_id) < 90);
+ALTER TABLE buildings ADD CONSTRAINT buildings_ref_toid_len CHECK (length(ref_toid) < 90);
 
 --
 -- Properties table
@@ -45,15 +38,15 @@ CREATE TABLE IF NOT EXISTS building_properties (
     -- internal primary key
     building_property_id serial PRIMARY KEY,
     -- UPRN
-    --uprn bigint,
+    uprn bigint,
     -- Parent should reference UPRN, but assume dataset may be (initially) incomplete
-    --parent_uprn bigint,
+    parent_uprn bigint,
     -- Building ID may be null for failed matches
-    building_id integer REFERENCES buildings
+    building_id integer REFERENCES buildings,
     -- TOID match provided by AddressBase
-    --toid varchar,
+    toid varchar,
     -- Geometry (for verification if loaded, not for public access)
-    --uprn_geom geometry(POINT, 3857)
+    uprn_geom geometry(POINT, 3857)
 );
 
 --
@@ -65,11 +58,7 @@ CREATE TABLE IF NOT EXISTS user_categories (
     -- category name/short description
     category varchar
 );
-
-INSERT INTO
-    user_categories (category_id, category)
-VALUES
-    (1, 'Not provided');
+INSERT INTO user_categories ( category_id, category ) VALUES ( 1, 'Not provided');
 
 --
 -- User access levels
@@ -80,11 +69,7 @@ CREATE TABLE IF NOT EXISTS user_access_levels (
     -- name/short description
     access_level varchar
 );
-
-INSERT INTO
-    user_access_levels (access_level_id, access_level)
-VALUES
-    (1, 'untrusted');
+INSERT INTO user_access_levels ( access_level_id, access_level ) VALUES ( 1, 'untrusted');
 
 --
 -- Users table
@@ -108,25 +93,12 @@ CREATE TABLE IF NOT EXISTS users (
     -- user API key - to give limited query/edit access
     api_key uuid UNIQUE default NULL
 );
+ALTER TABLE users ADD CONSTRAINT users_username_len CHECK (length(username) < 30);
+ALTER TABLE users ADD CONSTRAINT users_email_len CHECK (length(email) < 50);
+ALTER TABLE users ADD CONSTRAINT users_pass_len CHECK (length(pass) <= 60);
 
-ALTER TABLE
-    users
-ADD
-    CONSTRAINT users_username_len CHECK (length(username) < 30);
-
-ALTER TABLE
-    users
-ADD
-    CONSTRAINT users_email_len CHECK (length(email) < 50);
-
-ALTER TABLE
-    users
-ADD
-    CONSTRAINT users_pass_len CHECK (length(pass) <= 60);
-
-CREATE INDEX IF NOT EXISTS user_username_idx ON users (username);
-
-CREATE INDEX IF NOT EXISTS user_email_idx ON users (email);
+CREATE INDEX IF NOT EXISTS user_username_idx ON users ( username );
+CREATE INDEX IF NOT EXISTS user_email_idx ON users ( email );
 
 --
 -- User session table
@@ -137,7 +109,7 @@ CREATE TABLE IF NOT EXISTS user_sessions (
     expire timestamp(6) NOT NULL
 );
 
-CREATE INDEX IF NOT EXISTS user_sessions_expire_idx on user_sessions (expire);
+CREATE INDEX IF NOT EXISTS user_sessions_expire_idx on user_sessions ( expire );
 
 --
 -- Logs table
@@ -159,13 +131,8 @@ CREATE TABLE IF NOT EXISTS logs (
     building_id integer REFERENCES buildings
 );
 
-CREATE INDEX IF NOT EXISTS log_timestamp_idx ON logs (log_timestamp);
+CREATE INDEX IF NOT EXISTS log_timestamp_idx ON logs ( log_timestamp );
+CREATE INDEX IF NOT EXISTS log_user_idx ON logs ( user_id );
+CREATE INDEX IF NOT EXISTS log_building_idx ON logs ( building_id );
 
-CREATE INDEX IF NOT EXISTS log_user_idx ON logs (user_id);
-
-CREATE INDEX IF NOT EXISTS log_building_idx ON logs (building_id);
-
-ALTER TABLE
-    buildings
-ADD
-    COLUMN revision_id bigint REFERENCES logs (log_id);
+ALTER TABLE buildings ADD COLUMN revision_id bigint REFERENCES logs ( log_id );

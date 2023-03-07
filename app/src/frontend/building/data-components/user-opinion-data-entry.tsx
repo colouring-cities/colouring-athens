@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
-
+import { useTranslation } from "react-i18next";
 import { CopyProps } from '../data-containers/category-view-props';
 import { DataTitleCopyable } from './data-title';
 
@@ -15,7 +15,7 @@ interface UserOpinionEntryProps {
 }
 
 const UserOpinionEntry: React.FunctionComponent<UserOpinionEntryProps> = (props) => {
-
+    const { t } = useTranslation();
     return (
         <>
         <DataTitleCopyable
@@ -29,7 +29,7 @@ const UserOpinionEntry: React.FunctionComponent<UserOpinionEntryProps> = (props)
                     checked={!!props.userValue}
                     disabled={props.mode === 'view'}
                     onChange={e => props.onChange(props.slug, e.target.checked)}
-                /> Yes
+                /> {t("yes")}
             </label>
         </>
     );

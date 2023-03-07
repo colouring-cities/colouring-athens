@@ -12,11 +12,15 @@ import { CategoryViewProps } from "./category-view-props";
 // import { useTranslation } from "react-i18next";
 import { LogicalDataEntry } from "../data-components/logical-data-entry/logical-data-entry";
 import i18next from "i18next";
+import { useTranslation } from "react-i18next";
 
 /**
  * Size view/edit section
  */
+
 const SizeView: React.FunctionComponent<CategoryViewProps> = (props) => {
+  const { t } = useTranslation();
+
   let size_storeys_core_title = dataFields.size_storeys_core.title_en;
   let size_storeys_core_tooltip = dataFields.size_storeys_core.tooltip_en;
   let size_storeys_basement_title = dataFields.size_storeys_basement.title_en;
@@ -47,8 +51,7 @@ const SizeView: React.FunctionComponent<CategoryViewProps> = (props) => {
     height_title = dataFields.size_height_apex.title_gr;
     height_tooltip = dataFields.size_height_apex.tooltip_gr;
     floor_area_ground_title = dataFields.size_floor_area_ground.title_gr;
-    floor_area_ground_tooltip =
-      dataFields.size_floor_area_ground.tooltip_gr;
+    floor_area_ground_tooltip = dataFields.size_floor_area_ground.tooltip_gr;
     floor_area_total_title = dataFields.size_floor_area_total.title_gr;
     floor_area_total_tooltip = dataFields.size_floor_area_total.tooltip_gr;
     width_frontage_title = dataFields.size_width_frontage.title_gr;
@@ -57,7 +60,7 @@ const SizeView: React.FunctionComponent<CategoryViewProps> = (props) => {
 
   return (
     <Fragment>
-      <DataEntryGroup name="Storeys" collapsed={false}>
+      <DataEntryGroup name={t("storeys")} collapsed={false}>
         <NumericDataEntry
           title={size_storeys_core_title}
           slug="size_storeys_core"
@@ -68,6 +71,19 @@ const SizeView: React.FunctionComponent<CategoryViewProps> = (props) => {
           onChange={props.onChange}
           step={1}
           min={0}
+        />
+        <Verification
+          slug="size_storeys_core"
+          allow_verify={
+            props.user !== undefined &&
+            props.building.size_storeys_core !== null
+          }
+          onVerify={props.onVerify}
+          user_verified={props.user_verified.hasOwnProperty(
+            "size_storeys_core"
+          )}
+          user_verified_as={props.user_verified.size_storeys_core}
+          verified_count={props.building.verified.size_storeys_core}
         />
 
         <NumericDataEntry
@@ -81,25 +97,62 @@ const SizeView: React.FunctionComponent<CategoryViewProps> = (props) => {
           step={1}
           min={0}
         />
+        <Verification
+          slug="size_storeys_basement"
+          allow_verify={
+            props.user !== undefined &&
+            props.building.size_storeys_basement !== null
+          }
+          onVerify={props.onVerify}
+          user_verified={props.user_verified.hasOwnProperty(
+            "size_storeys_basement"
+          )}
+          user_verified_as={props.user_verified.size_storeys_basement}
+          verified_count={props.building.verified.size_storeys_basement}
+        />
 
         <LogicalDataEntry
           slug="pilotis"
           title={pilotis_title}
-          tooltip={pilotis_tooltip}
+          // tooltip={pilotis_tooltip}
           value={props.building.pilotis}
           onChange={props.onChange}
           mode={props.mode}
+        />
+        <Verification
+          slug="pilotis"
+          allow_verify={
+            props.user !== undefined && props.building.pilotis !== null
+          }
+          onVerify={props.onVerify}
+          user_verified={props.user_verified.hasOwnProperty("pilotis")}
+          user_verified_as={props.user_verified.pilotis}
+          verified_count={props.building.verified.pilotis}
         />
 
         <LogicalDataEntry
           slug="high_ground_floor"
           title={high_ground_floor_title}
-          tooltip={high_ground_floor_tooltip}
+          // tooltip={high_ground_floor_tooltip}
           value={props.building.high_ground_floor}
           onChange={props.onChange}
           mode={props.mode}
         />
-
+        <Verification
+          slug="high_ground_floor"
+          allow_verify={
+            props.user !== undefined &&
+            props.building.high_ground_floor !== null
+          }
+          onVerify={props.onVerify}
+          user_verified={props.user_verified.hasOwnProperty(
+            "high_ground_floor"
+          )}
+          user_verified_as={props.user_verified.high_ground_floor}
+          verified_count={props.building.verified.high_ground_floor}
+        />
+      </DataEntryGroup>
+      <DataEntryGroup name={t("height")} collapsed={true}>
         <NumericDataEntry
           title={height_title}
           slug="size_height_apex"
@@ -110,8 +163,18 @@ const SizeView: React.FunctionComponent<CategoryViewProps> = (props) => {
           step={0.1}
           min={0}
         />
+        <Verification
+          slug="size_height_apex"
+          allow_verify={
+            props.user !== undefined && props.building.size_height_apex !== null
+          }
+          onVerify={props.onVerify}
+          user_verified={props.user_verified.hasOwnProperty("size_height_apex")}
+          user_verified_as={props.user_verified.size_height_apex}
+          verified_count={props.building.verified.size_height_apex}
+        />
       </DataEntryGroup>
-      <DataEntryGroup name="Area" collapsed={true}>
+      <DataEntryGroup name={t("area")} collapsed={true}>
         <NumericDataEntry
           title={floor_area_ground_title}
           slug="size_floor_area_ground"
@@ -121,19 +184,7 @@ const SizeView: React.FunctionComponent<CategoryViewProps> = (props) => {
           onChange={props.onChange}
           step={0.1}
           min={0}
-        />
-        <Verification
-          slug="size_floor_area_ground"
-          allow_verify={
-            props.user !== undefined &&
-            props.building.size_floor_area_ground !== null
-          }
-          onVerify={props.onVerify}
-          user_verified={props.user_verified.hasOwnProperty(
-            "size_floor_area_ground"
-          )}
-          user_verified_as={props.user_verified.size_floor_area_ground}
-          verified_count={props.building.verified.size_floor_area_ground}
+          disabled={true}
         />
 
         <NumericDataEntry
@@ -145,19 +196,7 @@ const SizeView: React.FunctionComponent<CategoryViewProps> = (props) => {
           onChange={props.onChange}
           step={0.1}
           min={0}
-        />
-        <Verification
-          slug="size_floor_area_total"
-          allow_verify={
-            props.user !== undefined &&
-            props.building.size_floor_area_total !== null
-          }
-          onVerify={props.onVerify}
-          user_verified={props.user_verified.hasOwnProperty(
-            "size_floor_area_total"
-          )}
-          user_verified_as={props.user_verified.size_floor_area_total}
-          verified_count={props.building.verified.size_floor_area_total}
+          disabled={true}
         />
 
         <NumericDataEntry
@@ -169,19 +208,7 @@ const SizeView: React.FunctionComponent<CategoryViewProps> = (props) => {
           onChange={props.onChange}
           step={0.1}
           min={0}
-        />
-        <Verification
-          slug="size_width_frontage"
-          allow_verify={
-            props.user !== undefined &&
-            props.building.size_width_frontage !== null
-          }
-          onVerify={props.onVerify}
-          user_verified={props.user_verified.hasOwnProperty(
-            "size_width_frontage"
-          )}
-          user_verified_as={props.user_verified.size_width_frontage}
-          verified_count={props.building.verified.size_width_frontage}
+          disabled={true}
         />
       </DataEntryGroup>
     </Fragment>

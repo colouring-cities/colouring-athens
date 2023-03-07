@@ -47,6 +47,7 @@ export function useBuildingData(buildingId: number, preloadedData: Building, inc
             setBuildingData(building);
         } else {
             if(building.verified == undefined) {
+        
                 building.verified = {} as BuildingAttributeVerificationCounts;
             }
             setBuildingData(building);

@@ -21,13 +21,7 @@
     </Style>
     <Style name="number_labels">
         <Rule>
-            <TextSymbolizer
-                face-name="DejaVu Sans Condensed Bold"
-                fill="#eee"
-                size="21"
-                halo-radius="1"
-                halo-fill="#333"
-            >
+            <TextSymbolizer face-name="DejaVu Sans Condensed Bold" fill="#eee" size="21" halo-radius="1" halo-fill="#333">
                 [location_number]
             </TextSymbolizer>
             <MaxScaleDenominator>2132</MaxScaleDenominator>
@@ -71,12 +65,12 @@
         <Rule>
             <MaxScaleDenominator>17061</MaxScaleDenominator>
             <MinScaleDenominator>4264</MinScaleDenominator>
-            <LineSymbolizer stroke="#888" stroke-width="1.0"/>
+            <LineSymbolizer stroke="#888" stroke-width="1.0" />
         </Rule>
         <Rule>
             <MaxScaleDenominator>4264</MaxScaleDenominator>
             <MinScaleDenominator>0</MinScaleDenominator>
-            <LineSymbolizer stroke="#888" stroke-width="3.0"/>
+            <LineSymbolizer stroke="#888" stroke-width="3.0" />
         </Rule>
     </Style>
     <Style name="size_storeys">
@@ -104,175 +98,176 @@
         <Rule>
             <MaxScaleDenominator>17061</MaxScaleDenominator>
             <MinScaleDenominator>4264</MinScaleDenominator>
-            <LineSymbolizer stroke="#ccc" stroke-width="1.0"/>
+            <LineSymbolizer stroke="#ccc" stroke-width="1.0" />
         </Rule>
         <Rule>
             <MaxScaleDenominator>4264</MaxScaleDenominator>
             <MinScaleDenominator>0</MinScaleDenominator>
-            <LineSymbolizer stroke="#ccc" stroke-width="3.0"/>
+            <LineSymbolizer stroke="#ccc" stroke-width="3.0" />
         </Rule>
     </Style>
-    <Style name="size_height">
+
+    <Style name="size_storeys_core">
         <Rule>
-            <Filter>[size_height] &lt; 5.55</Filter>
+            <Filter>[size_storeys_core] = 1</Filter>
             <PolygonSymbolizer fill="#f7f4f9" />
         </Rule>
         <Rule>
-            <Filter>[size_height] &gt;= 5.55 and [size_height] &lt; 7.73</Filter>
+            <Filter>[size_storeys_core] = 2</Filter>
             <PolygonSymbolizer fill="#e7e1ef" />
         </Rule>
         <Rule>
-            <Filter>[size_height] &gt;= 7.73 and [size_height] &lt; 11.38</Filter>
+            <Filter>[size_storeys_core]  = 3</Filter>
             <PolygonSymbolizer fill="#d4b9da" />
         </Rule>
         <Rule>
-            <Filter>[size_height] &gt;= 11.38 and [size_height] &lt; 18.45</Filter>
+            <Filter>[size_storeys_core]  =4</Filter>
             <PolygonSymbolizer fill="#c994c7" />
         </Rule>
         <Rule>
-            <Filter>[size_height] &gt;= 18.45 and [size_height] &lt; 35.05</Filter>
+            <Filter>[size_storeys_core]  = 5</Filter>
             <PolygonSymbolizer fill="#df65b0" />
         </Rule>
         <Rule>
-            <Filter>[size_height] &gt;= 35.05 and [size_height] &lt; 89.30</Filter>
+            <Filter>[size_storeys_core]  = 6</Filter>
             <PolygonSymbolizer fill="#e7298a" />
         </Rule>
         <Rule>
-            <Filter>[size_height] &gt;= 89.30 and [size_height] &lt; 152</Filter>
+            <Filter>[size_storeys_core]  =7</Filter>
             <PolygonSymbolizer fill="#ce1256" />
         </Rule>
         <Rule>
-            <Filter>[size_height] &gt;= 152</Filter>
+            <Filter>[size_storeys_core]  >= 8</Filter>
             <PolygonSymbolizer fill="#980043" />
         </Rule>
 
         <Rule>
             <MaxScaleDenominator>17061</MaxScaleDenominator>
             <MinScaleDenominator>4264</MinScaleDenominator>
-            <LineSymbolizer stroke="#ccc" stroke-width="1.0"/>
+            <LineSymbolizer stroke="#ccc" stroke-width="1.0" />
         </Rule>
         <Rule>
             <MaxScaleDenominator>4264</MaxScaleDenominator>
             <MinScaleDenominator>0</MinScaleDenominator>
-            <LineSymbolizer stroke="#ccc" stroke-width="3.0"/>
+            <LineSymbolizer stroke="#ccc" stroke-width="3.0" />
         </Rule>
     </Style>
-    <Style name="construction_core_material">
+
+    <Style name="size_height">
         <Rule>
-            <Filter>[construction_core_material] = "Wood"</Filter>
-            <PolygonSymbolizer fill="#b5a859" />
+            <Filter>[size_height] &lt; 3</Filter>
+            <PolygonSymbolizer fill="rgb(245, 245, 250)" />
         </Rule>
         <Rule>
-            <Filter>[construction_core_material] = "Stone"</Filter>
-            <PolygonSymbolizer fill="#ffffe3" />
+            <Filter>[size_height] &gt;= 3 and [size_height] &lt; 6</Filter>
+            <PolygonSymbolizer fill="rgb(217, 225, 242)" />
         </Rule>
         <Rule>
-            <Filter>[construction_core_material] = "Brick"</Filter>
-            <PolygonSymbolizer fill="#f5d96b" />
+            <Filter>[size_height] &gt;= 6 and [size_height] &lt; 9</Filter>
+            <PolygonSymbolizer fill="rgb(180, 198, 231)" />
         </Rule>
         <Rule>
-            <Filter>[construction_core_material] = "Steel"</Filter>
-            <PolygonSymbolizer fill="#beffe8" />
+            <Filter>[size_height] &gt;= 9 and [size_height] &lt; 12</Filter>
+            <PolygonSymbolizer fill="rgb(142, 169, 219)" />
         </Rule>
         <Rule>
-            <Filter>[construction_core_material] = "Reinforced Concrete"</Filter>
-            <PolygonSymbolizer fill="#fca89d" />
+            <Filter>[size_height] &gt;= 12 and [size_height] &lt; 15</Filter>
+            <PolygonSymbolizer fill="rgb(120, 150, 196)" />
         </Rule>
         <Rule>
-            <Filter>[construction_core_material] = "Other Metal"</Filter>
-            <PolygonSymbolizer fill="#5c8970" />
+            <Filter>[size_height] &gt;= 15 and [size_height] &lt; 18</Filter>
+            <PolygonSymbolizer fill="rgb(103, 124, 163)" />
         </Rule>
         <Rule>
-            <Filter>[construction_core_material] = "Other Natural Material"</Filter>
-            <PolygonSymbolizer fill="#96613b" />
+            <Filter>[size_height] &gt;= 18 and [size_height] &lt; 30</Filter>
+            <PolygonSymbolizer fill="rgb(114, 116, 181)" />
         </Rule>
         <Rule>
-            <Filter>[construction_core_material] = "Other Man-Made Material"</Filter>
-            <PolygonSymbolizer fill="#c48a85" />
+            <Filter>[size_height] &gt;= 30</Filter>
+            <PolygonSymbolizer fill="rgb(72, 75, 153)" />
         </Rule>
 
         <Rule>
             <MaxScaleDenominator>17061</MaxScaleDenominator>
             <MinScaleDenominator>4264</MinScaleDenominator>
-            <LineSymbolizer stroke="#888" stroke-width="1.0"/>
+            <LineSymbolizer stroke="#ccc" stroke-width="1.0" />
         </Rule>
         <Rule>
             <MaxScaleDenominator>4264</MaxScaleDenominator>
             <MinScaleDenominator>0</MinScaleDenominator>
-            <LineSymbolizer stroke="#888" stroke-width="3.0"/>
+            <LineSymbolizer stroke="#ccc" stroke-width="3.0" />
         </Rule>
     </Style>
-    <Style name="date_year">
+
+
+    <Style name="construction_core_material">
         <Rule>
-            <Filter>[date_year] &gt;= 2020</Filter>
-            <PolygonSymbolizer fill="#fff9b8" />
+            <Filter>[construction_core_material] = 1</Filter>
+            <PolygonSymbolizer fill="rgb(252, 168, 157)" />
         </Rule>
         <Rule>
-            <Filter>[date_year] &gt;= 2000 and [date_year] &lt; 2020</Filter>
-            <PolygonSymbolizer fill="#fae269" />
+            <Filter>[construction_core_material] = 2</Filter>
+            <PolygonSymbolizer fill="rgb(255, 255, 227)" />
         </Rule>
         <Rule>
-            <Filter>[date_year] &gt;= 1980 and [date_year] &lt; 2000</Filter>
-            <PolygonSymbolizer fill="#fbaf27" />
+            <Filter>[construction_core_material] = 3</Filter>
+            <PolygonSymbolizer fill="rgb(245, 217, 107)" />
         </Rule>
         <Rule>
-            <Filter>[date_year] &gt;= 1960 and [date_year] &lt; 1980</Filter>
-            <PolygonSymbolizer fill="#e6711d" />
+            <Filter>[construction_core_material] = 4</Filter>
+            <PolygonSymbolizer fill="rgb(190, 255, 232)" />
         </Rule>
         <Rule>
-            <Filter>[date_year] &gt;= 1940 and [date_year] &lt; 1960</Filter>
-            <PolygonSymbolizer fill="#cc1212" />
+            <Filter>[construction_core_material] = 5</Filter>
+            <PolygonSymbolizer fill="rgb(150, 97, 59)" />
         </Rule>
         <Rule>
-            <Filter>[date_year] &gt;= 1920 and [date_year] &lt; 1940</Filter>
-            <PolygonSymbolizer fill="#8f0303" />
+            <Filter>[construction_core_material] = 6</Filter>
+            <PolygonSymbolizer fill="rgb(196, 138, 133)" />
+        </Rule>
+
+        <Rule>
+            <MaxScaleDenominator>17061</MaxScaleDenominator>
+            <MinScaleDenominator>4264</MinScaleDenominator>
+            <LineSymbolizer stroke="#888" stroke-width="1.0" />
         </Rule>
         <Rule>
-            <Filter>[date_year] &gt;= 1900 and [date_year] &lt; 1920</Filter>
-            <PolygonSymbolizer fill="#8f5385" />
+            <MaxScaleDenominator>4264</MaxScaleDenominator>
+            <MinScaleDenominator>0</MinScaleDenominator>
+            <LineSymbolizer stroke="#888" stroke-width="3.0" />
+        </Rule>
+    </Style>
+    <Style name="year_built">
+        <Rule>
+            <Filter>[year_built] = 5</Filter>
+            <PolygonSymbolizer fill="rgb(255, 249, 184)" />
         </Rule>
         <Rule>
-            <Filter>[date_year] &gt;= 1880 and [date_year] &lt; 1900</Filter>
-            <PolygonSymbolizer fill="#c3e1eb" />
+            <Filter>[year_built] = 4</Filter>
+            <PolygonSymbolizer fill="rgb(251, 175, 39)" />
         </Rule>
         <Rule>
-            <Filter>[date_year] &gt;= 1860 and [date_year] &lt; 1880</Filter>
-            <PolygonSymbolizer fill="#6a9dba" />
+            <Filter>[year_built] = 3</Filter>
+            <PolygonSymbolizer fill="rgb(230, 113, 29)" />
         </Rule>
         <Rule>
-            <Filter>[date_year] &gt;= 1840 and [date_year] &lt; 1860</Filter>
-            <PolygonSymbolizer fill="#3b74a3" />
+            <Filter>[year_built] = 2</Filter>
+            <PolygonSymbolizer fill="rgb(143, 3, 3)" />
         </Rule>
         <Rule>
-            <Filter>[date_year] &gt;= 1820 and [date_year] &lt; 1840</Filter>
-            <PolygonSymbolizer fill="#95ded8" />
-        </Rule>
-        <Rule>
-            <Filter>[date_year] &gt;= 1800 and [date_year] &lt; 1820</Filter>
-            <PolygonSymbolizer fill="#68aba5" />
-        </Rule>
-        <Rule>
-            <Filter>[date_year] &gt;= 1750 and [date_year] &lt; 1800</Filter>
-            <PolygonSymbolizer fill="#acc98f" />
-        </Rule>
-        <Rule>
-            <Filter>[date_year] &gt;= 1700 and [date_year] &lt; 1750</Filter>
-            <PolygonSymbolizer fill="#6d8a51" />
-        </Rule>
-        <Rule>
-            <Filter>[date_year] &lt; 1700</Filter>
-            <PolygonSymbolizer fill="#d0c291" />
+            <Filter>[year_built] = 1</Filter>
+            <PolygonSymbolizer fill="rgb(143, 83, 133)" />
         </Rule>
 
         <Rule>
             <MaxScaleDenominator>8530</MaxScaleDenominator>
             <MinScaleDenominator>4264</MinScaleDenominator>
-            <LineSymbolizer stroke="#888" stroke-width="1.0"/>
+            <LineSymbolizer stroke="#888" stroke-width="1.0" />
         </Rule>
         <Rule>
             <MaxScaleDenominator>4264</MaxScaleDenominator>
             <MinScaleDenominator>0</MinScaleDenominator>
-            <LineSymbolizer stroke="#888" stroke-width="3.0"/>
+            <LineSymbolizer stroke="#888" stroke-width="3.0" />
         </Rule>
     </Style>
     <Style name="conservation_area">
@@ -280,131 +275,101 @@
             <PolygonSymbolizer fill="#73ebaf" />
         </Rule>
     </Style>
+    
     <Style name="planning_combined">
         <Rule>
-            <Filter>[planning_in_conservation_area] = true</Filter>
-            <PolygonSymbolizer fill="#95beba"/>
+            <Filter>[inside_archaelogical_area] = true or [inside_energy_area] = true</Filter>
+            <PolygonSymbolizer fill="#95beba" />
         </Rule>
         <Rule>
-            <Filter>[listing_type] = "Grade I Listed"</Filter>
-            <PolygonSymbolizer fill="#c72e08"/>
+            <Filter>[officially_preserved] = true</Filter>
+            <PolygonSymbolizer fill="#c72e08" />
+        </Rule>
+        <!-- <Rule>
+            <Filter>[officially_monument] = true</Filter>
+            <PolygonSymbolizer fill="#e75b42" />
+        </Rule> -->
+        <!-- <Rule>
+            <Filter>[officially_monument] = true or ([monument_designation] = 2 or [monument_designation] = 3)</Filter>
+            <PolygonSymbolizer fill="#ffbea1" />
         </Rule>
         <Rule>
-            <Filter>[listing_type] = "Grade II* Listed"</Filter>
-            <PolygonSymbolizer fill="#e75b42"/>
+            <Filter>[officially_monument] = true and ([monument_designation] = 2 or [monument_designation] = 3) and [officially_preserved] = true</Filter>
+            <PolygonSymbolizer fill="#858ed4" />
+        </Rule> -->
+        <Rule>
+            <Filter>[officially_monument] = true </Filter>
+            <PolygonSymbolizer fill="#ffbea1" />
         </Rule>
         <Rule>
-            <Filter>[listing_type] = "Grade II Listed"</Filter>
-            <PolygonSymbolizer fill="#ffbea1"/>
+            <Filter>[officially_monument] = true and [officially_preserved] = true</Filter>
+            <PolygonSymbolizer fill="#858ed4" />
         </Rule>
-        <Rule>
-            <Filter>[listing_type] = "Locally Listed"</Filter>
-            <PolygonSymbolizer fill="#858ed4"/>
-        </Rule>
-
-        <Rule>
+        <!-- <Rule>
             <Filter>[listing_type] != "None" or [planning_in_conservation_area] = true</Filter>
             <MaxScaleDenominator>17061</MaxScaleDenominator>
             <MinScaleDenominator>4264</MinScaleDenominator>
-            <LineSymbolizer stroke="#888" stroke-width="1.0"/>
+            <LineSymbolizer stroke="#888" stroke-width="1.0" />
         </Rule>
         <Rule>
             <Filter>[listing_type] != "None" or [planning_in_conservation_area] = true</Filter>
             <MaxScaleDenominator>4264</MaxScaleDenominator>
             <MinScaleDenominator>0</MinScaleDenominator>
-            <LineSymbolizer stroke="#888" stroke-width="3.0"/>
-        </Rule>
+            <LineSymbolizer stroke="#888" stroke-width="3.0" />
+        </Rule> -->
 
         <!-- Conservation area outline -->
-        <Rule>
+        <!-- <Rule>
             <Filter>[listing_type] != "None" and [planning_in_conservation_area] = true</Filter>
             <MaxScaleDenominator>34100</MaxScaleDenominator>
             <MinScaleDenominator>17061</MinScaleDenominator>
-            <LineSymbolizer stroke="#95beba" stroke-width="0.5"/>
+            <LineSymbolizer stroke="#95beba" stroke-width="0.5" />
         </Rule>
         <Rule>
             <Filter>[listing_type] != "None" and [planning_in_conservation_area] = true</Filter>
             <MaxScaleDenominator>17061</MaxScaleDenominator>
             <MinScaleDenominator>8530</MinScaleDenominator>
-            <LineSymbolizer stroke="#95beba" stroke-width="1.0"/>
+            <LineSymbolizer stroke="#95beba" stroke-width="1.0" />
         </Rule>
         <Rule>
             <Filter>[listing_type] != "None" and [planning_in_conservation_area] = true</Filter>
             <MaxScaleDenominator>8530</MaxScaleDenominator>
             <MinScaleDenominator>0</MinScaleDenominator>
-            <LineSymbolizer stroke="#95beba" stroke-width="2.5"/>
-        </Rule>
+            <LineSymbolizer stroke="#95beba" stroke-width="2.5" />
+        </Rule> -->
     </Style>
-    <Style name="sust_dec">
+
+    <Style name="building_state">
         <Rule>
-            <Filter>[sust_dec] = A</Filter>
-            <PolygonSymbolizer fill="#007f3d" />
+            <Filter>[building_state] = 1</Filter>
+            <PolygonSymbolizer fill="rgb(44, 159, 41)" />
         </Rule>
         <Rule>
-            <Filter>[sust_dec] = B</Filter>
-            <PolygonSymbolizer fill="#2c9f29" />
+            <Filter>[building_state] = 2</Filter>
+            <PolygonSymbolizer fill="rgb(251, 175, 39)" />
         </Rule>
         <Rule>
-            <Filter>[sust_dec] = C</Filter>
-            <PolygonSymbolizer fill="#9dcb3c" />
+            <Filter>[building_state] = 3</Filter>
+            <PolygonSymbolizer fill="rgb(230, 113, 29)" />
         </Rule>
         <Rule>
-            <Filter>[sust_dec] = D</Filter>
-            <PolygonSymbolizer fill="#fff200" />
+            <Filter>[building_state] = 4</Filter>
+            <PolygonSymbolizer fill="rgb(143, 3, 3)" />
         </Rule>
-        <Rule>
-            <Filter>[sust_dec] = E</Filter>
-            <PolygonSymbolizer fill="#f7af1d" />
-        </Rule>
-        <Rule>
-            <Filter>[sust_dec] = F</Filter>
-            <PolygonSymbolizer fill="#ed6823" />
-        </Rule>
-        <Rule>
-            <Filter>[sust_dec] = G</Filter>
-            <PolygonSymbolizer fill="#e31d23" />
-        </Rule>
+
 
         <Rule>
             <MaxScaleDenominator>17061</MaxScaleDenominator>
             <MinScaleDenominator>4264</MinScaleDenominator>
-            <LineSymbolizer stroke="#888" stroke-width="1.0"/>
+            <LineSymbolizer stroke="#888" stroke-width="1.0" />
         </Rule>
         <Rule>
             <MaxScaleDenominator>4264</MaxScaleDenominator>
             <MinScaleDenominator>0</MinScaleDenominator>
-            <LineSymbolizer stroke="#888" stroke-width="3.0"/>
+            <LineSymbolizer stroke="#888" stroke-width="3.0" />
         </Rule>
     </Style>
-    <Style name="building_attachment_form">
-        <Rule>
-            <Filter>[building_attachment_form] = "Detached"</Filter>
-            <PolygonSymbolizer fill="#f2a2b9" />
-        </Rule>
-        <Rule>
-            <Filter>[building_attachment_form] = "Semi-Detached"</Filter>
-            <PolygonSymbolizer fill="#ab8fb0" />
-        </Rule>
-        <Rule>
-            <Filter>[building_attachment_form] = "End-Terrace"</Filter>
-            <PolygonSymbolizer fill="#3891d1" />
-        </Rule>
-        <Rule>
-            <Filter>[building_attachment_form] = "Mid-Terrace"</Filter>
-            <PolygonSymbolizer fill="#226291" />
-        </Rule>
 
-        <Rule>
-            <MaxScaleDenominator>17061</MaxScaleDenominator>
-            <MinScaleDenominator>4264</MinScaleDenominator>
-            <LineSymbolizer stroke="#888" stroke-width="0.8"/>
-        </Rule>
-        <Rule>
-            <MaxScaleDenominator>4264</MaxScaleDenominator>
-            <MinScaleDenominator>0</MinScaleDenominator>
-            <LineSymbolizer stroke="#888" stroke-width="2.0"/>
-        </Rule>
-    </Style>
     <Style name="likes">
         <Rule>
             <Filter>[likes] &gt;= 100</Filter>
@@ -438,12 +403,12 @@
         <Rule>
             <MaxScaleDenominator>17061</MaxScaleDenominator>
             <MinScaleDenominator>4264</MinScaleDenominator>
-            <LineSymbolizer stroke="#888" stroke-width="1.0"/>
+            <LineSymbolizer stroke="#888" stroke-width="1.0" />
         </Rule>
         <Rule>
             <MaxScaleDenominator>4264</MaxScaleDenominator>
             <MinScaleDenominator>0</MinScaleDenominator>
-            <LineSymbolizer stroke="#888" stroke-width="3.0"/>
+            <LineSymbolizer stroke="#888" stroke-width="3.0" />
         </Rule>
     </Style>
     <Style name="community_local_significance_total">
@@ -479,12 +444,12 @@
         <Rule>
             <MaxScaleDenominator>17061</MaxScaleDenominator>
             <MinScaleDenominator>4264</MinScaleDenominator>
-            <LineSymbolizer stroke="#888" stroke-width="1.0"/>
+            <LineSymbolizer stroke="#888" stroke-width="1.0" />
         </Rule>
         <Rule>
             <MaxScaleDenominator>4264</MaxScaleDenominator>
             <MinScaleDenominator>0</MinScaleDenominator>
-            <LineSymbolizer stroke="#888" stroke-width="3.0"/>
+            <LineSymbolizer stroke="#888" stroke-width="3.0" />
         </Rule>
     </Style>
     <Style name="community_in_public_ownership">
@@ -500,79 +465,248 @@
         <Rule>
             <MaxScaleDenominator>17061</MaxScaleDenominator>
             <MinScaleDenominator>4264</MinScaleDenominator>
-            <LineSymbolizer stroke="#888" stroke-width="1.0"/>
+            <LineSymbolizer stroke="#888" stroke-width="1.0" />
         </Rule>
         <Rule>
             <MaxScaleDenominator>4264</MaxScaleDenominator>
             <MinScaleDenominator>0</MinScaleDenominator>
-            <LineSymbolizer stroke="#888" stroke-width="3.0"/>
+            <LineSymbolizer stroke="#888" stroke-width="3.0" />
         </Rule>
     </Style>
-    <Style name="landuse">
+
+
+    <Style name="ownership_type">
         <Rule>
-            <Filter>[current_landuse_order] = "Agriculture And Fisheries"</Filter>
-            <PolygonSymbolizer fill="#fa667d" />
+            <Filter>[ownership_type] = 1 or [ownership_type] = 2</Filter>
+            <PolygonSymbolizer fill="#1166ff" />
         </Rule>
         <Rule>
-            <Filter>[current_landuse_order] = "Minerals"</Filter>
-            <PolygonSymbolizer fill="#53f5dd" />
+            <Filter>[ownership_type] = 3 or [ownership_type] = 4</Filter>
+            <PolygonSymbolizer fill="#ffaaa0" />
+        </Rule>
+
+        <Rule>
+            <MaxScaleDenominator>17061</MaxScaleDenominator>
+            <MinScaleDenominator>4264</MinScaleDenominator>
+            <LineSymbolizer stroke="#888" stroke-width="1.0" />
         </Rule>
         <Rule>
-            <Filter>[current_landuse_order] = "Unclassified buildings"</Filter>
-            <PolygonSymbolizer fill="#6c6f8e" />
+            <MaxScaleDenominator>4264</MaxScaleDenominator>
+            <MinScaleDenominator>0</MinScaleDenominator>
+            <LineSymbolizer stroke="#888" stroke-width="3.0" />
+        </Rule>
+    </Style>
+
+    <Style name="use">
+        <Rule>
+            <Filter>[use] = 1</Filter>
+            <PolygonSymbolizer fill="rgb(245, 245, 143)" />
         </Rule>
         <Rule>
-            <Filter>[current_landuse_order] = "Recreation And Leisure"</Filter>
-            <PolygonSymbolizer fill="#ffbfbf" />
+            <Filter>[use] = 5</Filter>
+            <PolygonSymbolizer fill="rgb(229, 5, 13)" />
         </Rule>
         <Rule>
-            <Filter>[current_landuse_order] = "Transport"</Filter>
-            <PolygonSymbolizer fill="#b3de69" />
+            <Filter>[use] = 2 or [use] = 3</Filter>
+            <PolygonSymbolizer fill="rgb(201, 148, 199)" />
         </Rule>
         <Rule>
-            <Filter>[current_landuse_order] = "Utilities And Infrastructure"</Filter>
-            <PolygonSymbolizer fill="#cccccc" />
+            <Filter>[use] = 4</Filter>
+            <PolygonSymbolizer fill="rgb(150, 97, 59)" />
         </Rule>
         <Rule>
-            <Filter>[current_landuse_order] = "Residential"</Filter>
-            <PolygonSymbolizer fill="#252aa6" />
+            <Filter>[use] = 8 or [use] = 9</Filter>
+            <PolygonSymbolizer fill="rgb(83, 245, 221)" />
         </Rule>
         <Rule>
-            <Filter>[current_landuse_order] = "Community Services"</Filter>
-            <PolygonSymbolizer fill="#73ccd1" />
+            <Filter>[use] = 6 or [use] = 7 or [use] = 12 or [use] = 16</Filter>
+            <PolygonSymbolizer fill="rgb(255, 191, 191)" />
         </Rule>
         <Rule>
-            <Filter>[current_landuse_order] = "Retail"</Filter>
-            <PolygonSymbolizer fill="#ff8c00" />
+            <Filter>[use] = 10</Filter>
+            <PolygonSymbolizer fill="rgb(56, 145, 209)" />
         </Rule>
         <Rule>
-            <Filter>[current_landuse_order] = "Industry And Business"</Filter>
-            <PolygonSymbolizer fill="#f5f58f" />
+            <Filter>[use] = 11</Filter>
+            <PolygonSymbolizer fill="rgb(115, 204, 209)" />
         </Rule>
         <Rule>
-            <Filter>[current_landuse_order] = "Vacant And Derelict"</Filter>
-            <PolygonSymbolizer fill="#ffffff" />
+            <Filter>[use] = 15 or [use] = 17</Filter>
+            <PolygonSymbolizer fill="rgb(179, 222, 105)" />
         </Rule>
         <Rule>
-            <Filter>[current_landuse_order] = "Defence"</Filter>
-            <PolygonSymbolizer fill="#898944" />
+            <Filter>[use] = 18</Filter>
+            <PolygonSymbolizer fill="rgb(204, 204, 204)" />
         </Rule>
         <Rule>
-            <Filter>[current_landuse_order] = "Mixed Use"</Filter>
-            <PolygonSymbolizer fill="#e5050d" />
+            <Filter>[use] = 13</Filter>
+            <PolygonSymbolizer fill="rgb(137, 137, 68)" />
+        </Rule>
+        <Rule>
+            <Filter>[use] = 14</Filter>
+            <PolygonSymbolizer fill="rgb(255, 255, 255)" />
+        </Rule>
+        <Rule>
+            <Filter>[use] = 19</Filter>
+            <PolygonSymbolizer fill="rgb(108, 111, 142)" />
+        </Rule>
+        <Rule>
+            <Filter>[use] = 20</Filter>
+            <PolygonSymbolizer fill="rgb(255, 140, 0)" />
         </Rule>
 
         <Rule>
             <MaxScaleDenominator>8530</MaxScaleDenominator>
             <MinScaleDenominator>4264</MinScaleDenominator>
-            <LineSymbolizer stroke="#888" stroke-width="0.8"/>
+            <LineSymbolizer stroke="#888" stroke-width="0.8" />
         </Rule>
         <Rule>
             <MaxScaleDenominator>4264</MaxScaleDenominator>
             <MinScaleDenominator>0</MinScaleDenominator>
-            <LineSymbolizer stroke="#888" stroke-width="3.0"/>
+            <LineSymbolizer stroke="#888" stroke-width="3.0" />
         </Rule>
     </Style>
+
+    <Style name="use_ground">
+        <Rule>
+            <Filter>[current_landuse_ground_floor] = 1</Filter>
+            <PolygonSymbolizer fill="rgb(245, 245, 143)" />
+        </Rule>
+        <Rule>
+            <Filter>[current_landuse_ground_floor] = 5</Filter>
+            <PolygonSymbolizer fill="rgb(229, 5, 13)" />
+        </Rule>
+        <Rule>
+            <Filter>[current_landuse_ground_floor] = 2 or [current_landuse_ground_floor] = 3</Filter>
+            <PolygonSymbolizer fill="rgb(201, 148, 199)" />
+        </Rule>
+        <Rule>
+            <Filter>[current_landuse_ground_floor] = 4</Filter>
+            <PolygonSymbolizer fill="rgb(150, 97, 59)" />
+        </Rule>
+        <Rule>
+            <Filter>[current_landuse_ground_floor] = 8 or [current_landuse_ground_floor] = 9</Filter>
+            <PolygonSymbolizer fill="rgb(83, 245, 221)" />
+        </Rule>
+        <Rule>
+            <Filter>[current_landuse_ground_floor] = 6 or [current_landuse_ground_floor] = 7 or [current_landuse_ground_floor] = 12 or [current_landuse_ground_floor] = 16</Filter>
+            <PolygonSymbolizer fill="rgb(255, 191, 191)" />
+        </Rule>
+        <Rule>
+            <Filter>[current_landuse_ground_floor] = 10</Filter>
+            <PolygonSymbolizer fill="rgb(56, 145, 209)" />
+        </Rule>
+        <Rule>
+            <Filter>[current_landuse_ground_floor] = 11</Filter>
+            <PolygonSymbolizer fill="rgb(115, 204, 209)" />
+        </Rule>
+        <Rule>
+            <Filter>[current_landuse_ground_floor] = 15 or [current_landuse_ground_floor] = 17</Filter>
+            <PolygonSymbolizer fill="rgb(179, 222, 105)" />
+        </Rule>
+        <Rule>
+            <Filter>[current_landuse_ground_floor] = 18</Filter>
+            <PolygonSymbolizer fill="rgb(204, 204, 204)" />
+        </Rule>
+        <Rule>
+            <Filter>[current_landuse_ground_floor] = 13</Filter>
+            <PolygonSymbolizer fill="rgb(137, 137, 68)" />
+        </Rule>
+        <Rule>
+            <Filter>[current_landuse_ground_floor] = 14</Filter>
+            <PolygonSymbolizer fill="rgb(255, 255, 255)" />
+        </Rule>
+        <Rule>
+            <Filter>[current_landuse_ground_floor] = 19</Filter>
+            <PolygonSymbolizer fill="rgb(108, 111, 142)" />
+        </Rule>
+        <Rule>
+            <Filter>[current_landuse_ground_floor] = 20</Filter>
+            <PolygonSymbolizer fill="rgb(255, 140, 0)" />
+        </Rule>
+
+        <Rule>
+            <MaxScaleDenominator>8530</MaxScaleDenominator>
+            <MinScaleDenominator>4264</MinScaleDenominator>
+            <LineSymbolizer stroke="#888" stroke-width="0.8" />
+        </Rule>
+        <Rule>
+            <MaxScaleDenominator>4264</MaxScaleDenominator>
+            <MinScaleDenominator>0</MinScaleDenominator>
+            <LineSymbolizer stroke="#888" stroke-width="3.0" />
+        </Rule>
+    </Style>
+
+    <Style name="use_floor">
+        <Rule>
+            <Filter>[current_landuse_floor] = 1</Filter>
+            <PolygonSymbolizer fill="rgb(245, 245, 143)" />
+        </Rule>
+        <Rule>
+            <Filter>[current_landuse_floor] = 5</Filter>
+            <PolygonSymbolizer fill="rgb(229, 5, 13)" />
+        </Rule>
+        <Rule>
+            <Filter>[current_landuse_floor] = 2 or [current_landuse_floor] = 3</Filter>
+            <PolygonSymbolizer fill="rgb(201, 148, 199)" />
+        </Rule>
+        <Rule>
+            <Filter>[current_landuse_floor] = 4</Filter>
+            <PolygonSymbolizer fill="rgb(150, 97, 59)" />
+        </Rule>
+        <Rule>
+            <Filter>[current_landuse_floor] = 8 or [current_landuse_floor] = 9</Filter>
+            <PolygonSymbolizer fill="rgb(83, 245, 221)" />
+        </Rule>
+        <Rule>
+            <Filter>[current_landuse_floor] = 6 or [current_landuse_floor] = 7 or [current_landuse_floor] = 12 or [current_landuse_floor] = 16</Filter>
+            <PolygonSymbolizer fill="rgb(255, 191, 191)" />
+        </Rule>
+        <Rule>
+            <Filter>[current_landuse_floor] = 10</Filter>
+            <PolygonSymbolizer fill="rgb(56, 145, 209)" />
+        </Rule>
+        <Rule>
+            <Filter>[current_landuse_floor] = 11</Filter>
+            <PolygonSymbolizer fill="rgb(115, 204, 209)" />
+        </Rule>
+        <Rule>
+            <Filter>[current_landuse_floor] = 15 or [current_landuse_floor] = 17</Filter>
+            <PolygonSymbolizer fill="rgb(179, 222, 105)" />
+        </Rule>
+        <Rule>
+            <Filter>[current_landuse_floor] = 18</Filter>
+            <PolygonSymbolizer fill="rgb(204, 204, 204)" />
+        </Rule>
+        <Rule>
+            <Filter>[current_landuse_floor] = 13</Filter>
+            <PolygonSymbolizer fill="rgb(137, 137, 68)" />
+        </Rule>
+        <Rule>
+            <Filter>[current_landuse_floor] = 14</Filter>
+            <PolygonSymbolizer fill="rgb(255, 255, 255)" />
+        </Rule>
+        <Rule>
+            <Filter>[current_landuse_floor] = 19</Filter>
+            <PolygonSymbolizer fill="rgb(108, 111, 142)" />
+        </Rule>
+        <Rule>
+            <Filter>[current_landuse_floor] = 20</Filter>
+            <PolygonSymbolizer fill="rgb(255, 140, 0)" />
+        </Rule>
+
+        <Rule>
+            <MaxScaleDenominator>8530</MaxScaleDenominator>
+            <MinScaleDenominator>4264</MinScaleDenominator>
+            <LineSymbolizer stroke="#888" stroke-width="0.8" />
+        </Rule>
+        <Rule>
+            <MaxScaleDenominator>4264</MaxScaleDenominator>
+            <MinScaleDenominator>0</MinScaleDenominator>
+            <LineSymbolizer stroke="#888" stroke-width="3.0" />
+        </Rule>
+    </Style>
+
     <Style name="dynamics_demolished_count">
         <Rule>
             <Filter>[dynamics_has_demolished_buildings] = false</Filter>
@@ -607,4 +741,132 @@
             <PolygonSymbolizer fill="#ffe8a9" />
         </Rule>
     </Style>
+
+
+    <Style name="type_class">
+        <Rule>
+            <Filter>[type_class] = 1</Filter>
+            <PolygonSymbolizer fill="rgb(195, 225, 235)" />
+        </Rule>
+        <Rule>
+            <Filter>[type_class] = 2</Filter>
+            <PolygonSymbolizer fill="rgb(106, 157, 186)" />
+        </Rule>
+        <Rule>
+            <Filter>[type_class] = 3 </Filter>
+            <PolygonSymbolizer fill="rgb(149, 222, 216)" />
+        </Rule>
+        <Rule>
+            <Filter>[type_class] = 4</Filter>
+            <PolygonSymbolizer fill="rgb(104, 171, 165)" />
+        </Rule>
+        <Rule>
+            <Filter>[type_class] = 5 </Filter>
+            <PolygonSymbolizer fill="rgb(172, 201, 143)" />
+        </Rule>
+        <Rule>
+            <Filter>[type_class] = 6</Filter>
+            <PolygonSymbolizer fill="rgb(109, 138, 81)" />
+        </Rule>
+        <Rule>
+            <MaxScaleDenominator>8530</MaxScaleDenominator>
+            <MinScaleDenominator>4264</MinScaleDenominator>
+            <LineSymbolizer stroke="#888" stroke-width="0.8" />
+        </Rule>
+        <Rule>
+            <MaxScaleDenominator>4264</MaxScaleDenominator>
+            <MinScaleDenominator>0</MinScaleDenominator>
+            <LineSymbolizer stroke="#888" stroke-width="3.0" />
+        </Rule>
+    </Style>
+
+    <Style name="side_distances">
+        <Rule>
+            <Filter>[side_distances] = 1</Filter>
+            <PolygonSymbolizer fill="rgb(242, 162, 185)" />
+        </Rule>
+        <Rule>
+            <Filter>[side_distances] = 2</Filter>
+            <PolygonSymbolizer fill="rgb(171, 143, 176)" />
+        </Rule>
+        <Rule>
+            <Filter>[side_distances] = 3</Filter>
+            <PolygonSymbolizer fill="rgb(56, 145, 209)" />
+        </Rule>
+        <Rule>
+            <MaxScaleDenominator>8530</MaxScaleDenominator>
+            <MinScaleDenominator>4264</MinScaleDenominator>
+            <LineSymbolizer stroke="#888" stroke-width="0.8" />
+        </Rule>
+        <Rule>
+            <MaxScaleDenominator>4264</MaxScaleDenominator>
+            <MinScaleDenominator>0</MinScaleDenominator>
+            <LineSymbolizer stroke="#888" stroke-width="3.0" />
+        </Rule>
+    </Style>
+
+
+    <Style name="sidewalk_width">
+        <Rule>
+            <Filter>[sidewalk_width] &gt;= 3 </Filter>
+            <PolygonSymbolizer fill="rgb(44, 159, 41)" />
+        </Rule>
+        <Rule>
+            <Filter>[sidewalk_width] &gt;= 1.5 and [sidewalk_width]  &lt; 3</Filter>
+            <PolygonSymbolizer fill="rgb(157, 203, 60)" />
+        </Rule>
+        <Rule>
+            <Filter>[sidewalk_width] &gt;= 1 and [sidewalk_width]  &lt; 1.5</Filter>
+            <PolygonSymbolizer fill="rgb(251, 175, 39)" />
+        </Rule>
+        <Rule>
+            <Filter>[sidewalk_width] &gt;= 0.5 and [sidewalk_width]  &lt; 1</Filter>
+            <PolygonSymbolizer fill="rgb(230, 113, 29)" />
+        </Rule>
+        <Rule>
+            <Filter>[sidewalk_width] &lt;  0.5</Filter>
+            <PolygonSymbolizer fill="rgb(229, 5, 13)" />
+        </Rule>
+        <Rule>
+            <MaxScaleDenominator>8530</MaxScaleDenominator>
+            <MinScaleDenominator>4264</MinScaleDenominator>
+            <LineSymbolizer stroke="#888" stroke-width="0.8" />
+        </Rule>
+        <Rule>
+            <MaxScaleDenominator>4264</MaxScaleDenominator>
+            <MinScaleDenominator>0</MinScaleDenominator>
+            <LineSymbolizer stroke="#888" stroke-width="3.0" />
+        </Rule>
+    </Style>
+
+    <Style name="noise_level">
+        <Rule>
+            <Filter>[noise_level] = 1 </Filter>
+            <PolygonSymbolizer fill="rgb(44, 159, 41)" />
+        </Rule>
+        <Rule>
+            <Filter>[noise_level] =2</Filter>
+            <PolygonSymbolizer fill="rgb(251, 175, 39)" />
+        </Rule>
+        <Rule>
+            <Filter>[noise_level] =3</Filter>
+            <PolygonSymbolizer fill="rgb(230, 113, 29)" />
+        </Rule>
+        <Rule>
+            <Filter>[noise_level] = 4 </Filter>
+            <PolygonSymbolizer fill="rgb(143, 3, 3)" />
+        </Rule>
+ 
+        <Rule>
+            <MaxScaleDenominator>8530</MaxScaleDenominator>
+            <MinScaleDenominator>4264</MinScaleDenominator>
+            <LineSymbolizer stroke="#888" stroke-width="0.8" />
+        </Rule>
+        <Rule>
+            <MaxScaleDenominator>4264</MaxScaleDenominator>
+            <MinScaleDenominator>0</MinScaleDenominator>
+            <LineSymbolizer stroke="#888" stroke-width="3.0" />
+        </Rule>
+    </Style>
+
 </Map>

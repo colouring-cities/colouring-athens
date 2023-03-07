@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { NavLink, Redirect } from "react-router-dom";
 import Confetti from "canvas-confetti";
 import _ from "lodash";
-
+// import { useTranslation } from "react-i18next";
 import { apiPost } from "../apiHelpers";
 import { sendBuildingUpdate } from "../api-data/building-update";
 import ErrorBox from "../components/error-box";
@@ -264,9 +264,6 @@ const withCopyEdit: (
     async handleVerify(slug: string, verify: boolean, x: number, y: number) {
       const verifyPatch = {};
       if (verify) {
-        console.log(this.props);
-        console.log(this.props.building);
-        console.log(this.props.building[slug]);
         verifyPatch[slug] = this.props.building[slug];
       } else {
         verifyPatch[slug] = null;
@@ -323,6 +320,8 @@ const withCopyEdit: (
       }`;
       const edited = this.isEdited();
 
+      
+
  
       return (
         <Translation>
@@ -337,7 +336,7 @@ const withCopyEdit: (
                     title={t("find_out_more")}
                     href={this.props.help}
                   >
-                    Info
+                    {t("info")}
                   </a>
                 ) : null}
                 {this.props.building != undefined && !this.props.inactive ? (
@@ -354,7 +353,7 @@ const withCopyEdit: (
                           className="icon-button history"
                           to={`/${this.props.mode}/${this.props.cat}/${this.props.building.building_id}/history`}
                         >
-                          History
+                           {t("history")}
                         </NavLink>
                         <ViewEditControl
                           cat={this.props.cat}
@@ -405,7 +404,7 @@ const withCopyEdit: (
                               disabled={!edited}
                               aria-disabled={!edited}
                             >
-                              Save edits
+                              {t("save_edits")}
                             </button>
                             {edited ? (
                               <button
@@ -413,7 +412,7 @@ const withCopyEdit: (
                                 className="btn btn-warning"
                                 onClick={this.handleReset}
                               >
-                                Discard edits
+                                {t("discard_edits")}
                               </button>
                             ) : null}
                           </div>
@@ -435,7 +434,7 @@ const withCopyEdit: (
                     />
                   </form>
                 ) : (
-                  <InfoBox msg="Select a building to view data"></InfoBox>
+                  <InfoBox msg={t("select_a_building_to_view_data")}></InfoBox>
                 )}
               </div>
             </section>

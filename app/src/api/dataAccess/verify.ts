@@ -15,7 +15,7 @@ export async function getBuildingVerifiedAttributes(buildingId: number): Promise
             `,
             [buildingId]
         );
-    } catch(error) {
+    } catch (error) {
         throw new DatabaseError(error.detail);
     }
 }
@@ -36,12 +36,12 @@ export async function getBuildingUserVerifiedAttributes(buildingId: number, user
             [buildingId, userId]
         );
         return asVerified(verifications)
-    } catch(error) {
+    } catch (error) {
         throw new DatabaseError(error.detail);
     }
 }
 
-function asVerified(verifications){
+function asVerified(verifications) {
     const user_verified = {};
     for (const item of verifications) {
         user_verified[item.attribute] = item.verified_value
@@ -50,33 +50,48 @@ function asVerified(verifications){
 }
 
 export async function updateBuildingUserVerifiedAttribute(buildingId: number, userId: string, attribute: string, value: any): Promise<void> {
-    console.log(typeof value, value)
+
     try {
-        if (typeof value === 'string'){
-            // cast strings to text explicitly - otherwise Postgres fails to cast to jsonb directly
-            await (db).none(
-                `INSERT INTO
+        if (attribute === 'fek_date_archaelogical' || attribute === 'fek_date_energy' || attribute === 'fek_date_officially_preserved' || attribute === 'fek_date_officially_monument') {
+
+                await (db).none(
+                    `INSERT INTO
                     building_verification
                     ( building_id, user_id, attribute, verified_value )
                 VALUES
                     ($1, $2, $3, to_jsonb($4::text));
                 `,
-                [buildingId, userId, attribute, value]
-            );
+                    [buildingId, userId, attribute, value]
+                );
+
         } else {
-            await (db).none(
-                `INSERT INTO
+            if (typeof value === 'string') {
+                // cast strings to text explicitly - otherwise Postgres fails to cast to jsonb directly
+                await (db).none(
+                    `INSERT INTO
+                    building_verification
+                    ( building_id, user_id, attribute, verified_value )
+                VALUES
+                    ($1, $2, $3, to_jsonb($4::text));
+                `,
+                    [buildingId, userId, attribute, value]
+                );
+
+            } else {
+                await (db).none(
+                    `INSERT INTO
                     building_verification
                     ( building_id, user_id, attribute, verified_value )
                 VALUES
                     ($1, $2, $3, to_jsonb($4));
                 `,
-                [buildingId, userId, attribute, value]
-            );
+                    [buildingId, userId, attribute, value]
+                );
+            }
         }
-    } catch(error) {
+    } catch (error) {
         console.error(error)
-        if(error.detail?.includes('already exists')) {
+        if (error.detail?.includes('already exists')) {
             const msg = 'User already verified that attribute for this building'
             throw new InvalidOperationError(msg);
         } else {
@@ -85,7 +100,7 @@ export async function updateBuildingUserVerifiedAttribute(buildingId: number, us
     }
 }
 
-export async function removeBuildingUserVerifiedAttribute(buildingId: number, userId: string, attribute: string) : Promise<null> {
+export async function removeBuildingUserVerifiedAttribute(buildingId: number, userId: string, attribute: string): Promise<null> {
     try {
         return await (db).none(
             `DELETE FROM
@@ -97,7 +112,7 @@ export async function removeBuildingUserVerifiedAttribute(buildingId: number, us
             `,
             [buildingId, userId, attribute]
         );
-    } catch(error) {
+    } catch (error) {
         throw new DatabaseError(error.detail);
     }
 }

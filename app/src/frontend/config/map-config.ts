@@ -1,13 +1,15 @@
 interface MapViewport {
     position: [number, number];
     zoom: number;
+    bounds: [[number, number], [number, number]];
 }
 
 export const initialMapViewport: MapViewport = {
   // position: [51.5245255, -0.1338422], // lat,lng
+  bounds: null,
   position: [37.983810, 23.727539],
 
-  zoom: 16,
+  zoom: 15,
 };
 
 export type MapTheme = 'light' | 'night';

@@ -6,3 +6,4 @@ export interface EditHistoryEntry {
     reverse_patch: object;
     building_id?: number;
 }
+ 

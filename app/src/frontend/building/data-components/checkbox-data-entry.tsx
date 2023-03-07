@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-
+import { useTranslation } from "react-i18next";
 import { BaseDataEntryProps } from './data-entry';
 import { DataTitleCopyable } from './data-title';
 
@@ -8,6 +8,7 @@ interface CheckboxDataEntryProps extends BaseDataEntryProps {
 }
 
 const CheckboxDataEntry: React.FunctionComponent<CheckboxDataEntryProps> = (props) => {
+    const { t } = useTranslation();
     return (
         <Fragment>
             <DataTitleCopyable
@@ -30,9 +31,9 @@ const CheckboxDataEntry: React.FunctionComponent<CheckboxDataEntryProps> = (prop
                         />
                     {
                         props.value?
-                            <span><strong>Yes</strong>/No</span>
+                            <span><strong>{t("yes")}</strong>/{t("no")}</span>
                         :
-                            <span>Yes/<strong>No</strong></span>
+                            <span>{t("yes")}/<strong>{t("no")}</strong></span>
                     }
                 </label>
             </div>

@@ -7,10 +7,13 @@ import { SpinnerIcon } from '../components/icons';
 import InfoBox from '../components/info-box';
 import SupporterLogos from '../components/supporter-logos';
 
+import i18next from "i18next";
+import { useTranslation } from "react-i18next";
+
 export const SignUp: React.FC = () => {
     const { isLoading, signup } = useAuth();
     const [error, setError] = useState(undefined);
-
+    const { t } = useTranslation();
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [confirmEmail, setConfirmEmail] = useState('')
@@ -26,47 +29,53 @@ export const SignUp: React.FC = () => {
         [username, email, confirmEmail, password, confirmConditions, signup]
     );
 
+    let signupText = 'Sign up';
+
+    if (i18next.language === 'gr') {
+        signupText = 'Εγγραφή';
+      }
+
     return (
         <article>
             <section className="main-col">
-                <h1 className="h2">Sign up</h1>
-                <InfoBox msg="Welcome to Colouring London. You're one of the first people to sign up!  ">
-                    <br/>Please <a href="https://discuss.colouring.london/">discuss
-                    suggestions for improvements</a> and <a
-                        href="https://github.com/colouring-london/colouring-london/issues">
-                    report issues or problems</a>.
+                <h1 className="h2">{t('signup')}</h1>
+                <InfoBox msg={t('login_infobox')}>
+                    <br/>{t('login_please')} <a href="https://discuss.colouring.london/">
+                        {t('login_discuss_suggestions')}</a> {t('login_and')} <a
+                        href="https://github.com/colouring-cities/colouring-Athens/issues">
+                    {t('login_report_issues')}</a>.
                 </InfoBox>
                 <p>
-                    Create an account to start colouring in.
+                {t('signup_create_an_account')}
                 </p>
                 <ErrorBox msg={error} />
                 <form onSubmit={onSubmit}>
-                    <label htmlFor="username">Username*</label>
+                    <label htmlFor="username">{t('login_username')}</label>
                     <input name="username" id="username"
                         className="form-control" type="text"
                         value={username} onChange={e => setUsername(e.target.value)}
-                        placeholder="not-your-real-name" required
+                        placeholder={t('login_not_your_real_name')} required
                         minLength={4}
                         maxLength={30}
                         pattern="\w+"
-                        title="Usernames can contain only letters, numbers and the underscore"
+                        title={t('signup_username_hint')}
                     />
 
-                    <label htmlFor="email">Email (optional)</label>
+                    <label htmlFor="email">{t('signup_email_optional')}</label>
                     <input name="email" id="email"
                         className="form-control" type="email"
                         value={email} onChange={e => setEmail(e.target.value)}
                         placeholder="someone@example.com"
                     />
-                    <InfoBox msg="Please note that if you forget your password, you will only be able to recover your account if you provide an email address." />
+                    <InfoBox msg={t('signup_please_note')} />
                     
-                    <label htmlFor="confirm_email">Confirm email (optional)</label>
+                    <label htmlFor="confirm_email">{t('signup_confirm_email')}</label>
                     <input name="confirm_email" id="confirm_email"
                         className="form-control" type="email"
                         value={confirmEmail} onChange={e => setConfirmEmail(e.target.value)}
                     />
 
-                    <label htmlFor="password">Password (at least 8 characters)</label>
+                    <label htmlFor="password">{t('signup_password')}</label>
                     <input name="password" id="password"
                         className="form-control"
                         type={(showPassword)? 'text': 'password'}
@@ -83,7 +92,7 @@ export const SignUp: React.FC = () => {
                             onChange={e => setShowPassword(e.target.checked)}
                         />
                         <label className="form-check-label" htmlFor="show_password">
-                            Show password?
+                        {t('login_show_password')}
                         </label>
                     </div>
 
@@ -94,25 +103,25 @@ export const SignUp: React.FC = () => {
                             onChange={e => setConfirmConditions(e.target.checked)}
                             required />
                         <label className="form-check-label" htmlFor="confirm_conditions">
-                            I confirm that I have read and agree to the <Link
-                                to="/privacy-policy.html">privacy policy</Link>, <Link
-                                to="/contributor-agreement.html">contributor agreement</Link> and <Link
-                                to="/data-accuracy.html">data accuracy agreement</Link>.
+                        {t('signup_confirm_a')} <Link
+                                to="/privacy-policy.html">{t('signup_confirm_b')}</Link>, <Link
+                                to="/contributor-agreement.html">{t('signup_confirm_c')}</Link> {t('signup_confirm_d')} <Link
+                                to="/data-accuracy.html">{t('signup_confirm_e')}</Link>.
                         </label>
                     </div>
 
                     <div className="buttons-container with-space">
-                        <input type="submit" disabled={isLoading} value="Sign Up" className="btn btn-primary" />
-                        {isLoading && <span><SpinnerIcon/>Sending sign up data...</span>}
+                        <input type="submit" disabled={isLoading} value={signupText} className="btn btn-primary" />
+                        {isLoading && <span><SpinnerIcon/>{t('signup_sending')}</span>}
                     </div>
                     <InfoBox msg="">
-                        Please also read our <a href="https://www.pages.colouring.london/data-ethics">data ethics policy</a> before using or sharing our data
+                    {t('signup_data_ethics_a')} <a href="https://www.pages.colouring.london/data-ethics">{t('signup_data_ethics_b')}</a> {t('signup_data_ethics_c')}
                     </InfoBox>
 
-                    Do you already have an account?
+                    {t('signup_already_have_account')}
 
                     <div className="buttons-container with-space">
-                        <Link to="login.html" className="btn btn-outline-dark">Log in</Link>
+                        <Link to="login.html" className="btn btn-outline-dark">{t('login')}</Link>
                     </div>
 
                 </form>

@@ -4,15 +4,20 @@ import { BuildingMapTileset } from './tileserver-config';
 export type LegendElement = {
     color: string;
     border?: string;
-    text: string;
+    text_en: string;
+    text_gr: string;
 } | {
-    subtitle: string;
+    subtitle_en: string;
+    subtitle_gr: string;
 };
 
 export interface LegendConfig {
-    title: string;
-    description?: string;
-    disclaimer?: string;
+    title_en: string;
+    title_gr: string;
+    description_en?: string;
+    description_gr?: string;
+    disclaimer_en?: string;
+    disclaimer_gr?: string;
     elements: LegendElement[];
 }
 
@@ -21,82 +26,95 @@ export interface CategoryMapDefinition {
     legend: LegendConfig;
 }
 
-export const defaultMapCategory = Category.Age;
+export const defaultMapCategory = Category.Use;
 
-export const categoryMapsConfig: {[key in Category]: CategoryMapDefinition[]} = {
+export const categoryMapsConfig: { [key in Category]: CategoryMapDefinition[] } = {
     [Category.Age]: [{
-        mapStyle: 'date_year',
+        mapStyle: 'year_built',
         legend: {
-            title: 'Age',
+            title_en: 'Period built',
+            title_gr: 'Περίοδος κατασκευής',
             elements: [
-                { color: '#fff9b8', text: '>2020' },
-                { color: '#fae269', text: '2000-2019' },
-                { color: '#fbaf27', text: '1980-1999' },
-                { color: '#e6711d', text: '1960-1979' },
-                { color: '#cc1212', text: '1940-1959' },
-                { color: '#8f0303', text: '1920-1939' },
-                { color: '#8f5385', text: '1900-1919' },
-                { color: '#c3e1eb', text: '1880-1899' },
-                { color: '#6a9dba', text: '1860-1879' },
-                { color: '#3b74a3', text: '1840-1859' },
-                { color: '#95ded8', text: '1820-1839' },
-                { color: '#68aba5', text: '1800-1819' },
-                { color: '#acc98f', text: '1750-1799' },
-                { color: '#6d8a51', text: '1700-1749' },
-                { color: '#d0c291', text: '<1700' },
+                { color: 'rgb(255, 249, 184)', text_en: 'After 2010', text_gr: 'Μετά το 2010' },
+                { color: 'rgb(251, 175, 39)', text_en: '1985-2010' , text_gr: '1985-2010'},
+                { color: 'rgb(230, 113, 29)', text_en: '1955-1985', text_gr: '1955-1985' },
+                { color: 'rgb(143, 3, 3)', text_en: '1920-1955', text_gr: '1920-1955' },
+                { color: 'rgb(143, 83, 133)', text_en: 'Before 1920', text_gr: 'Προ 1920' }
             ]
         },
     }],
-    [Category.Size]: [{
-        mapStyle: 'size_height',
-        legend: {
-            title: 'Height to apex',
-            elements: [
-                { color: '#f7f4f9', text: '0-5.55'},
-                { color: '#e7e1ef', text: '5.55-7.73'},
-                { color: '#d4b9da', text: '7.73-11.38'},
-                { color: '#c994c7', text: '11.38-18.45'},
-                { color: '#df65b0', text: '18.45-35.05'},
-                { color: '#e7298a', text: '35.05-89.30'},
-                { color: '#ce1256', text: '89.30-152'},
-                { color: '#980043', text: '≥152'}
-            ]
+    [Category.Size]: [
+        {
+            mapStyle: 'size_storeys_core',
+            legend: {
+                title_en: 'Number of core storeys',
+                title_gr: 'Αριθμός κύριων ορόφων',
+                elements: [
+                    { color: '#f7f4f9', text_en: '1', text_gr: '1' },
+                    { color: '#e7e1ef', text_en: '2', text_gr: '2' },
+                    { color: '#d4b9da', text_en: '3', text_gr: '3' },
+                    { color: '#c994c7', text_en: '4' , text_gr: '4'},
+                    { color: '#df65b0', text_en: '5', text_gr: '5' },
+                    { color: '#e7298a', text_en: '6' , text_gr: '6'},
+                    { color: '#ce1256', text_en: '7' , text_gr: '7'},
+                    { color: '#980043', text_en: '≥8' , text_gr: '≥8'}
+                ]
+            },
         },
-    }],
+        {
+            mapStyle: 'size_height',
+            legend: {
+                title_en: 'Height (m)',
+                title_gr: 'Ύψος (μ)',
+                elements: [
+                    { color: 'rgb(245, 245, 250)', text_en: '0-3', text_gr: '0-3' },
+                    { color: 'rgb(217, 225, 242)', text_en: '3-6', text_gr: '3-6' },
+                    { color: 'rgb(180, 198, 231)', text_en: '6-9', text_gr: '6-9' },
+                    { color: 'rgb(142, 169, 219)', text_en: '9-12', text_gr: '9-12' },
+                    { color: 'rgb(120, 150, 196)', text_en: '12-15' , text_gr: '12-15'},
+                    { color: 'rgb(103, 124, 163)', text_en: '15-18', text_gr: '15-18' },
+                    { color: 'rgb(114, 116, 181)', text_en: '18-30', text_gr: '18-30' },
+                    { color: 'rgb(72, 75, 153)', text_en: '≥30', text_gr: '≥30' }
+                ]
+            },
+        }
+    ],
     [Category.Team]: [{
         mapStyle: undefined,
         legend: {
-            title: 'Team',
+            title_en: 'Team',
+            title_gr: 'Team',
             elements: []
         },
     }],
     [Category.Construction]: [{
         mapStyle: 'construction_core_material',
         legend: {
-            title: 'Construction',
+            title_en: 'Construction',
+            title_gr: 'Κατασκευή',
             elements: [
-                { color: "#b5a859", text: "Wood" },
-                { color: "#ffffe3", text: "Stone" },
-                { color: "#f5d96b", text: "Brick" },
-                { color: "#beffe8", text: "Steel" },
-                { color: "#fca89d", text: "Reinforced Concrete" },
-                { color: "#5c8970", text: "Other Metal" },
-                { color: "#96613b", text: "Other Natural Material" },
-                { color: "#c48a85", text: "Other Man-Made Material" }
+                { color: "rgb(252, 168, 157)", text_en: "Reinforced concrete" , text_gr: 'Οπλισμένο σκυρόδεμα'},
+                { color: "rgb(255, 255, 227)", text_en: "Stone", text_gr: 'Λιθόκτιστο' },
+                { color: "rgb(245, 217, 107)", text_en: "Brick", text_gr: 'Πλινθόκτιστο' },
+                { color: "rgb(190, 255, 232)", text_en: "Metal structure", text_gr: 'Μεταλλική κατασκευή' },
+                { color: "rgb(150, 97, 59)", text_en: "Wood", text_gr: 'Ξύλινη κατασκευή' },
+                { color: "rgb(196, 138, 133)", text_en: "Mixed", text_gr: 'Σύμμικτη κατασκευή' },
             ]
         },
     }],
     [Category.Location]: [{
         mapStyle: 'location',
         legend: {
-            title: 'Location',
-            description: '% data collected',
+            title_en: 'Location',
+            title_gr: 'Τοποθεσία',
+            description_en: '% data collected',
+            description_gr: '% συλλογής δεδομένων',
             elements: [
-                { color: '#084081', text: '≥80%' },
-                { color: '#0868ac', text: '60–80%' },
-                { color: '#43a2ca', text: '40–60%' },
-                { color: '#7bccc4', text: '20–40%' },
-                { color: '#bae4bc', text: '<20%' }
+                { color: '#084081', text_en: '≥80%', text_gr: '≥80%' },
+                { color: '#0868ac', text_en: '60–80%', text_gr: '60–80%' },
+                { color: '#43a2ca', text_en: '40–60%' , text_gr: '40–60%'},
+                { color: '#7bccc4', text_en: '20–40%', text_gr: '20–40%' },
+                { color: '#bae4bc', text_en: '<20%', text_gr: '<20%' }
             ]
         },
     }],
@@ -104,42 +122,47 @@ export const categoryMapsConfig: {[key in Category]: CategoryMapDefinition[]} = 
         {
             mapStyle: 'likes',
             legend: {
-                title: 'Like Me',
+                title_en: 'Like Me',
+                title_gr: 'Μου αρέσει',
                 elements: [
-                    { color: '#bd0026', text: '👍👍👍👍 100+' },
-                    { color: '#e31a1c', text: '👍👍👍 50–99' },
-                    { color: '#fc4e2a', text: '👍👍 20–49' },
-                    { color: '#fd8d3c', text: '👍👍 10–19' },
-                    { color: '#feb24c', text: '👍 3–9' },
-                    { color: '#fed976', text: '👍 2' },
-                    { color: '#ffe8a9', text: '👍 1'}
+                    { color: '#bd0026', text_en: '👍👍👍👍 100+' , text_gr: '👍👍👍👍 100+'},
+                    { color: '#e31a1c', text_en: '👍👍👍 50–99' , text_gr: '👍👍👍 50–99'},
+                    { color: '#fc4e2a', text_en: '👍👍 20–49' , text_gr: '👍👍 20–49'},
+                    { color: '#fd8d3c', text_en: '👍👍 10–19', text_gr: '👍👍 10–19' },
+                    { color: '#feb24c', text_en: '👍 3–9', text_gr: '👍 3–9' },
+                    { color: '#fed976', text_en: '👍 2' , text_gr: '👍 2'},
+                    { color: '#ffe8a9', text_en: '👍 1' , text_gr: '👍 1'}
                 ]
             }
         },
         {
             mapStyle: 'community_local_significance_total',
             legend: {
-                title: 'Local Significance',
-                description: 'People who think the building should be locally listed',
+                title_en: 'Local Significance',
+                title_gr: 'Τοπική Αξία',
+                description_en: 'People who think the building should be locally listed',
+                description_gr: 'Πόσοι πιστεύουν ότι το κτίριο αξίζει να προστατευθεί',
                 elements: [
-                    { color: '#bd0026', text: '100+' },
-                    { color: '#e31a1c', text: '50–99' },
-                    { color: '#fc4e2a', text: '20–49' },
-                    { color: '#fd8d3c', text: '10–19' },
-                    { color: '#feb24c', text: '3–9' },
-                    { color: '#fed976', text: '2' },
-                    { color: '#ffe8a9', text: '1'}
+                    { color: '#bd0026', text_en: '100+', text_gr: '100+' },
+                    { color: '#e31a1c', text_en: '50–99', text_gr: '50–99' },
+                    { color: '#fc4e2a', text_en: '20–49' , text_gr: '20–49'},
+                    { color: '#fd8d3c', text_en: '10–19', text_gr: '10–19' },
+                    { color: '#feb24c', text_en: '3–9', text_gr: '3–9' },
+                    { color: '#fed976', text_en: '2', text_gr: '2' },
+                    { color: '#ffe8a9', text_en: '1', text_gr: '1' }
                 ]
             }
         },
         {
-            mapStyle: 'community_in_public_ownership',
+            mapStyle: 'ownership_type',
             legend: {
-                title: 'Public Ownership',
-                description: 'Is the building in some form of public/community ownership',
+                title_en: 'Public Ownership',
+                title_gr: 'Δημόσια Ιδιοκτησία',
+                description_en: 'Is the building in some form of public/community ownership',
+                description_gr: 'Ανήκει το κτίριο στον ευρύτερο δημόσιο τομέα;',
                 elements: [
-                    {color: '#1166ff', text: 'Yes'},
-                    {color: '#ffaaa0', text: 'No'}
+                    { color: '#1166ff', text_en: 'Yes', text_gr: 'Ναι' },
+                    { color: '#ffaaa0', text_en: 'No', text_gr: 'Όχι' }
                 ]
             }
         }
@@ -147,107 +170,203 @@ export const categoryMapsConfig: {[key in Category]: CategoryMapDefinition[]} = 
     [Category.Planning]: [{
         mapStyle: 'planning_combined',
         legend: {
-            title: 'Statutory protections',
-            disclaimer: 'All data relating to designated buildings should be checked on the National Heritage List for England or local authority websites where used for planning or development purposes',
+            title_en: 'Statutory protections',
+            title_gr: 'Προστατευόμενα κτίρια',
+            disclaimer_en: 'All data relating to designated buildings should be checked on the National Heritage List for England or local authority websites where used for planning or development purposes',
+            disclaimer_gr: 'Όλα τα δεδομένα σχετικά με τα προστατευόμενα κτίρια πρέπει να ελέγχονται με βάση τις λίστες του Υπουργείου Περιβάλλοντος και Ενέργειας και του Υπουργείου Πολιτισμού και Αθλητισμού και βάσει της τοπικής νομοθεσίας.',
             elements: [
-                { color: '#95beba', text: 'In conservation area'},
-                { color: '#c72e08', text: 'Grade I listed'},
-                { color: '#e75b42', text: 'Grade II* listed'},
-                { color: '#ffbea1', text: 'Grade II listed'},
-                { color: '#858ed4', text: 'Locally listed'},
+                { color: '#95beba', text_en: 'In protected area' , text_gr: 'Εντός προστατευόμενης περιοχής'},
+                { color: '#c72e08', text_en: 'Listed' , text_gr: 'Διατηρητέο'},
+                // { color: '#e75b42', text_en: 'Ancient Monument', text_gr: 'Αρχαίο Μνημείο' },
+                { color: '#ffbea1', text_en: 'Monument', text_gr: 'Μνημείο' },
+                { color: '#858ed4', text_en: 'Listed & Monument', text_gr: 'Διατηρητέο & Μνημείο' },
             ]
         },
     }],
     [Category.Sustainability]: [{
-        mapStyle: 'sust_dec',
+        mapStyle: 'building_state',
         legend: {
-            title: 'Sustainability',
-            description: 'DEC Rating',
+            title_en: 'Sustainability',
+            title_gr: 'Βιωσιμότητα',
+            description_en: 'Maintenance level of building',
+            description_gr: 'Κατάσταση συντήρησης κτιρίου',
             elements: [
-                { color: "#007f3d", text: 'A' },
-                { color: "#2c9f29", text: 'B' },
-                { color: "#9dcb3c", text: 'C' },
-                { color: "#fff200", text: 'D' },
-                { color: "#f7af1d", text: 'E' },
-                { color: "#ed6823", text: 'F' },
-                { color: "#e31d23", text: 'G' },
+                { color: "rgb(44, 159, 41)", text_en: 'Good', text_gr: 'Καλή' },
+                { color: "rgb(251, 175, 39)", text_en: 'Moderate', text_gr: 'Μέτρια' },
+                { color: "rgb(230, 113, 29)", text_en: 'Bad', text_gr: 'Κακή' },
+                { color: "rgb(143, 3, 3)", text_en: 'Ruin', text_gr: 'Ερείπιο' },
             ]
         },
     }],
-    [Category.Type]: [{
-        mapStyle: 'building_attachment_form',
+    [Category.Type]: [
+        {
+            mapStyle: 'type_class',
+            legend: {
+                title_en: 'Original building use',
+                title_gr: 'Προορισμός κτιρίου',
+                elements: [
+                    { color: 'rgb(195, 225, 235)', text_en: "Single-family home" , text_gr: 'Μονοκατοικία'},
+                    { color: 'rgb(106, 157, 186)', text_en: "Duplex" , text_gr: 'Διπλοκατοικία'},
+                    { color: 'rgb(149, 222, 216)', text_en: "Apartment building" , text_gr: 'Πολυκατοικία'},
+                    { color: 'rgb(104, 171, 165)', text_en: "Office building", text_gr: 'Κτίριο γραφείων' },
+                    { color: 'rgb(172, 201, 143)', text_en: "Commercial building", text_gr: 'Εμπορικό ακίνητο' },
+                    { color: 'rgb(109, 138, 81)', text_en: "Other", text_gr: 'Άλλο' }
+                ]
+            },
+        },
+        {
+            mapStyle: 'side_distances',
+            legend: {
+                title_en: 'Adjacency/configuration',
+                title_gr: 'Πλαϊνές αποστάσεις από γειτονικά κτίρια',
+                elements: [
+                    { color: "rgb(242, 162, 185)", text_en: "Detached" , text_gr: 'Σε απόσταση'},
+                    { color: "rgb(171, 143, 176)", text_en: "Semi-Detached", text_gr: 'Σε μερική επαφή' },
+                    { color: "rgb(56, 145, 209)", text_en: "Attached", text_gr: 'Σε πλήρη επαφή' },
+                ]
+            },
+        }
+    ],
+    [Category.Use]: [
+
+        {
+            mapStyle: 'use_ground',
+            legend: {
+                title_en: 'Dominant ground floor use',
+                title_gr: 'Επικρατούσα χρήση ισογείου',
+                elements: [
+                    { color: 'rgb(255, 140, 0)', text_en: 'Mixed Use', text_gr: 'Μικτή χρήση' },
+                    { subtitle_en: 'Single use:',subtitle_gr: 'Μία χρήση:' },
+                    { color: 'rgb(245, 245, 143)', text_en: 'Residential', text_gr: 'Κατοικία' },
+                    { color: 'rgb(229, 5, 13)', text_en: 'Retail', text_gr: 'Λιανικό εμπόριο' },
+                    { color: 'rgb(201, 148, 199)', text_en: 'Industry & Workshops', text_gr: 'Βιομηχανία & Βιοτεχνία' },
+                    { color: 'rgb(150, 97, 59)', text_en: 'Wholesale & Warehouses' , text_gr: 'Χονδρεμπόριο & Αποθήκες'},
+                    { color: 'rgb(83, 245, 221)', text_en: 'Offices & Services', text_gr: 'Γραφεία & Υπηρεσίες' },
+                    { color: 'rgb(255, 191, 191)', text_en: 'Recreation & Leisure', text_gr: 'Αναψυχή και διασκέδαση' },
+                    { color: 'rgb(56, 145, 209)', text_en: 'Education' , text_gr: 'Εκπαίδευση'},
+                    { color: 'rgb(115, 204, 209)', text_en: 'Health', text_gr: 'Υγεία' },
+                    { color: 'rgb(179, 222, 105)', text_en: 'Transport', text_gr: 'Μεταφορές' },
+                    { color: 'rgb(204, 204, 204)', text_en: 'Utilities & Infrastructure', text_gr: 'Εγκαταστάσεις υποδομών' },
+                    { color: 'rgb(137, 137, 68)', text_en: 'Under construction', text_gr: 'Υπό ανέγερση' },
+                    { color: 'rgb(255, 255, 255)', text_en: 'Unused - Vacant' , text_gr: 'Κενό - χωρίς χρήση'},
+                    { color: 'rgb(108, 111, 142)', text_en: 'Other ', text_gr: 'Λοιπές χρήσεις' },
+                ]
+            },
+        },
+        {
+            mapStyle: 'use_floor',
+            legend: {
+                title_en: 'Dominant floors use',
+                title_gr: 'Επικρατούσα χρήση ορόφων',
+                elements: [
+                    { color: 'rgb(255, 140, 0)', text_en: 'Mixed Use', text_gr: 'Μικτή χρήση' },
+                    { subtitle_en: 'Single use:',subtitle_gr: 'Μία χρήση:' },
+                    { color: 'rgb(245, 245, 143)', text_en: 'Residential', text_gr: 'Κατοικία' },
+                    { color: 'rgb(229, 5, 13)', text_en: 'Retail', text_gr: 'Λιανικό εμπόριο' },
+                    { color: 'rgb(201, 148, 199)', text_en: 'Industry & Workshops', text_gr: 'Βιομηχανία & Βιοτεχνία' },
+                    { color: 'rgb(150, 97, 59)', text_en: 'Wholesale & Warehouses' , text_gr: 'Χονδρεμπόριο & Αποθήκες'},
+                    { color: 'rgb(83, 245, 221)', text_en: 'Offices & Services', text_gr: 'Γραφεία & Υπηρεσίες' },
+                    { color: 'rgb(255, 191, 191)', text_en: 'Recreation & Leisure', text_gr: 'Αναψυχή και διασκέδαση' },
+                    { color: 'rgb(56, 145, 209)', text_en: 'Education' , text_gr: 'Εκπαίδευση'},
+                    { color: 'rgb(115, 204, 209)', text_en: 'Health', text_gr: 'Υγεία' },
+                    { color: 'rgb(179, 222, 105)', text_en: 'Transport', text_gr: 'Μεταφορές' },
+                    { color: 'rgb(204, 204, 204)', text_en: 'Utilities & Infrastructure', text_gr: 'Εγκαταστάσεις υποδομών' },
+                    { color: 'rgb(137, 137, 68)', text_en: 'Under construction', text_gr: 'Υπό ανέγερση' },
+                    { color: 'rgb(255, 255, 255)', text_en: 'Unused - Vacant' , text_gr: 'Κενό - χωρίς χρήση'},
+                    { color: 'rgb(108, 111, 142)', text_en: 'Other ', text_gr: 'Λοιπές χρήσεις' },
+                ]
+            },
+        },
+        {
+            mapStyle: 'use',
+            legend: {
+                title_en: 'Dominant building use',
+                title_gr: 'Επικρατούσα χρήση κτιρίου',
+                elements: [
+                    { color: 'rgb(255, 140, 0)', text_en: 'Mixed Use', text_gr: 'Μικτή χρήση' },
+                    { subtitle_en: 'Single use:',subtitle_gr: 'Μία χρήση:' },
+                    { color: 'rgb(245, 245, 143)', text_en: 'Residential', text_gr: 'Κατοικία' },
+                    { color: 'rgb(229, 5, 13)', text_en: 'Retail', text_gr: 'Λιανικό εμπόριο' },
+                    { color: 'rgb(201, 148, 199)', text_en: 'Industry & Workshops', text_gr: 'Βιομηχανία & Βιοτεχνία' },
+                    { color: 'rgb(150, 97, 59)', text_en: 'Wholesale & Warehouses' , text_gr: 'Χονδρεμπόριο & Αποθήκες'},
+                    { color: 'rgb(83, 245, 221)', text_en: 'Offices & Services', text_gr: 'Γραφεία & Υπηρεσίες' },
+                    { color: 'rgb(255, 191, 191)', text_en: 'Recreation & Leisure', text_gr: 'Αναψυχή και διασκέδαση' },
+                    { color: 'rgb(56, 145, 209)', text_en: 'Education' , text_gr: 'Εκπαίδευση'},
+                    { color: 'rgb(115, 204, 209)', text_en: 'Health', text_gr: 'Υγεία' },
+                    { color: 'rgb(179, 222, 105)', text_en: 'Transport', text_gr: 'Μεταφορές' },
+                    { color: 'rgb(204, 204, 204)', text_en: 'Utilities & Infrastructure', text_gr: 'Εγκαταστάσεις υποδομών' },
+                    { color: 'rgb(137, 137, 68)', text_en: 'Under construction', text_gr: 'Υπό ανέγερση' },
+                    { color: 'rgb(255, 255, 255)', text_en: 'Unused - Vacant' , text_gr: 'Κενό - χωρίς χρήση'},
+                    { color: 'rgb(108, 111, 142)', text_en: 'Other ', text_gr: 'Λοιπές χρήσεις' },
+                ]
+            },
+        },
+    ],
+    [Category.Streetscape]: [        
+        {
+        mapStyle: 'sidewalk_width',
         legend: {
-            title: 'Type',
+            title_en: 'Pavement width (m)',
+            title_gr: 'Πλάτος πεζοδρομίου (μ)',
             elements: [
-                { color: "#f2a2b9", text: "Detached" },
-                { color: "#ab8fb0", text: "Semi-Detached" },
-                { color: "#3891d1", text: "End-Terrace" },
-                { color: "#226291", text: "Mid-Terrace" }
+                { color: 'rgb(143, 3, 3)', text_en: "Without pavement", text_gr: 'Χωρίς πεζοδρόμιο' },
+                { color: 'rgb(229, 5, 13)', text_en: "0-0.5", text_gr: '0-0,5' },
+                { color: 'rgb(230, 113, 29)', text_en: "0.5-1.0", text_gr: '0,5-1,0' },
+                { color: 'rgb(251, 175, 39)', text_en: "1.0-1.5" , text_gr: '1,0-1,5'},
+                { color: 'rgb(157, 203, 60)', text_en: "1.5-3.0", text_gr: '1,5-3,0' },
+                { color: 'rgb(44, 159, 41)', text_en: ">3.0" , text_gr: '>3,0'}
             ]
         },
-    }],
-    [Category.Use]: [{
-        mapStyle: 'landuse',
+    },
+    {
+        mapStyle: 'noise_level',
         legend: {
-            title: 'Land Use',
+            title_en: 'Street noise level',
+            title_gr: 'Επίπεδο θορύβου',
             elements: [
-                { color: '#e5050d', text: 'Mixed Use' },
-                { subtitle: 'Single use:'},
-                { color: '#252aa6', text: 'Residential' },
-                { color: '#ff8c00', text: 'Retail' },
-                { color: '#f5f58f', text: 'Industry & Business' },
-                { color: '#73ccd1', text: 'Community Services' },
-                { color: '#ffbfbf', text: 'Recreation & Leisure' },
-                { color: '#b3de69', text: 'Transport' },
-                { color: '#cccccc', text: 'Utilities & Infrastructure' },
-                { color: '#898944', text: 'Defence' },
-                { color: '#fa667d', text: 'Agriculture' },
-                { color: '#53f5dd', text: 'Minerals' },
-                { color: '#ffffff', text: 'Vacant & Derelict' },
-                { color: '#6c6f8e', text: 'Unclassified buildings' }
+                { color: "rgb(44, 159, 41)", text_en: "Low" , text_gr: 'Χαμηλό'},
+                { color: "rgb(251, 175, 39)", text_en: "Moderate", text_gr: 'Μέτριο' },
+                { color: "rgb(230, 113, 29)", text_en: "High", text_gr: 'Υψηλό' },
+                { color: "rgb(143, 3, 3)", text_en: "Too High" , text_gr: 'Πολύ υψηλό'},
             ]
         },
-    }],
-    [Category.Streetscape]: [{
-        mapStyle: undefined,
-        legend: {
-            title: 'Streetscape',
-            elements: []
-        },
-    }],
+    }
+],
     [Category.Dynamics]: [{
         mapStyle: 'dynamics_demolished_count',
         legend: {
-            title: 'Dynamics',
-            description: 'Demolished buildings on the same site',
+            title_en: 'Dynamics',
+            title_gr: 'Dynamics',
+            description_en: 'Demolished buildings on the same site',
+            description_gr: 'Κατεδαφισμένα κτίρια στο ίδιο οικόπεδο',
             elements: [
                 {
-                    text: '7+',
+                    text_en: '7+', text_gr: '7+',
                     color: '#bd0026',
                 }, {
-                    text: '6',
+                    text_en: '6', text_gr: '6',
                     color: '#e31a1c',
                 }, {
-                    text: '5',
+                    text_en: '5', text_gr: '5',
                     color: '#fc4e2a',
                 }, {
-                    text: '4',
+                    text_en: '4', text_gr: '4',
                     color: '#fd8d3c',
                 }, {
-                    text: '3',
+                    text_en: '3', text_gr: '3',
                     color: '#feb24c',
                 }, {
-                    text: '2',
+                    text_en: '2', text_gr: '2',
                     color: '#fed976',
                 }, {
-                    text: '1',
+                    text_en: '1', text_gr: '1',
                     color: '#ffe8a9',
                 }, {
-                    text: 'None',
+                    text_en: 'None', text_gr: 'Κανένα',
                     color: '#0C7BDC'
                 }
             ],
         },
     }]
-    
+
 };

@@ -1,10 +1,14 @@
-ALTER TABLE buildings
-  ADD COLUMN IF NOT EXISTS type_class integer,
-  ADD FOREIGN KEY (type_class)
-  REFERENCES reference_tables.type_classifications (typec_id);
+-- Building attachment, ENUM: Detached, Semi-detached, End-Terrace, Mid-Terrace
+CREATE TYPE building_attachment_form
+AS ENUM ('Detached',
+    'Semi-Detached',
+    'End-Terrace',
+    'Mid-Terrace');
 
-
 ALTER TABLE buildings
-  ADD COLUMN IF NOT EXISTS side_distances integer,
-  ADD FOREIGN KEY (side_distances)
-  REFERENCES reference_tables.side_distances_classifications (side_distances_id);
+    ADD COLUMN IF NOT EXISTS building_attachment_form building_attachment_form;
+
+-- [Disabled for launch] Date of change of use
+-- This needs to pair with demolition
+ALTER TABLE buildings
+    ADD COLUMN IF NOT EXISTS date_change_building_use smallint;

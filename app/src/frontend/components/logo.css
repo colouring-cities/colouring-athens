@@ -20,7 +20,8 @@
 .logo .logotype span {
     display: block;
     font-size: 0.75em;
-    letter-spacing: 0.15em;
+    /* letter-spacing: 0.15em; */
+    letter-spacing: 0.24em;
 }
 .logo .logotype span:first-child {
     font-size: 0.625em;
