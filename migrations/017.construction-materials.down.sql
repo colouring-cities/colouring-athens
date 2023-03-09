@@ -3,10 +3,9 @@
 ALTER TABLE buildings DROP COLUMN IF EXISTS construction_core_material;
 
 --Secondary material
-ALTER TABLE buildings DROP COLUMN IF EXISTS construction_secondary_materials;
+ALTER TABLE buildings DROP COLUMN IF EXISTS construction_cover_material;
 
 --Primary roof material
 ALTER TABLE buildings DROP COLUMN IF EXISTS construction_roof_covering;
 
-DROP TYPE IF EXISTS construction_materials;
-DROP TYPE IF EXISTS roof_covering;
+
